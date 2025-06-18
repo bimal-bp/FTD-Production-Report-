@@ -50,9 +50,26 @@
             text-transform: uppercase;
         }
         .date-section {
-            text-align: right;
+            display: flex;
+            justify-content: space-between;
             margin-bottom: 15px;
             font-size: 12px;
+        }
+        .date-selector {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .shift-selector {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        select, input[type="date"] {
+            padding: 3px 5px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            font-size: 11px;
         }
         .columns {
             display: flex;
@@ -193,10 +210,20 @@
         </div>
 
         <div class="date-section">
-            <strong>Date:</strong> <span id="report-date"></span>
+            <div class="date-selector">
+                <strong>Date:</strong>
+                <input type="date" id="report-date" style="width: 120px;">
+            </div>
+            <div class="shift-selector">
+                <strong>Shift:</strong>
+                <select id="shift-type" style="width: 100px;">
+                    <option value="day">Day Shift</option>
+                    <option value="night">Night Shift</option>
+                </select>
+            </div>
         </div>
 
-        <div class="report-title">Day Shift Production Report</div>
+        <div class="report-title" id="dynamic-report-title">Day Shift Production Report</div>
 
         <div class="columns">
             <div class="column">
@@ -227,35 +254,35 @@
                     <div class="section-content">
                         <div class="row">
                             <div class="label">Start Time:</div>
-                            <div class="value"><input type="time" placeholder="HH:MM" style="width:70px" class="vrm-start"></div>
+                            <div class="value"><input type="time" id="vrm-start" placeholder="HH:MM" style="width:70px"></div>
                         </div>
                         <div class="row">
                             <div class="label">End Time:</div>
-                            <div class="value"><input type="time" placeholder="HH:MM" style="width:70px" class="vrm-end"></div>
+                            <div class="value"><input type="time" id="vrm-end" placeholder="HH:MM" style="width:70px"></div>
                         </div>
                         <div class="row">
                             <div class="label">Production (MT):</div>
-                            <div class="value"><input type="number" step="0.01" class="vrm-production"></div>
+                            <div class="value"><input type="number" step="0.01" id="vrm-production"></div>
                         </div>
                         <div class="row">
                             <div class="label">Running Hrs:</div>
-                            <div class="value"><input type="number" step="0.01" class="vrm-hours" readonly></div>
+                            <div class="value"><input type="number" step="0.01" id="vrm-hours" readonly></div>
                         </div>
                         <div class="row">
                             <div class="label">TPH:</div>
-                            <div class="value"><input type="number" step="0.01" class="vrm-tph" readonly></div>
+                            <div class="value"><input type="number" step="0.01" id="vrm-tph" readonly></div>
                         </div>
                         <div class="row">
                             <div class="label">EB Start (kWh):</div>
-                            <div class="value"><input type="number" step="0.01" class="eb-start"></div>
+                            <div class="value"><input type="number" step="0.01" id="eb-start"></div>
                         </div>
                         <div class="row">
                             <div class="label">EB End (kWh):</div>
-                            <div class="value"><input type="number" step="0.01" class="eb-end"></div>
+                            <div class="value"><input type="number" step="0.01" id="eb-end"></div>
                         </div>
                         <div class="row">
                             <div class="label">EB Cons. (kWh):</div>
-                            <div class="value"><input type="number" step="0.01" class="eb-consumption" readonly></div>
+                            <div class="value"><input type="number" step="0.01" id="eb-consumption" readonly></div>
                         </div>
                     </div>
                 </div>
@@ -289,35 +316,35 @@
                     <div class="section-content">
                         <div class="row">
                             <div class="label">Start Time:</div>
-                            <div class="value"><input type="time" placeholder="HH:MM" style="width:70px" class="dryer-start"></div>
+                            <div class="value"><input type="time" id="dryer-start" placeholder="HH:MM" style="width:70px"></div>
                         </div>
                         <div class="row">
                             <div class="label">End Time:</div>
-                            <div class="value"><input type="time" placeholder="HH:MM" style="width:70px" class="dryer-end"></div>
+                            <div class="value"><input type="time" id="dryer-end" placeholder="HH:MM" style="width:70px"></div>
                         </div>
                         <div class="row">
                             <div class="label">Production (MT):</div>
-                            <div class="value"><input type="number" step="0.01" class="dryer-production"></div>
+                            <div class="value"><input type="number" step="0.01" id="dryer-production"></div>
                         </div>
                         <div class="row">
                             <div class="label">Running Hrs:</div>
-                            <div class="value"><input type="number" step="0.01" class="dryer-hours" readonly></div>
+                            <div class="value"><input type="number" step="0.01" id="dryer-hours" readonly></div>
                         </div>
                         <div class="row">
                             <div class="label">TPH:</div>
-                            <div class="value"><input type="number" step="0.01" class="dryer-tph" readonly></div>
+                            <div class="value"><input type="number" step="0.01" id="dryer-tph" readonly></div>
                         </div>
                         <div class="row">
                             <div class="label">LDO Open (L):</div>
-                            <div class="value"><input type="number" step="0.01" class="ldo-start"></div>
+                            <div class="value"><input type="number" step="0.01" id="ldo-start"></div>
                         </div>
                         <div class="row">
                             <div class="label">LDO Close (L):</div>
-                            <div class="value"><input type="number" step="0.01" class="ldo-end"></div>
+                            <div class="value"><input type="number" step="0.01" id="ldo-end"></div>
                         </div>
                         <div class="row">
                             <div class="label">LDO Cons. (L):</div>
-                            <div class="value"><input type="number" step="0.01" class="ldo-consumption" readonly></div>
+                            <div class="value"><input type="number" step="0.01" id="ldo-consumption" readonly></div>
                         </div>
                     </div>
                 </div>
@@ -386,12 +413,12 @@
                             <div class="value"><input type="number" step="0.01" class="raw-material"></div>
                         </div>
                         <div class="row">
-                            <div class="label">Total Mix (MT):</div>
-                            <div class="value"><input type="number" step="0.01" class="total-mix" readonly></div>
-                        </div>
-                        <div class="row">
                             <div class="label">Received Any Stock (MT):</div>
                             <div class="value"><input type="number" step="0.01" class="raw-material"></div>
+                        </div>
+                        <div class="row">
+                            <div class="label">Total Mix (MT):</div>
+                            <div class="value"><input type="number" step="0.01" class="total-mix" readonly></div>
                         </div>
                     </div>
                 </div>
@@ -422,104 +449,179 @@
     <button class="print-button no-print" onclick="window.print()">Print Report</button>
 
     <script>
-        // Set today's date automatically
         document.addEventListener('DOMContentLoaded', function() {
+            // Set today's date as default
             const today = new Date();
-            const options = { year: 'numeric', month: 'short', day: 'numeric' };
-            document.getElementById('report-date').textContent = today.toLocaleDateString('en-US', options);
+            const formattedDate = today.toISOString().substr(0, 10);
+            document.getElementById('report-date').value = formattedDate;
             
-            // Add calculation functions
-            function calculateTimeDifference(startTimeId, endTimeId, resultId) {
-                const startTime = document.getElementById(startTimeId).value;
-                const endTime = document.getElementById(endTimeId).value;
+            // Update report title based on shift selection
+            document.getElementById('shift-type').addEventListener('change', function() {
+                const shift = this.value;
+                const titleElement = document.getElementById('dynamic-report-title');
+                titleElement.textContent = shift === 'day' ? 'Day Shift Production Report' : 'Night Shift Production Report';
+            });
+            
+            // Calculate time difference in hours between two time inputs
+            function calculateTimeDifference(startTimeInput, endTimeInput, resultInput) {
+                const startTime = startTimeInput.value;
+                const endTime = endTimeInput.value;
                 
                 if (startTime && endTime) {
-                    const start = new Date(`2000-01-01T${startTime}`);
-                    const end = new Date(`2000-01-01T${endTime}`);
+                    const [startHours, startMinutes] = startTime.split(':').map(Number);
+                    const [endHours, endMinutes] = endTime.split(':').map(Number);
                     
-                    // Handle overnight shifts
-                    if (end < start) {
-                        end.setDate(end.getDate() + 1);
+                    let totalHours = endHours - startHours;
+                    let totalMinutes = endMinutes - startMinutes;
+                    
+                    // Handle overnight shifts (end time is next day)
+                    if (totalHours < 0 || (totalHours === 0 && totalMinutes < 0)) {
+                        totalHours += 24;
                     }
                     
-                    const diffMs = end - start;
-                    const diffHrs = diffMs / (1000 * 60 * 60);
+                    // Handle minute overflow
+                    if (totalMinutes < 0) {
+                        totalHours -= 1;
+                        totalMinutes += 60;
+                    }
                     
-                    document.getElementById(resultId).value = diffHrs.toFixed(2);
+                    const totalTime = totalHours + (totalMinutes / 60);
+                    resultInput.value = totalTime.toFixed(2);
+                    
+                    // If there's a production value, calculate TPH
+                    if (startTimeInput.id.includes('vrm')) {
+                        calculateTPH('vrm');
+                    } else {
+                        calculateTPH('dryer');
+                    }
+                } else {
+                    resultInput.value = '';
                 }
             }
             
-            // Calculate consumption
-            function calculateConsumption(startId, endId, resultId) {
-                const start = parseFloat(document.getElementById(startId).value) || 0;
-                const end = parseFloat(document.getElementById(endId).value) || 0;
+            // Calculate Tons Per Hour (TPH)
+            function calculateTPH(machine) {
+                const hoursInput = document.getElementById(`${machine}-hours`);
+                const productionInput = document.getElementById(`${machine}-production`);
+                const tphInput = document.getElementById(`${machine}-tph`);
                 
-                if (start && end) {
-                    const consumption = start - end;
-                    document.getElementById(resultId).value = consumption.toFixed(2);
+                if (hoursInput.value && productionInput.value) {
+                    const hours = parseFloat(hoursInput.value);
+                    const production = parseFloat(productionInput.value);
+                    
+                    if (hours > 0) {
+                        tphInput.value = (production / hours).toFixed(2);
+                    } else {
+                        tphInput.value = '';
+                    }
+                } else {
+                    tphInput.value = '';
                 }
             }
             
-            // Calculate TPH (Tons Per Hour)
-            function calculateTPH(productionId, hoursId, resultId) {
-                const production = parseFloat(document.getElementById(productionId).value) || 0;
-                const hours = parseFloat(document.getElementById(hoursId).value) || 0;
+            // Calculate consumption (difference between start and end values)
+            function calculateConsumption(startInput, endInput, resultInput) {
+                const startValue = parseFloat(startInput.value) || 0;
+                const endValue = parseFloat(endInput.value) || 0;
                 
-                if (production && hours) {
-                    const tph = production / hours;
-                    document.getElementById(resultId).value = tph.toFixed(2);
+                if (!isNaN(startValue) && !isNaN(endValue)) {
+                    resultInput.value = (startValue - endValue).toFixed(2);
+                } else {
+                    resultInput.value = '';
                 }
             }
             
             // Calculate total raw material mix
             function calculateTotalMix() {
-                const inputs = document.querySelectorAll('.raw-material');
+                const materialInputs = document.querySelectorAll('.raw-material');
                 let total = 0;
                 
-                inputs.forEach(input => {
-                    total += parseFloat(input.value) || 0;
+                materialInputs.forEach(input => {
+                    const value = parseFloat(input.value) || 0;
+                    total += value;
                 });
                 
                 document.querySelector('.total-mix').value = total.toFixed(2);
             }
             
-            // Set up event listeners for calculations
-            document.querySelectorAll('.vrm-start, .vrm-end').forEach(input => {
-                input.addEventListener('change', function() {
-                    calculateTimeDifference('vrm-start', 'vrm-end', 'vrm-hours');
-                    calculateTPH('vrm-production', 'vrm-hours', 'vrm-tph');
-                });
+            // Set up event listeners for VRM calculations
+            document.getElementById('vrm-start').addEventListener('change', function() {
+                calculateTimeDifference(
+                    document.getElementById('vrm-start'),
+                    document.getElementById('vrm-end'),
+                    document.getElementById('vrm-hours')
+                );
             });
             
-            document.querySelectorAll('.dryer-start, .dryer-end').forEach(input => {
-                input.addEventListener('change', function() {
-                    calculateTimeDifference('dryer-start', 'dryer-end', 'dryer-hours');
-                    calculateTPH('dryer-production', 'dryer-hours', 'dryer-tph');
-                });
+            document.getElementById('vrm-end').addEventListener('change', function() {
+                calculateTimeDifference(
+                    document.getElementById('vrm-start'),
+                    document.getElementById('vrm-end'),
+                    document.getElementById('vrm-hours')
+                );
             });
             
-            document.querySelector('.vrm-production').addEventListener('change', function() {
-                calculateTPH('vrm-production', 'vrm-hours', 'vrm-tph');
+            document.getElementById('vrm-production').addEventListener('input', function() {
+                calculateTPH('vrm');
             });
             
-            document.querySelector('.dryer-production').addEventListener('change', function() {
-                calculateTPH('dryer-production', 'dryer-hours', 'dryer-tph');
+            // Set up event listeners for Dryer calculations
+            document.getElementById('dryer-start').addEventListener('change', function() {
+                calculateTimeDifference(
+                    document.getElementById('dryer-start'),
+                    document.getElementById('dryer-end'),
+                    document.getElementById('dryer-hours')
+                );
             });
             
-            document.querySelectorAll('.eb-start, .eb-end').forEach(input => {
-                input.addEventListener('change', function() {
-                    calculateConsumption('eb-start', 'eb-end', 'eb-consumption');
-                });
+            document.getElementById('dryer-end').addEventListener('change', function() {
+                calculateTimeDifference(
+                    document.getElementById('dryer-start'),
+                    document.getElementById('dryer-end'),
+                    document.getElementById('dryer-hours')
+                );
             });
             
-            document.querySelectorAll('.ldo-start, .ldo-end').forEach(input => {
-                input.addEventListener('change', function() {
-                    calculateConsumption('ldo-start', 'ldo-end', 'ldo-consumption');
-                });
+            document.getElementById('dryer-production').addEventListener('input', function() {
+                calculateTPH('dryer');
             });
             
+            // Set up event listeners for consumption calculations
+            document.getElementById('eb-start').addEventListener('input', function() {
+                calculateConsumption(
+                    document.getElementById('eb-start'),
+                    document.getElementById('eb-end'),
+                    document.getElementById('eb-consumption')
+                );
+            });
+            
+            document.getElementById('eb-end').addEventListener('input', function() {
+                calculateConsumption(
+                    document.getElementById('eb-start'),
+                    document.getElementById('eb-end'),
+                    document.getElementById('eb-consumption')
+                );
+            });
+            
+            document.getElementById('ldo-start').addEventListener('input', function() {
+                calculateConsumption(
+                    document.getElementById('ldo-start'),
+                    document.getElementById('ldo-end'),
+                    document.getElementById('ldo-consumption')
+                );
+            });
+            
+            document.getElementById('ldo-end').addEventListener('input', function() {
+                calculateConsumption(
+                    document.getElementById('ldo-start'),
+                    document.getElementById('ldo-end'),
+                    document.getElementById('ldo-consumption')
+                );
+            });
+            
+            // Set up event listeners for raw material calculations
             document.querySelectorAll('.raw-material').forEach(input => {
-                input.addEventListener('change', calculateTotalMix);
+                input.addEventListener('input', calculateTotalMix);
             });
         });
     </script>
