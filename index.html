@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shift Wise Production Report - SGX Minerals</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            padding: 25px;
+            background-color: #fff;
+        }
+        .letterhead {
+            text-align: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #2c3e50;
+            padding-bottom: 15px;
+        }
+        .company-name {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        .location {
+            font-weight: 500;
+            color: #555;
+        }
+        .report-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #3498db;
+            margin: 20px 0;
+            text-align: center;
+            text-transform: uppercase;
+        }
+        .date-section {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+        .section {
+            margin-bottom: 25px;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        .section-title {
+            background-color: #2c3e50;
+            color: white;
+            padding: 8px 15px;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .section-content {
+            padding: 15px;
+        }
+        .row {
+            display: flex;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed #eee;
+        }
+        .row:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        .label {
+            width: 250px;
+            font-weight: 600;
+            color: #555;
+        }
+        .value {
+            flex-grow: 1;
+            color: #222;
+        }
+        .remarks-section {
+            margin-top: 30px;
+        }
+        .remarks-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #2c3e50;
+            font-size: 16px;
+        }
+        .remarks-content {
+            border: 1px solid #e0e0e0;
+            padding: 15px;
+            min-height: 80px;
+            border-radius: 5px;
+        }
+        .signature-section {
+            margin-top: 40px;
+            display: flex;
+            justify-content: flex-end;
+        }
+        .signature-box {
+            width: 250px;
+            border-top: 1px solid #333;
+            padding-top: 5px;
+            text-align: center;
+            font-size: 14px;
+        }
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 12px;
+            color: #777;
+            border-top: 1px solid #eee;
+            padding-top: 10px;
+        }
+        @media print {
+            body {
+                padding: 0;
+            }
+            .container {
+                box-shadow: none;
+                border: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="letterhead">
+            <div class="company-name">SGX MINERALS PRIVATE LIMITED</div>
+            <div class="location">Acthutapuram, Andhra Pradesh</div>
+        </div>
+
+        <div class="date-section">
+            <strong>Date:</strong> <span id="report-date"></span>
+        </div>
+
+        <div class="report-title">Shift Wise Production Report</div>
+
+        <div class="section">
+            <div class="section-title">OPENING STOCK OF RAW MATERIAL</div>
+            <div class="section-content">
+                <div class="row">
+                    <div class="label">Slurry (MT):</div>
+                    <div class="value"></div>
+                </div>
+                <div class="row">
+                    <div class="label">RH (MT):</div>
+                    <div class="value"></div>
+                </div>
+                <div class="row">
+                    <div class="label">OPC (MT):</div>
+                    <div class="value"></div>
+                </div>
+                <div class="row">
+                    <div class="label">Silo Stock (MT):</div>
+                    <div class="value"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">VRM DETAILS</div>
+            <div class="section-content">
+                <div class="row">
+                    <div class="label">VRM Start Time:</div>
+                    <div class="value"></div>
+                </div>
+                <div class="row">
+                    <div class="label">VRM End Time:</div>
+                    <div class="value"></div>
+                </div>
+                <div class="row">
+                    <div class="label">VRM Production (MT):</div>
+                    <div class="value"></div>
+                </div>
+                <div class="row">
+                    <div class="label">VRM Running Hours:</div>
+                    <div class="value"></div>
+                </div>
+                <div class="row">
+                    <div class="label">VRM TPH (Tons Per Hour):</div>
+                    <div class="value"></div>
+                </div>
+                <div class="row">
+                    <div class="label">EB Meter Starting (kWh):</div>
+                    <div class="value"></div>
+                </div>
+                <div class="row">
+                    <div class="label">EB Meter Closing (kWh):</div>
+                    <div class="value"></div>
+                </div>
+                <div class="row">
+                    <div class="label">Total EB Consumption (kWh):</div>
+                    <div class="value"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">DRYER DETAILS</div>
+            <div class="section-content">
+                <div class="row">
+                    <div class="label">Dryer Production (MT):</div>
+                    <div class="value"></div>
+                </div>
+                <div class="row">
+                    <div class="label">Dryer Running Hours:</div>
+                    <div class="value"></div>
+                </div>
+                <div class="row">
+                    <div class="label">Dryer TPH (Tons Per Hour):</div>
+                    <div class="value"></div>
+                </div>
+                <div class="row">
+                    <div class="label">LDO Opening Stock (Liters):</div>
+                    <div class="value"></div>
+                </div>
+                <div class="row">
+                    <div class="label">LDO Closing Stock (Liters):</div>
+                    <div class="value"></div>
+                </div>
+                <div class="row">
+                    <div class="label">LDO Consumption (Liters):</div>
+                    <div class="value"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">OPERATIONAL DETAILS</div>
+            <div class="section-content">
+                <div class="row">
+                    <div class="label">NMR Number:</div>
+                    <div class="value"></div>
+                </div>
+                <div class="row">
+                    <div class="label">JCB Working Hours:</div>
+                    <div class="value"></div>
+                </div>
+                <div class="row">
+                    <div class="label">No Production Time (Hours):</div>
+                    <div class="value"></div>
+                </div>
+                <div class="row">
+                    <div class="label">No Feed Time (Hours):</div>
+                    <div class="value"></div>
+                </div>
+                <div class="row">
+                    <div class="label">Dispatch Quantity (MT):</div>
+                    <div class="value"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">CLOSING STOCK OF RAW MATERIAL</div>
+            <div class="section-content">
+                <div class="row">
+                    <div class="label">Slurry (MT):</div>
+                    <div class="value"></div>
+                </div>
+                <div class="row">
+                    <div class="label">RH (MT):</div>
+                    <div class="value"></div>
+                </div>
+                <div class="row">
+                    <div class="label">OPC (MT):</div>
+                    <div class="value"></div>
+                </div>
+                <div class="row">
+                    <div class="label">Silo Stock (MT):</div>
+                    <div class="value"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">RAW MATERIAL MIX</div>
+            <div class="section-content">
+                <div class="row">
+                    <div class="label">Material 1 (MT):</div>
+                    <div class="value"></div>
+                </div>
+                <div class="row">
+                    <div class="label">Material 2 (MT):</div>
+                    <div class="value"></div>
+                </div>
+                <div class="row">
+                    <div class="label">Material 3 (MT):</div>
+                    <div class="value"></div>
+                </div>
+                <div class="row">
+                    <div class="label">Total Mix (MT):</div>
+                    <div class="value"></div>
+                </div>
+                <div class="row">
+                    <div class="label">Mix Ratio:</div>
+                    <div class="value"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="remarks-section">
+            <div class="remarks-title">REMARKS/OBSERVATIONS:</div>
+            <div class="remarks-content"></div>
+        </div>
+
+        <div class="signature-section">
+            <div class="signature-box">
+                Prepared By<br>
+                (Shift Incharge)
+            </div>
+            <div class="signature-box">
+                Approved By<br>
+                (Plant Manager)
+            </div>
+        </div>
+
+        <div class="footer">
+            This is a computer generated report. No signature required.
+        </div>
+    </div>
+
+    <script>
+        // Set today's date automatically
+        document.addEventListener('DOMContentLoaded', function() {
+            const today = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('report-date').textContent = today.toLocaleDateString('en-US', options);
+        });
+    </script>
+</body>
+</html>
