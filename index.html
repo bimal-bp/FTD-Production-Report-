@@ -30,12 +30,6 @@
             border-bottom: 2px solid #2c3e50;
             padding-bottom: 8px;
         }
-        .company-name {
-            font-size: 20px;
-            font-weight: bold;
-            color: #2c3e50;
-            margin-bottom: 3px;
-        }
         .location {
             font-weight: 500;
             color: #555;
@@ -121,6 +115,9 @@
             padding: 3px 5px;
             margin-left: 8px;
         }
+        input[type="time"] {
+            width: 70px;
+        }
         input[type="time"]::-webkit-calendar-picker-indicator {
             display: none;
         }
@@ -148,19 +145,6 @@
             font-size: 11px;
             font-family: inherit;
             resize: none;
-        }
-        .signature-section {
-            margin-top: 25px;
-            display: flex;
-            justify-content: space-between;
-            page-break-inside: avoid;
-        }
-        .signature-box {
-            width: 180px;
-            border-top: 1px solid #333;
-            padding-top: 8px;
-            text-align: center;
-            font-size: 11px;
         }
         .footer {
             margin-top: 20px;
@@ -205,8 +189,7 @@
 <body>
     <div class="container">
         <div class="letterhead">
-            <div class="company-name">SGX MINERALS PRIVATE LIMITED</div>
-            <div class="location">Atchutapuram, Andhra Pradesh</div>
+            <div class="report-title" id="dynamic-report-title">Day Shift Production Report</div>
         </div>
 
         <div class="date-section">
@@ -222,8 +205,6 @@
                 </select>
             </div>
         </div>
-
-        <div class="report-title" id="dynamic-report-title">Day Shift Production Report</div>
 
         <div class="columns">
             <div class="column">
@@ -261,12 +242,12 @@
                             <div class="value"><input type="time" id="vrm-end" placeholder="HH:MM" style="width:70px"></div>
                         </div>
                         <div class="row">
-                            <div class="label">Production (MT):</div>
-                            <div class="value"><input type="number" step="0.01" id="vrm-production"></div>
+                            <div class="label">Running Hrs:</div>
+                            <div class="value"><input type="number" step="0.01" id="vrm-hours"></div>
                         </div>
                         <div class="row">
-                            <div class="label">Running Hrs:</div>
-                            <div class="value"><input type="number" step="0.01" id="vrm-hours" readonly></div>
+                            <div class="label">Production (MT):</div>
+                            <div class="value"><input type="number" step="0.01" id="vrm-production"></div>
                         </div>
                         <div class="row">
                             <div class="label">TPH:</div>
@@ -323,12 +304,12 @@
                             <div class="value"><input type="time" id="dryer-end" placeholder="HH:MM" style="width:70px"></div>
                         </div>
                         <div class="row">
-                            <div class="label">Production (MT):</div>
-                            <div class="value"><input type="number" step="0.01" id="dryer-production"></div>
+                            <div class="label">Running Hrs:</div>
+                            <div class="value"><input type="number" step="0.01" id="dryer-hours"></div>
                         </div>
                         <div class="row">
-                            <div class="label">Running Hrs:</div>
-                            <div class="value"><input type="number" step="0.01" id="dryer-hours" readonly></div>
+                            <div class="label">Production (MT):</div>
+                            <div class="value"><input type="number" step="0.01" id="dryer-production"></div>
                         </div>
                         <div class="row">
                             <div class="label">TPH:</div>
@@ -430,19 +411,8 @@
             <div class="remarks-content"><textarea></textarea></div>
         </div>
 
-        <div class="signature-section">
-            <div class="signature-box">
-                Prepared By<br>
-                (Shift Incharge)
-            </div>
-            <div class="signature-box">
-                Approved By<br>
-                (Plant Manager)
-            </div>
-        </div>
-
         <div class="footer">
-            This is a computer generated report. No signature required.
+            This is a computer generated report.
         </div>
     </div>
 
@@ -462,44 +432,7 @@
                 titleElement.textContent = shift === 'day' ? 'Day Shift Production Report' : 'Night Shift Production Report';
             });
             
-            // Calculate time difference in hours between two time inputs
-            function calculateTimeDifference(startTimeInput, endTimeInput, resultInput) {
-                const startTime = startTimeInput.value;
-                const endTime = endTimeInput.value;
-                
-                if (startTime && endTime) {
-                    const [startHours, startMinutes] = startTime.split(':').map(Number);
-                    const [endHours, endMinutes] = endTime.split(':').map(Number);
-                    
-                    let totalHours = endHours - startHours;
-                    let totalMinutes = endMinutes - startMinutes;
-                    
-                    // Handle overnight shifts (end time is next day)
-                    if (totalHours < 0 || (totalHours === 0 && totalMinutes < 0)) {
-                        totalHours += 24;
-                    }
-                    
-                    // Handle minute overflow
-                    if (totalMinutes < 0) {
-                        totalHours -= 1;
-                        totalMinutes += 60;
-                    }
-                    
-                    const totalTime = totalHours + (totalMinutes / 60);
-                    resultInput.value = totalTime.toFixed(2);
-                    
-                    // If there's a production value, calculate TPH
-                    if (startTimeInput.id.includes('vrm')) {
-                        calculateTPH('vrm');
-                    } else {
-                        calculateTPH('dryer');
-                    }
-                } else {
-                    resultInput.value = '';
-                }
-            }
-            
-            // Calculate Tons Per Hour (TPH)
+            // Calculate TPH (Tons Per Hour) whenever running hours or production changes
             function calculateTPH(machine) {
                 const hoursInput = document.getElementById(`${machine}-hours`);
                 const productionInput = document.getElementById(`${machine}-production`);
@@ -545,20 +478,8 @@
             }
             
             // Set up event listeners for VRM calculations
-            document.getElementById('vrm-start').addEventListener('change', function() {
-                calculateTimeDifference(
-                    document.getElementById('vrm-start'),
-                    document.getElementById('vrm-end'),
-                    document.getElementById('vrm-hours')
-                );
-            });
-            
-            document.getElementById('vrm-end').addEventListener('change', function() {
-                calculateTimeDifference(
-                    document.getElementById('vrm-start'),
-                    document.getElementById('vrm-end'),
-                    document.getElementById('vrm-hours')
-                );
+            document.getElementById('vrm-hours').addEventListener('input', function() {
+                calculateTPH('vrm');
             });
             
             document.getElementById('vrm-production').addEventListener('input', function() {
@@ -566,20 +487,8 @@
             });
             
             // Set up event listeners for Dryer calculations
-            document.getElementById('dryer-start').addEventListener('change', function() {
-                calculateTimeDifference(
-                    document.getElementById('dryer-start'),
-                    document.getElementById('dryer-end'),
-                    document.getElementById('dryer-hours')
-                );
-            });
-            
-            document.getElementById('dryer-end').addEventListener('change', function() {
-                calculateTimeDifference(
-                    document.getElementById('dryer-start'),
-                    document.getElementById('dryer-end'),
-                    document.getElementById('dryer-hours')
-                );
+            document.getElementById('dryer-hours').addEventListener('input', function() {
+                calculateTPH('dryer');
             });
             
             document.getElementById('dryer-production').addEventListener('input', function() {
@@ -623,6 +532,32 @@
             document.querySelectorAll('.raw-material').forEach(input => {
                 input.addEventListener('input', calculateTotalMix);
             });
+            
+            // Set up time inputs to use 12-hour format
+            function formatTimeInput(input) {
+                input.addEventListener('blur', function() {
+                    let timeValue = this.value;
+                    if (!timeValue) return;
+                    
+                    // Convert to 12-hour format
+                    let [hours, minutes] = timeValue.split(':');
+                    hours = parseInt(hours);
+                    minutes = parseInt(minutes) || 0;
+                    
+                    if (hours > 12) {
+                        this.value = `${hours - 12}:${minutes.toString().padStart(2, '0')}`;
+                    } else if (hours === 0) {
+                        this.value = `12:${minutes.toString().padStart(2, '0')}`;
+                    } else {
+                        this.value = `${hours}:${minutes.toString().padStart(2, '0')}`;
+                    }
+                });
+            }
+            
+            formatTimeInput(document.getElementById('vrm-start'));
+            formatTimeInput(document.getElementById('vrm-end'));
+            formatTimeInput(document.getElementById('dryer-start'));
+            formatTimeInput(document.getElementById('dryer-end'));
         });
     </script>
 </body>
