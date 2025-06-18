@@ -104,6 +104,9 @@
             padding: 3px 5px;
             margin-left: 8px;
         }
+        input[type="time"]::-webkit-calendar-picker-indicator {
+            display: none;
+        }
         .remarks-section {
             margin-top: 20px;
             page-break-inside: avoid;
@@ -186,7 +189,7 @@
     <div class="container">
         <div class="letterhead">
             <div class="company-name">SGX MINERALS PRIVATE LIMITED</div>
-            <div class="location">Acthutapuram, Andhra Pradesh</div>
+            <div class="location">Atchutapuram, Andhra Pradesh</div>
         </div>
 
         <div class="date-section">
@@ -202,19 +205,19 @@
                     <div class="section-content">
                         <div class="row">
                             <div class="label">Slurry (MT):</div>
-                            <div class="value"><input type="text"></div>
+                            <div class="value"><input type="number" step="0.01" class="opening-stock"></div>
                         </div>
                         <div class="row">
                             <div class="label">RH (MT):</div>
-                            <div class="value"><input type="text"></div>
+                            <div class="value"><input type="number" step="0.01" class="opening-stock"></div>
                         </div>
                         <div class="row">
                             <div class="label">OPC (MT):</div>
-                            <div class="value"><input type="text"></div>
+                            <div class="value"><input type="number" step="0.01" class="opening-stock"></div>
                         </div>
                         <div class="row">
                             <div class="label">Silo Stock (MT):</div>
-                            <div class="value"><input type="text"></div>
+                            <div class="value"><input type="number" step="0.01" class="opening-stock"></div>
                         </div>
                     </div>
                 </div>
@@ -224,35 +227,35 @@
                     <div class="section-content">
                         <div class="row">
                             <div class="label">Start Time:</div>
-                            <div class="value"><input type="time" style="width:70px"></div>
+                            <div class="value"><input type="time" placeholder="HH:MM" style="width:70px" class="vrm-start"></div>
                         </div>
                         <div class="row">
                             <div class="label">End Time:</div>
-                            <div class="value"><input type="time" style="width:70px"></div>
+                            <div class="value"><input type="time" placeholder="HH:MM" style="width:70px" class="vrm-end"></div>
                         </div>
                         <div class="row">
                             <div class="label">Production (MT):</div>
-                            <div class="value"><input type="text"></div>
+                            <div class="value"><input type="number" step="0.01" class="vrm-production"></div>
                         </div>
                         <div class="row">
                             <div class="label">Running Hrs:</div>
-                            <div class="value"><input type="text"></div>
+                            <div class="value"><input type="number" step="0.01" class="vrm-hours" readonly></div>
                         </div>
                         <div class="row">
                             <div class="label">TPH:</div>
-                            <div class="value"><input type="text"></div>
+                            <div class="value"><input type="number" step="0.01" class="vrm-tph" readonly></div>
                         </div>
                         <div class="row">
                             <div class="label">EB Start (kWh):</div>
-                            <div class="value"><input type="text"></div>
+                            <div class="value"><input type="number" step="0.01" class="eb-start"></div>
                         </div>
                         <div class="row">
                             <div class="label">EB End (kWh):</div>
-                            <div class="value"><input type="text"></div>
+                            <div class="value"><input type="number" step="0.01" class="eb-end"></div>
                         </div>
                         <div class="row">
                             <div class="label">EB Cons. (kWh):</div>
-                            <div class="value"><input type="text"></div>
+                            <div class="value"><input type="number" step="0.01" class="eb-consumption" readonly></div>
                         </div>
                     </div>
                 </div>
@@ -264,19 +267,19 @@
                     <div class="section-content">
                         <div class="row">
                             <div class="label">Slurry (MT):</div>
-                            <div class="value"><input type="text"></div>
+                            <div class="value"><input type="number" step="0.01" class="closing-stock"></div>
                         </div>
                         <div class="row">
                             <div class="label">RH (MT):</div>
-                            <div class="value"><input type="text"></div>
+                            <div class="value"><input type="number" step="0.01" class="closing-stock"></div>
                         </div>
                         <div class="row">
                             <div class="label">OPC (MT):</div>
-                            <div class="value"><input type="text"></div>
+                            <div class="value"><input type="number" step="0.01" class="closing-stock"></div>
                         </div>
                         <div class="row">
                             <div class="label">Silo Stock (MT):</div>
-                            <div class="value"><input type="text"></div>
+                            <div class="value"><input type="number" step="0.01" class="closing-stock"></div>
                         </div>
                     </div>
                 </div>
@@ -286,35 +289,35 @@
                     <div class="section-content">
                         <div class="row">
                             <div class="label">Start Time:</div>
-                            <div class="value"><input type="time" style="width:70px"></div>
+                            <div class="value"><input type="time" placeholder="HH:MM" style="width:70px" class="dryer-start"></div>
                         </div>
                         <div class="row">
                             <div class="label">End Time:</div>
-                            <div class="value"><input type="time" style="width:70px"></div>
+                            <div class="value"><input type="time" placeholder="HH:MM" style="width:70px" class="dryer-end"></div>
                         </div>
                         <div class="row">
                             <div class="label">Production (MT):</div>
-                            <div class="value"><input type="text"></div>
+                            <div class="value"><input type="number" step="0.01" class="dryer-production"></div>
                         </div>
                         <div class="row">
                             <div class="label">Running Hrs:</div>
-                            <div class="value"><input type="text"></div>
+                            <div class="value"><input type="number" step="0.01" class="dryer-hours" readonly></div>
                         </div>
                         <div class="row">
                             <div class="label">TPH:</div>
-                            <div class="value"><input type="text"></div>
+                            <div class="value"><input type="number" step="0.01" class="dryer-tph" readonly></div>
                         </div>
                         <div class="row">
                             <div class="label">LDO Open (L):</div>
-                            <div class="value"><input type="text"></div>
+                            <div class="value"><input type="number" step="0.01" class="ldo-start"></div>
                         </div>
                         <div class="row">
                             <div class="label">LDO Close (L):</div>
-                            <div class="value"><input type="text"></div>
+                            <div class="value"><input type="number" step="0.01" class="ldo-end"></div>
                         </div>
                         <div class="row">
                             <div class="label">LDO Cons. (L):</div>
-                            <div class="value"><input type="text"></div>
+                            <div class="value"><input type="number" step="0.01" class="ldo-consumption" readonly></div>
                         </div>
                     </div>
                 </div>
@@ -332,27 +335,27 @@
                         </div>
                         <div class="row">
                             <div class="label">JCB Hrs:</div>
-                            <div class="value"><input type="text"></div>
+                            <div class="value"><input type="number" step="0.01"></div>
                         </div>
                         <div class="row">
                             <div class="label">No Prod. Hrs:</div>
-                            <div class="value"><input type="text"></div>
+                            <div class="value"><input type="number" step="0.01"></div>
                         </div>
                         <div class="row">
                             <div class="label">No Feed Hrs:</div>
-                            <div class="value"><input type="text"></div>
+                            <div class="value"><input type="number" step="0.01"></div>
                         </div>
                         <div class="row">
                             <div class="label">Power Cut Hrs:</div>
-                            <div class="value"><input type="text"></div>
+                            <div class="value"><input type="number" step="0.01"></div>
                         </div>
                         <div class="row">
                             <div class="label">Rain Hrs:</div>
-                            <div class="value"><input type="text"></div>
+                            <div class="value"><input type="number" step="0.01"></div>
                         </div>
                         <div class="row">
                             <div class="label">Dispatch (MT):</div>
-                            <div class="value"><input type="text"></div>
+                            <div class="value"><input type="number" step="0.01"></div>
                         </div>
                     </div>
                 </div>
@@ -364,31 +367,31 @@
                     <div class="section-content">
                         <div class="row">
                             <div class="label">M1 (MT):</div>
-                            <div class="value"><input type="text"></div>
+                            <div class="value"><input type="number" step="0.01" class="raw-material"></div>
                         </div>
                         <div class="row">
                             <div class="label">M2 (MT):</div>
-                            <div class="value"><input type="text"></div>
+                            <div class="value"><input type="number" step="0.01" class="raw-material"></div>
                         </div>
                         <div class="row">
                             <div class="label">M3 (MT):</div>
-                            <div class="value"><input type="text"></div>
+                            <div class="value"><input type="number" step="0.01" class="raw-material"></div>
                         </div>
                         <div class="row">
                             <div class="label">M4 (MT):</div>
-                            <div class="value"><input type="text"></div>
+                            <div class="value"><input type="number" step="0.01" class="raw-material"></div>
                         </div>
                         <div class="row">
                             <div class="label">M5 (MT):</div>
-                            <div class="value"><input type="text"></div>
+                            <div class="value"><input type="number" step="0.01" class="raw-material"></div>
                         </div>
                         <div class="row">
                             <div class="label">Total Mix (MT):</div>
-                            <div class="value"><input type="text"></div>
+                            <div class="value"><input type="number" step="0.01" class="total-mix" readonly></div>
                         </div>
                         <div class="row">
-                            <div class="label">Mix Ratio:</div>
-                            <div class="value"><input type="text" style="width:100px"></div>
+                            <div class="label">Received Any Stock (MT):</div>
+                            <div class="value"><input type="number" step="0.01" class="raw-material"></div>
                         </div>
                     </div>
                 </div>
@@ -425,12 +428,98 @@
             const options = { year: 'numeric', month: 'short', day: 'numeric' };
             document.getElementById('report-date').textContent = today.toLocaleDateString('en-US', options);
             
-            // Auto-calculate some fields if needed
-            document.querySelectorAll('input').forEach(input => {
-                input.addEventListener('change', function() {
-                    // You can add auto-calculation logic here
-                    // For example, calculate consumption based on opening-closing stock
+            // Add calculation functions
+            function calculateTimeDifference(startTimeId, endTimeId, resultId) {
+                const startTime = document.getElementById(startTimeId).value;
+                const endTime = document.getElementById(endTimeId).value;
+                
+                if (startTime && endTime) {
+                    const start = new Date(`2000-01-01T${startTime}`);
+                    const end = new Date(`2000-01-01T${endTime}`);
+                    
+                    // Handle overnight shifts
+                    if (end < start) {
+                        end.setDate(end.getDate() + 1);
+                    }
+                    
+                    const diffMs = end - start;
+                    const diffHrs = diffMs / (1000 * 60 * 60);
+                    
+                    document.getElementById(resultId).value = diffHrs.toFixed(2);
+                }
+            }
+            
+            // Calculate consumption
+            function calculateConsumption(startId, endId, resultId) {
+                const start = parseFloat(document.getElementById(startId).value) || 0;
+                const end = parseFloat(document.getElementById(endId).value) || 0;
+                
+                if (start && end) {
+                    const consumption = start - end;
+                    document.getElementById(resultId).value = consumption.toFixed(2);
+                }
+            }
+            
+            // Calculate TPH (Tons Per Hour)
+            function calculateTPH(productionId, hoursId, resultId) {
+                const production = parseFloat(document.getElementById(productionId).value) || 0;
+                const hours = parseFloat(document.getElementById(hoursId).value) || 0;
+                
+                if (production && hours) {
+                    const tph = production / hours;
+                    document.getElementById(resultId).value = tph.toFixed(2);
+                }
+            }
+            
+            // Calculate total raw material mix
+            function calculateTotalMix() {
+                const inputs = document.querySelectorAll('.raw-material');
+                let total = 0;
+                
+                inputs.forEach(input => {
+                    total += parseFloat(input.value) || 0;
                 });
+                
+                document.querySelector('.total-mix').value = total.toFixed(2);
+            }
+            
+            // Set up event listeners for calculations
+            document.querySelectorAll('.vrm-start, .vrm-end').forEach(input => {
+                input.addEventListener('change', function() {
+                    calculateTimeDifference('vrm-start', 'vrm-end', 'vrm-hours');
+                    calculateTPH('vrm-production', 'vrm-hours', 'vrm-tph');
+                });
+            });
+            
+            document.querySelectorAll('.dryer-start, .dryer-end').forEach(input => {
+                input.addEventListener('change', function() {
+                    calculateTimeDifference('dryer-start', 'dryer-end', 'dryer-hours');
+                    calculateTPH('dryer-production', 'dryer-hours', 'dryer-tph');
+                });
+            });
+            
+            document.querySelector('.vrm-production').addEventListener('change', function() {
+                calculateTPH('vrm-production', 'vrm-hours', 'vrm-tph');
+            });
+            
+            document.querySelector('.dryer-production').addEventListener('change', function() {
+                calculateTPH('dryer-production', 'dryer-hours', 'dryer-tph');
+            });
+            
+            document.querySelectorAll('.eb-start, .eb-end').forEach(input => {
+                input.addEventListener('change', function() {
+                    calculateConsumption('eb-start', 'eb-end', 'eb-consumption');
+                });
+            });
+            
+            document.querySelectorAll('.ldo-start, .ldo-end').forEach(input => {
+                input.addEventListener('change', function() {
+                    calculateConsumption('ldo-start', 'ldo-end', 'ldo-consumption');
+                });
+            });
+            
+            document.querySelectorAll('.raw-material').forEach(input => {
+                input.addEventListener('change', calculateTotalMix);
             });
         });
     </script>
