@@ -3,555 +3,463 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shift Production Report - SGX Minerals</title>
+    <title>Day Shift Production Report - SGX Minerals</title>
     <style>
         @page {
             size: A4;
             margin: 0.5cm;
         }
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: Arial, sans-serif;
             line-height: 1.3;
             margin: 0;
             padding: 0;
             color: #333;
-            font-size: 11px;
+            font-size: 12px;
         }
         .container {
             width: 100%;
             max-width: 21cm;
             margin: 0 auto;
-            padding: 0.8cm;
-            background-color: #fff;
-        }
-        .letterhead {
-            text-align: center;
-            margin-bottom: 15px;
-            border-bottom: 2px solid #2c3e50;
-            padding-bottom: 8px;
+            padding: 0.5cm;
         }
         .report-title {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
-            color: #3498db;
-            margin: 15px 0;
             text-align: center;
-            text-transform: uppercase;
+            margin-bottom: 10px;
+            text-decoration: underline;
         }
-        .date-section {
+        .header-info {
             display: flex;
             justify-content: space-between;
             margin-bottom: 15px;
-            font-size: 12px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        .date-selector, .shift-selector {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        select, input[type="date"] {
-            padding: 3px 5px;
-            border: 1px solid #ccc;
-            border-radius: 3px;
-            font-size: 11px;
-        }
-        .columns {
-            display: flex;
-            gap: 20px;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-        }
-        .column {
-            flex: 1;
-            min-width: 250px;
         }
         .section {
             margin-bottom: 15px;
-            border: 1px solid #e0e0e0;
-            border-radius: 4px;
-            overflow: hidden;
             page-break-inside: avoid;
         }
         .section-title {
-            background-color: #2c3e50;
-            color: white;
-            padding: 5px 8px;
             font-weight: bold;
-            font-size: 12px;
+            margin-bottom: 5px;
+            text-decoration: underline;
         }
-        .section-content {
-            padding: 8px;
-        }
-        .row {
+        .two-columns {
             display: flex;
-            margin-bottom: 6px;
-            align-items: center;
+            gap: 10px;
         }
-        .label {
-            width: 120px;
-            font-weight: 600;
-            color: #555;
-            flex-shrink: 0;
-            font-size: 11px;
+        .three-columns {
+            display: flex;
+            gap: 10px;
         }
-        .value {
-            flex-grow: 1;
-            color: #222;
+        .column {
+            flex: 1;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 10px;
+        }
+        table, th, td {
+            border: 1px solid #000;
+        }
+        th, td {
+            padding: 3px 5px;
+            text-align: left;
+            width: 50%; /* Reduced column width */
         }
         input {
-            width: 80px;
+            width: 90%; /* Reduced input width */
             border: none;
-            border-bottom: 1px dotted #ccc;
+            font-family: inherit;
+            font-size: inherit;
+            padding: 2px;
+            box-sizing: border-box;
+        }
+        input[type="number"], input[type="text"] {
             text-align: right;
-            font-size: 11px;
-            padding: 3px 5px;
-            margin-left: 8px;
         }
         input[type="time"] {
-            width: 70px;
             text-align: center;
         }
-        .remarks-section {
-            margin-top: 20px;
-            page-break-inside: avoid;
+        .remarks {
+            margin-top: 10px;
         }
-        .remarks-title {
-            font-weight: bold;
-            margin-bottom: 8px;
-            color: #2c3e50;
-            font-size: 12px;
-        }
-        .remarks-content {
-            border: 1px solid #e0e0e0;
-            padding: 8px;
-            min-height: 60px;
-            border-radius: 4px;
-            font-size: 11px;
-        }
-        textarea {
+        .remarks textarea {
             width: 100%;
-            height: 60px;
-            border: none;
-            font-size: 11px;
+            height: 50px;
+            border: 1px solid #000;
             font-family: inherit;
-            resize: none;
+            font-size: inherit;
+            padding: 5px;
+            box-sizing: border-box;
         }
-        .footer {
-            margin-top: 20px;
-            text-align: center;
-            font-size: 10px;
-            color: #777;
-            border-top: 1px solid #eee;
-            padding-top: 10px;
-        }
-        @media print {
-            body {
-                padding: 0;
-                background: white;
-                font-size: 10px;
-            }
-            .container {
-                padding: 0;
-                max-width: 100%;
-            }
-            .no-print {
-                display: none !important;
-            }
-            input {
-                border-bottom: none;
-                background: transparent;
-            }
-            input[readonly] {
-                font-weight: bold;
-            }
-            .section {
-                border: 1px solid #ddd;
-            }
-        }
-        @media (max-width: 600px) {
-            .columns {
-                flex-direction: column;
-                gap: 10px;
-            }
-            .column {
-                width: 100%;
-            }
-        }
-        .print-button {
+        .action-buttons {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
-            padding: 10px 20px;
+            bottom: 10px;
+            right: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            z-index: 1000;
+        }
+        .action-button {
+            padding: 6px 10px;
             background-color: #2c3e50;
             color: white;
             border: none;
-            border-radius: 4px;
+            border-radius: 3px;
             cursor: pointer;
-            z-index: 1000;
-            font-size: 13px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            font-size: 10px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
         }
-        .print-button:hover {
-            background-color: #3498db;
+        @media print {
+            .action-buttons {
+                display: none;
+            }
+            input {
+                background: transparent;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="letterhead">
-            <div class="report-title" id="dynamic-report-title">Day Shift Production Report</div>
-        </div>
-
-        <div class="date-section">
-            <div class="date-selector">
-                <strong>Date:</strong>
-                <input type="date" id="report-date" style="width: 120px;">
-            </div>
-            <div class="shift-selector">
-                <strong>Shift:</strong>
+    <div class="container" id="report-content">
+        <div class="report-title">DAY SHIFT PRODUCTION REPORT</div>
+        
+        <div class="header-info">
+            <div>Date: <input type="date" id="report-date" style="width: 120px;"></div>
+            <div>Shift: 
                 <select id="shift-type" style="width: 100px;">
-                    <option value="day">Day Shift</option>
+                    <option value="day" selected>Day Shift</option>
                     <option value="night">Night Shift</option>
                 </select>
             </div>
         </div>
 
-        <div class="columns">
+        <!-- First Row: Opening and Closing Stock -->
+        <div class="two-columns">
             <div class="column">
                 <div class="section">
-                    <div class="section-title">OPENING STOCK</div>
-                    <div class="section-content">
-                        <div class="row">
-                            <div class="label">Slurry (MT):</div>
-                            <div class="value"><input type="number" step="0.01" class="opening-stock"></div>
-                        </div>
-                        <div class="row">
-                            <div class="label">RH (MT):</div>
-                            <div class="value"><input type="number" step="0.01" class="opening-stock"></div>
-                        </div>
-                        <div class="row">
-                            <div class="label">OPC (MT):</div>
-                            <div class="value"><input type="number" step="0.01" class="opening-stock"></div>
-                        </div>
-                        <div class="row">
-                            <div class="label">Silo Stock (MT):</div>
-                            <div class="value"><input type="number" step="0.01" class="opening-stock"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="section">
-                    <div class="section-title">VRM DETAILS</div>
-                    <div class="section-content">
-                        <div class="row">
-                            <div class="label">Start Time:</div>
-                            <div class="value"><input type="time" id="vrm-start" style="width:70px"></div>
-                        </div>
-                        <div class="row">
-                            <div class="label">End Time:</div>
-                            <div class="value"><input type="time" id="vrm-end" style="width:70px"></div>
-                        </div>
-                        <div class="row">
-                            <div class="label">Running Hrs:</div>
-                            <div class="value"><input type="number" step="0.01" id="vrm-hours"></div>
-                        </div>
-                        <div class="row">
-                            <div class="label">Production (MT):</div>
-                            <div class="value"><input type="number" step="0.01" id="vrm-production"></div>
-                        </div>
-                        <div class="row">
-                            <div class="label">TPH:</div>
-                            <div class="value"><input type="number" step="0.01" id="vrm-tph" readonly></div>
-                        </div>
-                        <div class="row">
-                            <div class="label">EB Start (kWh):</div>
-                            <div class="value"><input type="number" step="0.01" id="eb-start"></div>
-                        </div>
-                        <div class="row">
-                            <div class="label">EB End (kWh):</div>
-                            <div class="value"><input type="number" step="0.01" id="eb-end"></div>
-                        </div>
-                        <div class="row">
-                            <div class="label">EB Cons. (kWh):</div>
-                            <div class="value"><input type="number" step="0.01" id="eb-consumption" readonly></div>
-                        </div>
-                    </div>
+                    <div class="section-title">OPENING STOCK OF RAW MATERIAL</div>
+                    <table>
+                        <tr>
+                            <td>Slurry (MT):</td>
+                            <td><input type="number" step="0.1" id="opening-slurry" value="118"></td>
+                        </tr>
+                        <tr>
+                            <td>RH (MT):</td>
+                            <td><input type="number" step="0.1" id="opening-rh" value="1.7"></td>
+                        </tr>
+                        <tr>
+                            <td>OPC (MT):</td>
+                            <td><input type="number" step="0.1" id="opening-opc" value="0"></td>
+                        </tr>
+                        <tr>
+                            <td>Silo Stock (MT):</td>
+                            <td><input type="number" step="0.1" id="opening-silo" value="0"></td>
+                        </tr>
+                        <tr>
+                            <td>Microsilica Bags:</td>
+                            <td><input type="number" step="1" id="opening-microsilica" value="0"></td>
+                        </tr>
+                    </table>
                 </div>
             </div>
-
+            
             <div class="column">
                 <div class="section">
-                    <div class="section-title">CLOSING STOCK</div>
-                    <div class="section-content">
-                        <div class="row">
-                            <div class="label">Slurry (MT):</div>
-                            <div class="value"><input type="number" step="0.01" class="closing-stock"></div>
-                        </div>
-                        <div class="row">
-                            <div class="label">RH (MT):</div>
-                            <div class="value"><input type="number" step="0.01" class="closing-stock"></div>
-                        </div>
-                        <div class="row">
-                            <div class="label">OPC (MT):</div>
-                            <div class="value"><input type="number" step="0.01" class="closing-stock"></div>
-                        </div>
-                        <div class="row">
-                            <div class="label">Silo Stock (MT):</div>
-                            <div class="value"><input type="number" step="0.01" class="closing-stock"></div>
-                        </div>
-                    </div>
+                    <div class="section-title">CLOSING STOCK OF RAW MATERIAL</div>
+                    <table>
+                        <tr>
+                            <td>Slurry (MT):</td>
+                            <td><input type="number" step="0.1" id="closing-slurry" value="103"></td>
+                        </tr>
+                        <tr>
+                            <td>RH (MT):</td>
+                            <td><input type="number" step="0.1" id="closing-rh" value="16.7"></td>
+                        </tr>
+                        <tr>
+                            <td>OPC (MT):</td>
+                            <td><input type="number" step="0.1" id="closing-opc" value="33.3"></td>
+                        </tr>
+                        <tr>
+                            <td>Silo Stock (MT):</td>
+                            <td><input type="number" step="0.1" id="closing-silo" value="33"></td>
+                        </tr>
+                        <tr>
+                            <td>Microsilica Bags:</td>
+                            <td><input type="number" step="1" id="closing-microsilica" value="0"></td>
+                        </tr>
+                    </table>
                 </div>
+            </div>
+        </div>
 
+        <!-- Second Row: Dryer and VRM Details -->
+        <div class="two-columns">
+            <div class="column">
                 <div class="section">
                     <div class="section-title">DRYER DETAILS</div>
-                    <div class="section-content">
-                        <div class="row">
-                            <div class="label">Start Time:</div>
-                            <div class="value"><input type="time" id="dryer-start" style="width:70px"></div>
-                        </div>
-                        <div class="row">
-                            <div class="label">End Time:</div>
-                            <div class="value"><input type="time" id="dryer-end" style="width:70px"></div>
-                        </div>
-                        <div class="row">
-                            <div class="label">Running Hrs:</div>
-                            <div class="value"><input type="number" step="0.01" id="dryer-hours"></div>
-                        </div>
-                        <div class="row">
-                            <div class="label">Production (MT):</div>
-                            <div class="value"><input type="number" step="0.01" id="dryer-production"></div>
-                        </div>
-                        <div class="row">
-                            <div class="label">TPH:</div>
-                            <div class="value"><input type="number" step="0.01" id="dryer-tph" readonly></div>
-                        </div>
-                        <div class="row">
-                            <div class="label">LDO Open (L):</div>
-                            <div class="value"><input type="number" step="0.01" id="ldo-start"></div>
-                        </div>
-                        <div class="row">
-                            <div class="label">LDO Close (L):</div>
-                            <div class="value"><input type="number" step="0.01" id="ldo-end"></div>
-                        </div>
-                        <div class="row">
-                            <div class="label">LDO Cons. (L):</div>
-                            <div class="value"><input type="number" step="0.01" id="ldo-consumption" readonly></div>
-                        </div>
-                    </div>
+                    <table>
+                        <tr>
+                            <td>Dryer Start Time:</td>
+                            <td><input type="time" id="dryer-start" value="08:00"></td>
+                        </tr>
+                        <tr>
+                            <td>Dryer End Time:</td>
+                            <td><input type="time" id="dryer-end" value="12:00"></td>
+                        </tr>
+                        <tr>
+                            <td>Dryer Running Hours:</td>
+                            <td><input type="number" step="0.1" id="dryer-hours" value="4"></td>
+                        </tr>
+                        <tr>
+                            <td>Dryer Production (MT):</td>
+                            <td><input type="number" step="0.1" id="dryer-production" value="66"></td>
+                        </tr>
+                        <tr>
+                            <td>TPH (Dryer):</td>
+                            <td><input type="number" step="0.01" id="dryer-tph" value="16.50"></td>
+                        </tr>
+                        <tr>
+                            <td>Dryer Frequency:</td>
+                            <td><input type="number" step="0.1" id="dryer-frequency" value="50"></td>
+                        </tr>
+                        <tr>
+                            <td>LDO Start Reading (L):</td>
+                            <td><input type="number" step="1" id="ldo-start" value="870"></td>
+                        </tr>
+                        <tr>
+                            <td>LDO Closing Reading (L):</td>
+                            <td><input type="number" step="1" id="ldo-end" value="680"></td>
+                        </tr>
+                        <tr>
+                            <td>LDO Consumed (L):</td>
+                            <td><input type="number" step="0.01" id="ldo-consumed" value="190.00" readonly></td>
+                        </tr>
+                        <tr>
+                            <td>LDO Per Hour (L):</td>
+                            <td><input type="number" step="0.01" id="ldo-per-hour" value="47.50" readonly></td>
+                        </tr>
+                        <tr>
+                            <td>LDO Per MT (L):</td>
+                            <td><input type="number" step="0.01" id="ldo-per-mt" value="2.88" readonly></td>
+                        </tr>
+                    </table>
                 </div>
             </div>
-        </div>
-
-        <div class="columns">
+            
             <div class="column">
                 <div class="section">
-                    <div class="section-title">OPERATIONAL</div>
-                    <div class="section-content">
-                        <div class="row">
-                            <div class="label">NMR Number:</div>
-                            <div class="value"><input type="text" style="width:120px"></div>
-                        </div>
-                        <div class="row">
-                            <div class="label">JCB Hrs:</div>
-                            <div class="value"><input type="number" step="0.01"></div>
-                        </div>
-                        <div class="row">
-                            <div class="label">No Prod. Hrs:</div>
-                            <div class="value"><input type="number" step="0.01"></div>
-                        </div>
-                        <div class="row">
-                            <div class="label">No Feed Hrs:</div>
-                            <div class="value"><input type="number" step="0.01"></div>
-                        </div>
-                        <div class="row">
-                            <div class="label">Power Cut Hrs:</div>
-                            <div class="value"><input type="number" step="0.01"></div>
-                        </div>
-                        <div class="row">
-                            <div class="label">Rain Hrs:</div>
-                            <div class="value"><input type="number" step="0.01"></div>
-                        </div>
-                        <div class="row">
-                            <div class="label">Dispatch (MT):</div>
-                            <div class="value"><input type="number" step="0.01"></div>
-                        </div>
-                    </div>
+                    <div class="section-title">VRM DETAILS – Microsilica (AMS) 75µ</div>
+                    <table>
+                        <tr>
+                            <td>VRM Start Time:</td>
+                            <td><input type="time" id="vrm-start" value="10:42"></td>
+                        </tr>
+                        <tr>
+                            <td>VRM End Time:</td>
+                            <td><input type="time" id="vrm-end" value="12:47"></td>
+                        </tr>
+                        <tr>
+                            <td>VRM Total Production (Bags):</td>
+                            <td><input type="number" step="1" id="vrm-bags" value="650"></td>
+                        </tr>
+                        <tr>
+                            <td>Duration (Hrs):</td>
+                            <td><input type="number" step="0.01" id="vrm-hours" value="1.75"></td>
+                        </tr>
+                        <tr>
+                            <td>EB Start Reading (kWh):</td>
+                            <td><input type="number" step="1" id="eb-start" value="4669"></td>
+                        </tr>
+                        <tr>
+                            <td>EB End Reading (kWh):</td>
+                            <td><input type="number" step="1" id="eb-end" value="4889"></td>
+                        </tr>
+                        <tr>
+                            <td>Total Units Consumed (kWh):</td>
+                            <td><input type="number" step="0.01" id="eb-consumed" value="220.00" readonly></td>
+                        </tr>
+                        <tr>
+                            <td>Total Unit Difference:</td>
+                            <td><input type="number" step="0.01" id="unit-difference" value="0.00" readonly></td>
+                        </tr>
+                    </table>
                 </div>
             </div>
+        </div>
 
+        <!-- Third Row: Production, Despatch & Other Details -->
+        <div class="two-columns">
             <div class="column">
                 <div class="section">
-                    <div class="section-title">RAW MATERIALS</div>
-                    <div class="section-content">
-                        <div class="row">
-                            <div class="label">Total Mix (MT):</div>
-                            <div class="value"><input type="number" step="0.01" id="total-mix"></div>
-                        </div>
-                        <div class="row">
-                            <div class="label">Received Stock (MT):</div>
-                            <div class="value"><input type="number" step="0.01" id="received-stock"></div>
-                        </div>
-                    </div>
+                    <div class="section-title">PRODUCTION & DESPATCH DATA</div>
+                    <table>
+                        <tr>
+                            <td>Production for AMS (MT):</td>
+                            <td><input type="number" step="0.1" id="production-ams" value="32.5"></td>
+                        </tr>
+                        <tr>
+                            <td>Despatched for AMS (MT):</td>
+                            <td><input type="number" step="0.1" id="despatched-ams" value="56.7"></td>
+                        </tr>
+                        <tr>
+                            <td>Godown Stock for AMS (MT):</td>
+                            <td><input type="number" step="0.1" id="godown-stock-ams" value="103"></td>
+                        </tr>
+                        <tr>
+                            <td>Raw Material Input Moisture (%):</td>
+                            <td><input type="number" step="0.1" id="input-moisture" value="12.5"></td>
+                        </tr>
+                        <tr>
+                            <td>Raw Material Output Moisture (%):</td>
+                            <td><input type="number" step="0.1" id="output-moisture" value="5.2"></td>
+                        </tr>
+                        <tr>
+                            <td>Raw Material SiO₂ Content (%):</td>
+                            <td><input type="number" step="0.1" id="sio2-content" value="45.3"></td>
+                        </tr>
+                        <tr>
+                            <td>Production Time (Range):</td>
+                            <td><input type="text" id="production-time" value="10:42 - 12:47"></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="column">
+                <div class="section">
+                    <div class="section-title">OPERATION DETAILS</div>
+                    <table>
+                        <tr>
+                            <td>NMR No:</td>
+                            <td><input type="text" id="nmr-no" value="9"></td>
+                        </tr>
+                        <tr>
+                            <td>No Production Time (Hrs):</td>
+                            <td><input type="number" step="0.1" id="no-prod-hours" value="1"></td>
+                        </tr>
+                        <tr>
+                            <td>No Feed Time (Hrs):</td>
+                            <td><input type="number" step="0.1" id="no-feed-hours" value="0"></td>
+                        </tr>
+                        <tr>
+                            <td>Rain Hour (Hrs):</td>
+                            <td><input type="number" step="0.1" id="rain-hours" value="0"></td>
+                        </tr>
+                        <tr>
+                            <td>Power Cut Time (Hrs):</td>
+                            <td><input type="number" step="0.1" id="power-cut-hours" value="0"></td>
+                        </tr>
+                        <tr>
+                            <td>Raw Material Mixing Completed:</td>
+                            <td><input type="text" id="mixing-completed" value="Yes"></td>
+                        </tr>
+                        <tr>
+                            <td>Plant Cleaning Work:</td>
+                            <td><input type="text" id="plant-cleaning" value="No"></td>
+                        </tr>
+                        <tr>
+                            <td>JCB Running Hours:</td>
+                            <td><input type="number" step="0.1" id="jcb-hours" value="6"></td>
+                        </tr>
+                        <tr>
+                            <td>Total Material Mixed (MT):</td>
+                            <td><input type="number" step="0.1" id="total-mixed" value="98.5"></td>
+                        </tr>
+                    </table>
                 </div>
             </div>
         </div>
 
-        <div class="remarks-section">
-            <div class="remarks-title">REMARKS/OBSERVATIONS:</div>
-            <div class="remarks-content"><textarea></textarea></div>
-        </div>
-
-        <div class="footer">
-            This is a computer generated report.
+        <!-- Remarks at the bottom -->
+        <div class="section remarks">
+            <div class="section-title">REMARKS/OBSERVATIONS:</div>
+            <textarea id="remarks">No Failure and Breakdown</textarea>
         </div>
     </div>
 
-    <button class="print-button no-print" id="print-btn">Print Report</button>
+    <div class="action-buttons">
+        <button class="action-button" id="print-btn">Print Report</button>
+        <button class="action-button" id="save-pdf-btn">Save as PDF</button>
+        <button class="action-button" id="clear-btn">Clear Form</button>
+    </div>
 
     <script>
+        // Set today's date as default
         document.addEventListener('DOMContentLoaded', function() {
-            // Set today's date as default
             const today = new Date();
             const formattedDate = today.toISOString().substr(0, 10);
             document.getElementById('report-date').value = formattedDate;
             
-            // Update report title based on shift selection
-            document.getElementById('shift-type').addEventListener('change', function() {
-                const shift = this.value;
-                const titleElement = document.getElementById('dynamic-report-title');
-                titleElement.textContent = shift === 'day' ? 'Day Shift Production Report' : 'Night Shift Production Report';
-            });
-            
-            // Calculate TPH (Tons Per Hour)
-            function calculateTPH(machine) {
-                const hoursInput = document.getElementById(`${machine}-hours`);
-                const productionInput = document.getElementById(`${machine}-production`);
-                const tphInput = document.getElementById(`${machine}-tph`);
+            // Calculate consumed values and dryer hours
+            function calculateValues() {
+                // Calculate dryer hours from start/end time
+                const dryerStart = document.getElementById('dryer-start').value;
+                const dryerEnd = document.getElementById('dryer-end').value;
                 
-                if (hoursInput.value && productionInput.value) {
-                    const hours = parseFloat(hoursInput.value);
-                    const production = parseFloat(productionInput.value);
-                    
-                    if (hours > 0) {
-                        tphInput.value = (production / hours).toFixed(2);
-                    } else {
-                        tphInput.value = '';
-                    }
-                } else {
-                    tphInput.value = '';
+                if (dryerStart && dryerEnd) {
+                    const start = new Date(`2000-01-01T${dryerStart}`);
+                    const end = new Date(`2000-01-01T${dryerEnd}`);
+                    const diffMs = end - start;
+                    const diffHrs = diffMs / (1000 * 60 * 60);
+                    document.getElementById('dryer-hours').value = diffHrs.toFixed(2);
                 }
-            }
-            
-            // Calculate consumption
-            function calculateConsumption(startInput, endInput, resultInput) {
-                const startValue = parseFloat(startInput.value) || 0;
-                const endValue = parseFloat(endInput.value) || 0;
                 
-                if (!isNaN(startValue) && !isNaN(endValue)) {
-                    resultInput.value = Math.max(0, (startValue - endValue)).toFixed(2);
-                } else {
-                    resultInput.value = '';
-                }
+                // Calculate EB consumed
+                const ebStart = parseFloat(document.getElementById('eb-start').value) || 0;
+                const ebEnd = parseFloat(document.getElementById('eb-end').value) || 0;
+                const ebConsumed = ebEnd - ebStart;
+                document.getElementById('eb-consumed').value = ebConsumed.toFixed(2);
+                
+                // Calculate LDO consumed
+                const ldoStart = parseFloat(document.getElementById('ldo-start').value) || 0;
+                const ldoEnd = parseFloat(document.getElementById('ldo-end').value) || 0;
+                const ldoConsumed = ldoStart - ldoEnd;
+                document.getElementById('ldo-consumed').value = ldoConsumed.toFixed(2);
+                
+                // Calculate LDO per hour
+                const dryerHours = parseFloat(document.getElementById('dryer-hours').value) || 1;
+                const ldoPerHour = ldoConsumed / dryerHours;
+                document.getElementById('ldo-per-hour').value = ldoPerHour.toFixed(2);
+                
+                // Calculate LDO per MT
+                const dryerProduction = parseFloat(document.getElementById('dryer-production').value) || 1;
+                const ldoPerMT = ldoConsumed / dryerProduction;
+                document.getElementById('ldo-per-mt').value = ldoPerMT.toFixed(2);
             }
             
-            // Calculate total stock
-            function calculateTotalStock() {
-                const totalMix = parseFloat(document.getElementById('total-mix').value) || 0;
-                const receivedStock = parseFloat(document.getElementById('received-stock').value) || 0;
-                document.getElementById('total-stock').value = (totalMix + receivedStock).toFixed(2);
-            }
+            // Set up event listeners
+            document.getElementById('dryer-start').addEventListener('input', calculateValues);
+            document.getElementById('dryer-end').addEventListener('input', calculateValues);
+            document.getElementById('eb-start').addEventListener('input', calculateValues);
+            document.getElementById('eb-end').addEventListener('input', calculateValues);
+            document.getElementById('ldo-start').addEventListener('input', calculateValues);
+            document.getElementById('ldo-end').addEventListener('input', calculateValues);
+            document.getElementById('dryer-production').addEventListener('input', calculateValues);
             
-            // Set up event listeners for VRM calculations
-            document.getElementById('vrm-hours').addEventListener('input', function() {
-                calculateTPH('vrm');
-            });
-            document.getElementById('vrm-production').addEventListener('input', function() {
-                calculateTPH('vrm');
-            });
-            
-            // Set up event listeners for Dryer calculations
-            document.getElementById('dryer-hours').addEventListener('input', function() {
-                calculateTPH('dryer');
-            });
-            document.getElementById('dryer-production').addEventListener('input', function() {
-                calculateTPH('dryer');
-            });
-            
-            // Set up event listeners for consumption calculations
-            document.getElementById('eb-start').addEventListener('input', function() {
-                calculateConsumption(
-                    document.getElementById('eb-start'),
-                    document.getElementById('eb-end'),
-                    document.getElementById('eb-consumption')
-                );
-            });
-            document.getElementById('eb-end').addEventListener('input', function() {
-                calculateConsumption(
-                    document.getElementById('eb-start'),
-                    document.getElementById('eb-end'),
-                    document.getElementById('eb-consumption')
-                );
-            });
-            
-            document.getElementById('ldo-start').addEventListener('input', function() {
-                calculateConsumption(
-                    document.getElementById('ldo-start'),
-                    document.getElementById('ldo-end'),
-                    document.getElementById('ldo-consumption')
-                );
-            });
-            document.getElementById('ldo-end').addEventListener('input', function() {
-                calculateConsumption(
-                    document.getElementById('ldo-start'),
-                    document.getElementById('ldo-end'),
-                    document.getElementById('ldo-consumption')
-                );
-            });
-            
-            // Set up event listeners for raw materials
-            document.getElementById('total-mix').addEventListener('input', calculateTotalStock);
-            document.getElementById('received-stock').addEventListener('input', calculateTotalStock);
-            
-            // Improved print functionality
+            // Print functionality
             document.getElementById('print-btn').addEventListener('click', function() {
-                // Format time inputs for printing
-                const timeInputs = document.querySelectorAll('input[type="time"]');
-                timeInputs.forEach(input => {
-                    if (input.value) {
-                        const [hours, minutes] = input.value.split(':');
-                        const formattedTime = `${hours.padStart(2, '0')}:${minutes.padStart(2, '0')}`;
-                        input.value = formattedTime;
-                    }
-                });
-                
                 window.print();
             });
             
-            // Better time input handling
-            function handleTimeInput(input) {
-                input.addEventListener('blur', function() {
-                    if (!this.value) return;
+            // Clear form functionality
+            document.getElementById('clear-btn').addEventListener('click', function() {
+                if (confirm('Are you sure you want to clear all form data?')) {
+                    const inputs = document.querySelectorAll('input:not([type="date"]):not([type="button"])');
+                    inputs.forEach(input => {
+                        if (!input.readOnly) input.value = '';
+                    });
+                    document.getElementById('remarks').value = '';
                     
-                    // Ensure proper time format
-                    let [hours, minutes] = this.value.split(':');
-                    hours = parseInt(hours) || 0;
-                    minutes = parseInt(minutes) || 0;
-                    
-                    // Validate and correct values
-                    hours = Math.min(23, Math.max(0, hours));
-                    minutes = Math.min(59, Math.max(0, minutes));
-                    
-                    this.value = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
-                });
-            }
-            
-            // Apply to all time inputs
-            handleTimeInput(document.getElementById('vrm-start'));
-            handleTimeInput(document.getElementById('vrm-end'));
-            handleTimeInput(document.getElementById('dryer-start'));
-            handleTimeInput(document.getElementById('dryer-end'));
+                    // Reset date to today
+                    const today = new Date();
+                    const formattedDate = today.toISOString().substr(0, 10);
+                    document.getElementById('report-date').value = formattedDate;
+                }
+            });
         });
     </script>
 </body>
