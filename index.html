@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Day Shift Production Report - SGX Minerals</title>
+    <title>Daily Production Report - SGX Minerals</title>
     <style>
         @page {
             size: A4;
@@ -18,11 +18,11 @@
             font-size: 12px;
         }
         .container {
-            width: 70%; /* Reduced width by 30% */
-            max-width: 14.7cm; /* Adjusted for 70% of original */
+            width: 70%;
+            max-width: 14.7cm;
             margin: 0 auto;
             padding: 0.5cm;
-            height: 110%; /* Increased height by 10% */
+            height: 110%;
         }
         .report-title {
             font-size: 16px;
@@ -30,7 +30,7 @@
             text-align: center;
             margin-bottom: 10px;
             text-decoration: underline;
-            color: #2c3e50; /* Dark blue color */
+            color: #2c3e50;
         }
         .header-info {
             display: flex;
@@ -45,13 +45,9 @@
             font-weight: bold;
             margin-bottom: 5px;
             text-decoration: underline;
-            color: #2980b9; /* Blue color */
+            color: #2980b9;
         }
         .two-columns {
-            display: flex;
-            gap: 10px;
-        }
-        .three-columns {
             display: flex;
             gap: 10px;
         }
@@ -82,11 +78,8 @@
         input[type="number"], input[type="text"] {
             text-align: right;
         }
-        input[type="time"] {
-            text-align: center;
-        }
-        .remarks {
-            margin-top: 10px;
+        .production-input {
+            font-weight: bold;
         }
         .remarks textarea {
             width: 100%;
@@ -124,20 +117,22 @@
                 background: transparent;
             }
         }
+        .time-input-group {
+            display: flex;
+            align-items: center;
+        }
+        .time-input-group input[type="text"] {
+            width: 60px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
     <div class="container" id="report-content">
-        <div class="report-title">DAY SHIFT PRODUCTION REPORT</div>
+        <div class="report-title">DAILY PRODUCTION REPORT</div>
         
         <div class="header-info">
             <div>Date: <input type="date" id="report-date" style="width: 120px;"></div>
-            <div>Shift: 
-                <select id="shift-type" style="width: 100px;">
-                    <option value="day" selected>Day Shift</option>
-                    <option value="night">Night Shift</option>
-                </select>
-            </div>
         </div>
 
         <!-- First Row: Opening and Closing Stock -->
@@ -207,23 +202,31 @@
                     <table>
                         <tr>
                             <td>Dryer Start Time:</td>
-                            <td><input type="time" id="dryer-start"></td>
+                            <td>
+                                <div class="time-input-group">
+                                    <input type="text" id="dryer-start" placeholder="HH:MM AM/PM">
+                                </div>
+                            </td>
                         </tr>
                         <tr>
                             <td>Dryer End Time:</td>
-                            <td><input type="time" id="dryer-end"></td>
-                        </tr>
-                        <tr>
-                            <td>Dryer Running Hours:</td>
-                            <td><input type="number" step="0.1" id="dryer-hours" readonly></td>
+                            <td>
+                                <div class="time-input-group">
+                                    <input type="text" id="dryer-end" placeholder="HH:MM AM/PM">
+                                </div>
+                            </td>
                         </tr>
                         <tr>
                             <td>Dryer Production (MT):</td>
-                            <td><input type="number" step="0.1" id="dryer-production"></td>
+                            <td><input type="number" step="0.1" id="dryer-production" class="production-input"></td>
+                        </tr>
+                        <tr>
+                            <td>Dryer Running Hours:</td>
+                            <td><input type="number" step="0.1" id="dryer-hours"></td>
                         </tr>
                         <tr>
                             <td>TPH (Dryer):</td>
-                            <td><input type="number" step="0.01" id="dryer-tph"></td>
+                            <td><input type="number" step="0.01" id="dryer-tph" readonly></td>
                         </tr>
                         <tr>
                             <td>Dryer Frequency:</td>
@@ -259,27 +262,43 @@
                     <table>
                         <tr>
                             <td>VRM Start Time:</td>
-                            <td><input type="time" id="vrm-start"></td>
+                            <td>
+                                <div class="time-input-group">
+                                    <input type="text" id="vrm-start" placeholder="HH:MM AM/PM">
+                                </div>
+                            </td>
                         </tr>
                         <tr>
                             <td>VRM End Time:</td>
-                            <td><input type="time" id="vrm-end"></td>
+                            <td>
+                                <div class="time-input-group">
+                                    <input type="text" id="vrm-end" placeholder="HH:MM AM/PM">
+                                </div>
+                            </td>
                         </tr>
                         <tr>
-                            <td>VRM Total Production (Bags):</td>
-                            <td><input type="number" step="1" id="vrm-bags"></td>
+                            <td>VRM Production (MT):</td>
+                            <td><input type="number" step="0.1" id="vrm-production" class="production-input"></td>
                         </tr>
                         <tr>
-                            <td>Duration (Hrs):</td>
-                            <td><input type="number" step="0.01" id="vrm-hours"></td>
+                            <td>VRM Running Hours:</td>
+                            <td><input type="number" step="0.1" id="vrm-hours"></td>
+                        </tr>
+                        <tr>
+                            <td>VRM TPH:</td>
+                            <td><input type="number" step="0.01" id="vrm-tph" readonly></td>
+                        </tr>
+                        <tr>
+                            <td>Total Bags Production:</td>
+                            <td><input type="number" step="1" id="total-bags" readonly></td>
                         </tr>
                         <tr>
                             <td>EB Start Reading (kWh):</td>
-                            <td><input type="number" step="1" id="eb-start"></td>
+                            <td><input type="number" step="1" id="eb-start" value="5853"></td>
                         </tr>
                         <tr>
                             <td>EB End Reading (kWh):</td>
-                            <td><input type="number" step="1" id="eb-end"></td>
+                            <td><input type="number" step="1" id="eb-end" value="5945"></td>
                         </tr>
                         <tr>
                             <td>Total Units Consumed (kWh):</td>
@@ -313,12 +332,12 @@
                             <td><input type="number" step="0.1" id="godown-stock-ams"></td>
                         </tr>
                         <tr>
-                            <td>Raw Material Input Moisture (%):</td>
-                            <td><input type="number" step="0.1" id="input-moisture"></td>
+                            <td>Raw Material Input Moisture (&lt;) in %:</td>
+                            <td><input type="number" step="0.1" id="input-moisture" value="3"></td>
                         </tr>
                         <tr>
-                            <td>Raw Material Output Moisture (%):</td>
-                            <td><input type="number" step="0.1" id="output-moisture"></td>
+                            <td>Raw Material Output Moisture (&lt;) in %:</td>
+                            <td><input type="number" step="0.1" id="output-moisture" value="1"></td>
                         </tr>
                         <tr>
                             <td>Raw Material SiO₂ Content (%):</td>
@@ -345,10 +364,6 @@
                             <td><input type="number" step="0.1" id="no-prod-hours"></td>
                         </tr>
                         <tr>
-                            <td>No Feed Time (Hrs):</td>
-                            <td><input type="number" step="0.1" id="no-feed-hours"></td>
-                        </tr>
-                        <tr>
                             <td>Rain Hour (Hrs):</td>
                             <td><input type="number" step="0.1" id="rain-hours"></td>
                         </tr>
@@ -357,16 +372,20 @@
                             <td><input type="number" step="0.1" id="power-cut-hours"></td>
                         </tr>
                         <tr>
+                            <td>JCB Running Hours:</td>
+                            <td><input type="number" step="0.1" id="jcb-hours"></td>
+                        </tr>
+                        <tr>
+                            <td>JCB Diesel Consumed (L):</td>
+                            <td><input type="number" step="0.1" id="jcb-diesel" readonly></td>
+                        </tr>
+                        <tr>
                             <td>Raw Material Mixing Completed:</td>
                             <td><input type="text" id="mixing-completed"></td>
                         </tr>
                         <tr>
                             <td>Plant Cleaning Work:</td>
                             <td><input type="text" id="plant-cleaning"></td>
-                        </tr>
-                        <tr>
-                            <td>JCB Running Hours:</td>
-                            <td><input type="number" step="0.1" id="jcb-hours"></td>
                         </tr>
                         <tr>
                             <td>Total Material Mixed (MT):</td>
@@ -395,25 +414,17 @@
             const formattedDate = today.toISOString().substr(0, 10);
             document.getElementById('report-date').value = formattedDate;
             
-            // Calculate consumed values and dryer hours
+            // Calculate consumed values
             function calculateValues() {
-                // Calculate dryer hours from start/end time
-                const dryerStart = document.getElementById('dryer-start').value;
-                const dryerEnd = document.getElementById('dryer-end').value;
-                
-                if (dryerStart && dryerEnd) {
-                    const start = new Date(`2000-01-01T${dryerStart}`);
-                    const end = new Date(`2000-01-01T${dryerEnd}`);
-                    const diffMs = end - start;
-                    const diffHrs = diffMs / (1000 * 60 * 60);
-                    document.getElementById('dryer-hours').value = diffHrs.toFixed(2);
-                }
-                
-                // Calculate EB consumed
+                // Calculate EB consumed (closing - opening) and multiply by 4 for unit difference
                 const ebStart = parseFloat(document.getElementById('eb-start').value) || 0;
                 const ebEnd = parseFloat(document.getElementById('eb-end').value) || 0;
                 const ebConsumed = ebEnd - ebStart;
                 document.getElementById('eb-consumed').value = ebConsumed.toFixed(2);
+                
+                // Calculate unit difference (consumed * 4)
+                const unitDifference = ebConsumed * 4;
+                document.getElementById('unit-difference').value = unitDifference.toFixed(2);
                 
                 // Calculate LDO consumed
                 const ldoStart = parseFloat(document.getElementById('ldo-start').value) || 0;
@@ -430,16 +441,41 @@
                 const dryerProduction = parseFloat(document.getElementById('dryer-production').value) || 1;
                 const ldoPerMT = ldoConsumed / dryerProduction;
                 document.getElementById('ldo-per-mt').value = ldoPerMT.toFixed(2);
+                
+                // Calculate Dryer TPH
+                if (dryerHours > 0) {
+                    const tph = dryerProduction / dryerHours;
+                    document.getElementById('dryer-tph').value = tph.toFixed(2);
+                }
+                
+                // Calculate VRM TPH
+                const vrmHours = parseFloat(document.getElementById('vrm-hours').value) || 0;
+                const vrmProduction = parseFloat(document.getElementById('vrm-production').value) || 0;
+                if (vrmHours > 0) {
+                    const vrmTph = vrmProduction / vrmHours;
+                    document.getElementById('vrm-tph').value = vrmTph.toFixed(2);
+                }
+                
+                // Calculate Total Bags (VRM Production * 40)
+                const totalBags = vrmProduction * 40;
+                document.getElementById('total-bags').value = totalBags.toFixed(0);
+                
+                // Calculate JCB Diesel Consumed (Running Hours * 6)
+                const jcbHours = parseFloat(document.getElementById('jcb-hours').value) || 0;
+                const jcbDiesel = jcbHours * 6;
+                document.getElementById('jcb-diesel').value = jcbDiesel.toFixed(1);
             }
             
-            // Set up event listeners
-            document.getElementById('dryer-start').addEventListener('input', calculateValues);
-            document.getElementById('dryer-end').addEventListener('input', calculateValues);
-            document.getElementById('eb-start').addEventListener('input', calculateValues);
-            document.getElementById('eb-end').addEventListener('input', calculateValues);
-            document.getElementById('ldo-start').addEventListener('input', calculateValues);
-            document.getElementById('ldo-end').addEventListener('input', calculateValues);
-            document.getElementById('dryer-production').addEventListener('input', calculateValues);
+            // Set up event listeners for all input fields
+            const inputFields = [
+                'eb-start', 'eb-end', 'ldo-start', 'ldo-end', 
+                'dryer-production', 'dryer-hours', 'vrm-production',
+                'vrm-hours', 'jcb-hours'
+            ];
+            
+            inputFields.forEach(fieldId => {
+                document.getElementById(fieldId).addEventListener('input', calculateValues);
+            });
             
             // Print functionality
             document.getElementById('print-btn').addEventListener('click', function() {
