@@ -29,7 +29,7 @@
             text-align: center;
             margin-bottom: 10px;
             text-decoration: underline;
-            color: #1a5276; /* Darker blue for main title */
+            color: #1a5276;
         }
         .header-info {
             display: flex;
@@ -44,9 +44,9 @@
             font-weight: bold;
             margin-bottom: 5px;
             text-decoration: underline;
-            color: #2874a6; /* Consistent blue for section titles */
+            color: #2874a6;
             font-size: 12px;
-            background-color: #ebf5fb; /* Light blue background */
+            background-color: #ebf5fb;
             padding: 3px 5px;
             border-radius: 3px;
         }
@@ -96,13 +96,14 @@
         }
         .remarks textarea {
             width: 100%;
-            height: 40px;
+            height: 80px;
             border: 1px solid #000;
             font-family: inherit;
             font-size: inherit;
             padding: 5px;
             box-sizing: border-box;
             resize: none;
+            font-weight: bold;
         }
         .action-buttons {
             position: fixed;
@@ -115,7 +116,7 @@
         }
         .action-button {
             padding: 6px 10px;
-            background-color: #1a5276; /* Matching the title color */
+            background-color: #1a5276;
             color: white;
             border: none;
             border-radius: 3px;
@@ -131,7 +132,7 @@
                 background: transparent;
             }
             .section-title {
-                background-color: transparent !important; /* Remove background when printing */
+                background-color: transparent !important;
             }
         }
         .time-input-group {
@@ -148,11 +149,11 @@
         .mtd-title {
             font-weight: bold;
             text-align: center;
-            background-color: #d4e6f1; /* Light blue background */
+            background-color: #d4e6f1;
             padding: 3px;
             border: 1px solid #000;
             font-size: 11px;
-            color: #1a5276; /* Matching the title color */
+            color: #1a5276;
         }
         .mtd-value {
             text-align: center;
@@ -171,6 +172,13 @@
         }
         .ftd-table td {
             padding: 3px 5px;
+        }
+        .ftd-highlight {
+            font-weight: bold;
+            background-color: #f5f5f5;
+        }
+        .ftd-label {
+            font-weight: bold;
         }
     </style>
 </head>
@@ -200,17 +208,30 @@
             </div>
         </div>
 
-        <!-- FTD Dispatch and Received Table -->
-        <div class="section compact-row">
-            <div class="section-title">FTD DISPATCH AND RECEIVED</div>
-            <table class="ftd-table">
-                <tr>
-                    <td>FTD Dispatch (MT):</td>
-                    <td><input type="number" step="0.1" id="ftd-dispatch"></td>
-                    <td>FTD Received (MT):</td>
-                    <td><input type="number" step="0.1" id="ftd-received"></td>
-                </tr>
-            </table>
+        <!-- FTD Dispatch and Received Tables -->
+        <div class="two-columns compact-row">
+            <div class="column">
+                <div class="section">
+                    <div class="section-title">FTD DISPATCH</div>
+                    <table class="ftd-table">
+                        <tr>
+                            <td class="ftd-label">FTD Dispatch (MT):</td>
+                            <td class="ftd-highlight"><input type="number" step="0.1" id="ftd-dispatch"></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="column">
+                <div class="section">
+                    <div class="section-title">FTD RECEIVED</div>
+                    <table class="ftd-table">
+                        <tr>
+                            <td class="ftd-label">FTD Received (MT):</td>
+                            <td class="ftd-highlight"><input type="number" step="0.1" id="ftd-received"></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
         </div>
 
         <!-- First Row: Opening and Closing Stock -->
@@ -372,18 +393,18 @@
                         </tr>
                         <tr>
                             <td>EB Start Reading (kWh):</td>
-                            <td><input type="number" step="1" id="eb-start" value="5853"></td>
+                            <td><input type="number" step="1" id="eb-start"></td>
                         </tr>
                         <tr>
                             <td>EB End Reading (kWh):</td>
-                            <td><input type="number" step="1" id="eb-end" value="5945"></td>
+                            <td><input type="number" step="1" id="eb-end"></td>
                         </tr>
                         <tr>
                             <td>Total EB (kWh):</td>
                             <td><input type="number" step="0.01" id="eb-consumed" readonly></td>
                         </tr>
                         <tr>
-                            <td>Total Unit Consumed :</td>
+                            <td>Total Unit Consumed:</td>
                             <td><input type="number" step="0.01" id="unit-difference" readonly></td>
                         </tr>
                     </table>
@@ -411,11 +432,11 @@
                         </tr>
                         <tr>
                             <td>Raw Material Input Moisture (&lt;) in %:</td>
-                            <td><input type="number" step="0.1" id="input-moisture" value="5"></td>
+                            <td><input type="number" step="0.1" id="input-moisture"></td>
                         </tr>
                         <tr>
                             <td>Raw Material Output Moisture (&lt;) in %:</td>
-                            <td><input type="number" step="0.1" id="output-moisture" value="3"></td>
+                            <td><input type="number" step="0.1" id="output-moisture"></td>
                         </tr>
                         <tr>
                             <td>Raw Material SiO₂ Content (%):</td>
@@ -468,8 +489,8 @@
 
         <!-- Remarks at the bottom -->
         <div class="section remarks compact-row">
-            <div class="section-title">REMARKS/OBSERVATIONS:</div>
-            <textarea id="remarks"></textarea>
+            <div class="section-title">REMARK/MAJOR ISSUE</div>
+            <textarea id="remarks" placeholder="Enter remarks or major issues here..."></textarea>
         </div>
     </div>
 
@@ -484,8 +505,8 @@
             const formattedDate = today.toISOString().substr(0, 10);
             document.getElementById('report-date').value = formattedDate;
             
-            // Calculate consumed values
-            function calculateValues() {
+            // Calculate all values function
+            function calculateAllValues() {
                 // Calculate EB consumed (closing - opening) and multiply by 4 for unit difference
                 const ebStart = parseFloat(document.getElementById('eb-start').value) || 0;
                 const ebEnd = parseFloat(document.getElementById('eb-end').value) || 0;
@@ -516,6 +537,8 @@
                 if (dryerHours > 0) {
                     const tph = dryerProduction / dryerHours;
                     document.getElementById('dryer-tph').value = tph.toFixed(2);
+                } else {
+                    document.getElementById('dryer-tph').value = "0.00";
                 }
                 
                 // Calculate VRM TPH
@@ -524,6 +547,8 @@
                 if (vrmHours > 0) {
                     const vrmTph = vrmProduction / vrmHours;
                     document.getElementById('vrm-tph').value = vrmTph.toFixed(2);
+                } else {
+                    document.getElementById('vrm-tph').value = "0.00";
                 }
                 
                 // Calculate Total Bags (VRM Production * 40)
@@ -534,23 +559,41 @@
                 const jcbHours = parseFloat(document.getElementById('jcb-hours').value) || 0;
                 const jcbDiesel = jcbHours * 6;
                 document.getElementById('jcb-diesel').value = jcbDiesel.toFixed(1);
+                
+                // Auto-calculate production time range if both dryer and VRM times are entered
+                const dryerStart = document.getElementById('dryer-start').value;
+                const dryerEnd = document.getElementById('dryer-end').value;
+                const vrmStart = document.getElementById('vrm-start').value;
+                const vrmEnd = document.getElementById('vrm-end').value;
+                
+                if (dryerStart && dryerEnd && vrmStart && vrmEnd) {
+                    document.getElementById('production-time').value = `${dryerStart} to ${dryerEnd} | ${vrmStart} to ${vrmEnd}`;
+                } else if (dryerStart && dryerEnd) {
+                    document.getElementById('production-time').value = `${dryerStart} to ${dryerEnd}`;
+                } else if (vrmStart && vrmEnd) {
+                    document.getElementById('production-time').value = `${vrmStart} to ${vrmEnd}`;
+                }
             }
             
             // Set up event listeners for all input fields
             const inputFields = [
                 'eb-start', 'eb-end', 'ldo-start', 'ldo-end', 
                 'dryer-production', 'dryer-hours', 'vrm-production',
-                'vrm-hours', 'jcb-hours'
+                'vrm-hours', 'jcb-hours', 'dryer-start', 'dryer-end',
+                'vrm-start', 'vrm-end'
             ];
             
             inputFields.forEach(fieldId => {
-                document.getElementById(fieldId).addEventListener('input', calculateValues);
+                document.getElementById(fieldId).addEventListener('input', calculateAllValues);
             });
             
             // Print functionality
             document.getElementById('print-btn').addEventListener('click', function() {
                 window.print();
             });
+            
+            // Initial calculation
+            calculateAllValues();
         });
     </script>
 </body>
