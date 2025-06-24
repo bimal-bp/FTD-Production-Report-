@@ -29,7 +29,7 @@
             text-align: center;
             margin-bottom: 10px;
             text-decoration: underline;
-            color: #2c3e50;
+            color: #1a5276; /* Darker blue for main title */
         }
         .header-info {
             display: flex;
@@ -44,8 +44,11 @@
             font-weight: bold;
             margin-bottom: 5px;
             text-decoration: underline;
-            color: #2980b9;
+            color: #2874a6; /* Consistent blue for section titles */
             font-size: 12px;
+            background-color: #ebf5fb; /* Light blue background */
+            padding: 3px 5px;
+            border-radius: 3px;
         }
         .two-columns {
             display: flex;
@@ -112,7 +115,7 @@
         }
         .action-button {
             padding: 6px 10px;
-            background-color: #2c3e50;
+            background-color: #1a5276; /* Matching the title color */
             color: white;
             border: none;
             border-radius: 3px;
@@ -126,6 +129,9 @@
             }
             input {
                 background: transparent;
+            }
+            .section-title {
+                background-color: transparent !important; /* Remove background when printing */
             }
         }
         .time-input-group {
@@ -142,10 +148,11 @@
         .mtd-title {
             font-weight: bold;
             text-align: center;
-            background-color: #f2f2f2;
+            background-color: #d4e6f1; /* Light blue background */
             padding: 3px;
             border: 1px solid #000;
             font-size: 11px;
+            color: #1a5276; /* Matching the title color */
         }
         .mtd-value {
             text-align: center;
