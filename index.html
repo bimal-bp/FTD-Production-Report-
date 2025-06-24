@@ -183,13 +183,17 @@
         /* Added styles for bold outputs */
         #mtd-vrm, #mtd-dryer, #mtd-dispatch,
         #ftd-dispatch, #ftd-received,
-        #nmr-no {
+        #nmr-no, #total-bags, #jcb-diesel,
+        #unit-difference {
             font-weight: bold !important;
         }
         .quality-section {
             margin-top: 5px;
             border-top: 1px dashed #999;
             padding-top: 5px;
+        }
+        .readonly-field {
+            background-color: #f5f5f5;
         }
     </style>
 </head>
@@ -336,7 +340,7 @@
                         </tr>
                         <tr>
                             <td>TPH (Dryer):</td>
-                            <td><input type="number" step="0.01" id="dryer-tph" readonly></td>
+                            <td><input type="number" step="0.01" id="dryer-tph" readonly class="readonly-field"></td>
                         </tr>
                         <tr>
                             <td>Dryer Frequency:</td>
@@ -352,7 +356,15 @@
                         </tr>
                         <tr>
                             <td>LDO Consumed (L):</td>
-                            <td><input type="number" step="0.01" id="ldo-consumed" readonly></td>
+                            <td><input type="number" step="0.01" id="ldo-consumed" readonly class="readonly-field"></td>
+                        </tr>
+                        <tr>
+                            <td>LDO per Hour (L/Hr):</td>
+                            <td><input type="number" step="0.01" id="ldo-per-hour" readonly class="readonly-field"></td>
+                        </tr>
+                        <tr>
+                            <td>LDO per MT (L/MT):</td>
+                            <td><input type="number" step="0.01" id="ldo-per-mt" readonly class="readonly-field"></td>
                         </tr>
                     </table>
                 </div>
@@ -388,11 +400,11 @@
                         </tr>
                         <tr>
                             <td>VRM TPH:</td>
-                            <td><input type="number" step="0.01" id="vrm-tph" readonly></td>
+                            <td><input type="number" step="0.01" id="vrm-tph" readonly class="readonly-field"></td>
                         </tr>
                         <tr>
                             <td>Total Bags Production:</td>
-                            <td><input type="number" step="1" id="total-bags" readonly></td>
+                            <td><input type="number" step="1" id="total-bags" readonly class="readonly-field"></td>
                         </tr>
                         <tr>
                             <td>EB Start Reading (kWh):</td>
@@ -404,11 +416,11 @@
                         </tr>
                         <tr>
                             <td>Total EB (kWh):</td>
-                            <td><input type="number" step="0.01" id="eb-consumed" readonly></td>
+                            <td><input type="number" step="0.01" id="eb-consumed" readonly class="readonly-field"></td>
                         </tr>
                         <tr>
                             <td>Total Unit Consumed:</td>
-                            <td><input type="number" step="0.01" id="unit-difference" readonly></td>
+                            <td><input type="number" step="0.01" id="unit-difference" readonly class="readonly-field"></td>
                         </tr>
                     </table>
                 </div>
@@ -485,7 +497,7 @@
                         </tr>
                         <tr>
                             <td>JCB Diesel Consumed (L):</td>
-                            <td><input type="number" step="0.1" id="jcb-diesel" readonly></td>
+                            <td><input type="number" step="0.1" id="jcb-diesel" readonly class="readonly-field"></td>
                         </tr>
                         <tr>
                             <td>Total Material Mixed (MT):</td>
@@ -516,7 +528,7 @@
             
             // Calculate all values function
             function calculateAllValues() {
-                // Calculate EB consumed (closing - opening) and multiply by 4 for unit difference
+                // Calculate EB consumed (closing - opening)
                 const ebStart = parseFloat(document.getElementById('eb-start').value) || 0;
                 const ebEnd = parseFloat(document.getElementById('eb-end').value) || 0;
                 const ebConsumed = ebEnd - ebStart;
@@ -524,7 +536,7 @@
                 
                 // Calculate unit difference (consumed * 4)
                 const unitDifference = ebConsumed * 4;
-                document.getElementById('unit-difference').value = unitDifference.toFixed(2);
+                document.getElementById('unit-difference').value = Math.round(unitDifference); // Round to whole number
                 
                 // Calculate LDO consumed
                 const ldoStart = parseFloat(document.getElementById('ldo-start').value) || 0;
@@ -550,7 +562,7 @@
                     document.getElementById('dryer-tph').value = "0.00";
                 }
                 
-                // Calculate VRM TPH (Tons Per Hour) - using VRM-specific values
+                // Calculate VRM TPH (Tons Per Hour)
                 const vrmHours = parseFloat(document.getElementById('vrm-hours').value) || 0;
                 const vrmProduction = parseFloat(document.getElementById('vrm-production').value) || 0;
                 if (vrmHours > 0) {
@@ -562,12 +574,12 @@
                 
                 // Calculate Total Bags (VRM Production * 40)
                 const totalBags = vrmProduction * 40;
-                document.getElementById('total-bags').value = totalBags.toFixed(0);
+                document.getElementById('total-bags').value = Math.round(totalBags); // Round to whole number
                 
                 // Calculate JCB Diesel Consumed (Running Hours * 6)
                 const jcbHours = parseFloat(document.getElementById('jcb-hours').value) || 0;
                 const jcbDiesel = jcbHours * 6;
-                document.getElementById('jcb-diesel').value = jcbDiesel.toFixed(1);
+                document.getElementById('jcb-diesel').value = Math.round(jcbDiesel); // Round to whole number
                 
                 // Auto-calculate production time range if both dryer and VRM times are entered
                 const dryerStart = document.getElementById('dryer-start').value;
@@ -582,14 +594,6 @@
                 } else if (vrmStart && vrmEnd) {
                     document.getElementById('production-time').value = `${vrmStart} to ${vrmEnd}`;
                 }
-                
-                // Ensure bold styling for specific fields
-                document.getElementById('mtd-vrm').style.fontWeight = 'bold';
-                document.getElementById('mtd-dryer').style.fontWeight = 'bold';
-                document.getElementById('mtd-dispatch').style.fontWeight = 'bold';
-                document.getElementById('ftd-dispatch').style.fontWeight = 'bold';
-                document.getElementById('ftd-received').style.fontWeight = 'bold';
-                document.getElementById('nmr-no').style.fontWeight = 'bold';
             }
             
             // Set up event listeners for all input fields
@@ -607,11 +611,6 @@
             // Print functionality
             document.getElementById('print-btn').addEventListener('click', function() {
                 window.print();
-            });
-            
-            // Save functionality (placeholder - would need backend integration)
-            document.getElementById('save-btn').addEventListener('click', function() {
-                alert('Data saved! (This would connect to a database in a real application)');
             });
             
             // Initial calculation
