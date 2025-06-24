@@ -539,15 +539,15 @@
                 const ldoPerMT = ldoConsumed / dryerProduction;
                 document.getElementById('ldo-per-mt').value = ldoPerMT.toFixed(2);
                 
-                // Calculate Dryer TPH
+                // Calculate Dryer TPH (Tons Per Hour)
                 if (dryerHours > 0) {
-                    const tph = dryerProduction / dryerHours;
-                    document.getElementById('dryer-tph').value = tph.toFixed(2);
+                    const dryerTph = dryerProduction / dryerHours;
+                    document.getElementById('dryer-tph').value = dryerTph.toFixed(2);
                 } else {
                     document.getElementById('dryer-tph').value = "0.00";
                 }
                 
-                // Calculate VRM TPH
+                // Calculate VRM TPH (Tons Per Hour) - using VRM-specific values
                 const vrmHours = parseFloat(document.getElementById('vrm-hours').value) || 0;
                 const vrmProduction = parseFloat(document.getElementById('vrm-production').value) || 0;
                 if (vrmHours > 0) {
