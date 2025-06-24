@@ -180,6 +180,12 @@
         .ftd-label {
             font-weight: bold;
         }
+        /* Added styles for bold outputs */
+        #mtd-vrm, #mtd-dryer, #mtd-dispatch,
+        #ftd-dispatch, #ftd-received,
+        #nmr-no {
+            font-weight: bold !important;
+        }
     </style>
 </head>
 <body>
@@ -573,6 +579,14 @@
                 } else if (vrmStart && vrmEnd) {
                     document.getElementById('production-time').value = `${vrmStart} to ${vrmEnd}`;
                 }
+                
+                // Ensure bold styling for specific fields
+                document.getElementById('mtd-vrm').style.fontWeight = 'bold';
+                document.getElementById('mtd-dryer').style.fontWeight = 'bold';
+                document.getElementById('mtd-dispatch').style.fontWeight = 'bold';
+                document.getElementById('ftd-dispatch').style.fontWeight = 'bold';
+                document.getElementById('ftd-received').style.fontWeight = 'bold';
+                document.getElementById('nmr-no').style.fontWeight = 'bold';
             }
             
             // Set up event listeners for all input fields
