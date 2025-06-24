@@ -186,6 +186,11 @@
         #nmr-no {
             font-weight: bold !important;
         }
+        .quality-section {
+            margin-top: 5px;
+            border-top: 1px dashed #999;
+            padding-top: 5px;
+        }
     </style>
 </head>
 <body>
@@ -422,7 +427,7 @@
         <div class="two-columns compact-row">
             <div class="column">
                 <div class="section">
-                    <div class="section-title">PRODUCTION & DESPATCH DATA</div>
+                    <div class="section-title">PRODUCTION DATA - AMS</div>
                     <table>
                         <tr>
                             <td>Production for AMS (MT):</td>
@@ -436,23 +441,29 @@
                             <td>Godown Stock for AMS (MT):</td>
                             <td><input type="number" step="0.1" id="godown-stock-ams"></td>
                         </tr>
-                        <tr>
-                            <td>Raw Material Input Moisture (&lt;) in %:</td>
-                            <td><input type="number" step="0.1" id="input-moisture"></td>
-                        </tr>
-                        <tr>
-                            <td>Raw Material Output Moisture (&lt;) in %:</td>
-                            <td><input type="number" step="0.1" id="output-moisture"></td>
-                        </tr>
-                        <tr>
-                            <td>Raw Material SiO₂ Content (%):</td>
-                            <td><input type="number" step="0.1" id="sio2-content"></td>
-                        </tr>
-                        <tr>
-                            <td>PSD AMS:</td>
-                            <td><input type="text" id="production-time"></td>
-                        </tr>
                     </table>
+                    
+                    <div class="quality-section">
+                        <div class="section-title">QUALITY CHECK</div>
+                        <table>
+                            <tr>
+                                <td>Raw Material Input Moisture (&lt;) in %:</td>
+                                <td><input type="number" step="0.1" id="input-moisture"></td>
+                            </tr>
+                            <tr>
+                                <td>Raw Material Output Moisture (&lt;) in %:</td>
+                                <td><input type="number" step="0.1" id="output-moisture"></td>
+                            </tr>
+                            <tr>
+                                <td>Raw Material SiO₂ Content (%):</td>
+                                <td><input type="number" step="0.1" id="sio2-content"></td>
+                            </tr>
+                            <tr>
+                                <td>PSD AMS:</td>
+                                <td><input type="text" id="production-time"></td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
             </div>
             
@@ -502,6 +513,7 @@
 
     <div class="action-buttons">
         <button class="action-button" id="print-btn">Print Report</button>
+        <button class="action-button" id="save-btn">Save Data</button>
     </div>
 
     <script>
@@ -604,6 +616,11 @@
             // Print functionality
             document.getElementById('print-btn').addEventListener('click', function() {
                 window.print();
+            });
+            
+            // Save functionality (placeholder - would need backend integration)
+            document.getElementById('save-btn').addEventListener('click', function() {
+                alert('Data saved! (This would connect to a database in a real application)');
             });
             
             // Initial calculation
