@@ -165,6 +165,13 @@
         .compact-row {
             margin-bottom: 5px;
         }
+        .ftd-table {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        .ftd-table td {
+            padding: 3px 5px;
+        }
     </style>
 </head>
 <body>
@@ -191,6 +198,19 @@
                     <div class="mtd-value"><input type="number" step="0.1" id="mtd-dispatch" style="width: 100%; text-align: center;"></div>
                 </div>
             </div>
+        </div>
+
+        <!-- FTD Dispatch and Received Table -->
+        <div class="section compact-row">
+            <div class="section-title">FTD DISPATCH AND RECEIVED</div>
+            <table class="ftd-table">
+                <tr>
+                    <td>FTD Dispatch (MT):</td>
+                    <td><input type="number" step="0.1" id="ftd-dispatch"></td>
+                    <td>FTD Received (MT):</td>
+                    <td><input type="number" step="0.1" id="ftd-received"></td>
+                </tr>
+            </table>
         </div>
 
         <!-- First Row: Opening and Closing Stock -->
@@ -436,14 +456,6 @@
                         <tr>
                             <td>JCB Diesel Consumed (L):</td>
                             <td><input type="number" step="0.1" id="jcb-diesel" readonly></td>
-                        </tr>
-                        <tr>
-                            <td>FTD Raw Material Received:</td>
-                            <td><input type="text" id="mixing-completed"></td>
-                        </tr>
-                        <tr>
-                            <td>Plant Cleaning Work:</td>
-                            <td><input type="text" id="plant-cleaning"></td>
                         </tr>
                         <tr>
                             <td>Total Material Mixed (MT):</td>
