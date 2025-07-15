@@ -186,6 +186,41 @@
             width: 100%;
             margin: 5px 0;
         }
+        /* FTD Section Styles */
+        .ftd-section {
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            width: 300px;
+        }
+        .ftd-title {
+            background-color: #e6e6e6;
+            font-weight: bold;
+            text-align: center;
+            padding: 8px;
+            margin-bottom: 12px;
+            font-size: 16px;
+        }
+        .ftd-table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        .ftd-table th, .ftd-table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        .ftd-table th {
+            background-color: #f2f2f2;
+        }
+        .ftd-input-full {
+            width: 100%;
+            padding: 6px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
         @media print {
             @page {
                 size: landscape;
@@ -228,11 +263,25 @@
     </div>
 
     <div class="dashboard">
+        <!-- FTD Section (Added from first code snippet) -->
+        <div class="ftd-section">
+            <table class="ftd-table">
+                <tr>
+                    <th>FTD Dispatch</th>
+                    <td><input type="text" class="ftd-input-full"></td>
+                </tr>
+                <tr>
+                    <th>FTD Received</th>
+                    <td><input type="text" class="ftd-input-full"></td>
+                </tr>
+            </table>
+        </div>
+
         <!-- Combined Horizontal Section -->
         <div class="horizontal-container">
             <!-- Opening Stock -->
             <div class="horizontal-section">
-                <div class="section-title">OPENING STOCK (MT)</div>
+                <div class="section-title">OPENING STOCK</div>
                 <div class="horizontal-row">
                     <div class="horizontal-cell">
                         <div class="form-label">SGX Raw</div>
@@ -255,20 +304,22 @@
 
             <!-- FTD Details -->
             <div class="horizontal-section">
-                <div class="section-title">FTD (MT)</div>
+                <div class="section-title">FTD</div>
                 <div class="horizontal-row">
                     <div class="horizontal-cell">
-                        <input type="text" class="ftd-input" placeholder="FTD Received">
+                        <div class="form-label">FTD Received</div>
+                        <input type="text" class="ftd-input">
                     </div>
                     <div class="horizontal-cell">
-                        <input type="text" class="ftd-input" placeholder="FTD Dispatch">
+                        <div class="form-label">FTD Dispatch</div>
+                        <input type="text" class="ftd-input">
                     </div>
                 </div>
             </div>
 
             <!-- Mixing Details -->
             <div class="horizontal-section">
-                <div class="section-title">MIXING DETAILS (MT)</div>
+                <div class="section-title">MIXING DETAILS</div>
                 <div class="horizontal-row">
                     <div class="horizontal-cell">
                         <div class="form-label">DAY</div>
@@ -291,13 +342,13 @@
             <thead>
                 <tr>
                     <th style="width: 10%;">PRODUCT</th>
-                    <th style="width: 12.5%;">SGX (MT)</th>
-                    <th style="width: 12.5%;">RH (MT)</th>
-                    <th style="width: 12.5%;">OPC (MT)</th>
-                    <th style="width: 12.5%;">ACCLTR (MT)</th>
-                    <th style="width: 12.5%;">GROUND MIXING (MT)</th>
-                    <th style="width: 12.5%;">VRM OUTPUT (MT)</th>
-                    <th style="width: 12.5%;">DRYER OUTPUT (MT)</th>
+                    <th style="width: 12.5%;">SGX</th>
+                    <th style="width: 12.5%;">RH</th>
+                    <th style="width: 12.5%;">OPC</th>
+                    <th style="width: 12.5%;">ACCLTR</th>
+                    <th style="width: 12.5%;">GROUND MIXING</th>
+                    <th style="width: 12.5%;">VRM OUTPUT</th>
+                    <th style="width: 12.5%;">DRYER OUTPUT</th>
                 </tr>
             </thead>
             <tbody>
@@ -343,7 +394,7 @@
                         <td><input type="text" value="0"></td>
                     </tr>
                     <tr>
-                        <td>PRODUCTION (MT)</td>
+                        <td>PRODUCTION</td>
                         <td><input type="text"></td>
                         <td><input type="text"></td>
                         <td><input type="text" value="0"></td>
@@ -359,12 +410,6 @@
                         <td><input type="text"></td>
                         <td><input type="text"></td>
                         <td><input type="text" value="0"></td>
-                    </tr>
-                    <tr>
-                        <td>SILO</td>
-                        <td><input type="text"></td>
-                        <td><input type="text"></td>
-                        <td><input type="text"></td>
                     </tr>
                     <tr>
                         <td>JCB (Hrs)</td>
@@ -392,7 +437,7 @@
                         <td><input type="text" value="0"></td>
                     </tr>
                     <tr>
-                        <td>PRODUCTION (MT)</td>
+                        <td>PRODUCTION</td>
                         <td><input type="text"></td>
                         <td><input type="text"></td>
                         <td><input type="text" value="0"></td>
