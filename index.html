@@ -1,464 +1,840 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SGX Minerals - Production Management</title>
     <style>
+        /* Global Styles */
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
-            zoom: 1.05; /* Slightly zoom the entire page */
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
         }
+        
+        /* Tab Navigation */
+        .tab-container {
+            width: 100%;
+            background-color: #333;
+            overflow: hidden;
+        }
+        
+        .tab-buttons {
+            display: flex;
+        }
+        
+        .tab-button {
+            background-color: #555;
+            color: white;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 20px;
+            font-size: 18px;
+            flex: 1;
+            transition: background-color 0.3s;
+        }
+        
+        .tab-button:hover {
+            background-color: #777;
+        }
+        
+        .tab-button.active {
+            background-color: orange;
+            font-weight: bold;
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 20px;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Common Header Styles */
         .header {
             background-color: orange;
             color: white;
-            padding: 10px;
+            padding: 15px;
             text-align: center;
-            margin-bottom: 20px;
-            position: relative; /* For date positioning */
+            margin-bottom: 25px;
+            position: relative;
+            border-radius: 5px;
         }
+        
         .company-name {
-            font-size: 20px; /* Increased from 18px */
+            font-size: 24px;
             font-weight: bold;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
         }
+        
         .date-picker {
             position: absolute;
-            right: 20px;
+            right: 25px;
             top: 50%;
             transform: translateY(-50%);
             background-color: rgba(255,255,255,0.2);
-            padding: 5px 10px;
-            border-radius: 4px;
+            padding: 8px 15px;
+            border-radius: 5px;
         }
+        
         .date-picker label {
-            font-size: 16px; /* Increased font size */
-            margin-right: 5px;
+            font-size: 18px;
+            margin-right: 8px;
         }
+        
         .date-picker input {
-            padding: 8px;
+            padding: 10px;
             font-size: 16px;
             border: 1px solid #ccc;
             border-radius: 4px;
         }
+        
+        /* Common Button Styles */
+        .submit-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 14px 28px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            margin-top: 25px;
+            transition: background-color 0.3s;
+        }
+        
+        .submit-btn:hover {
+            background-color: #45a049;
+        }
+        
+        .no-print {
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        /* Production Dashboard Styles */
         .dashboard {
             display: flex;
             flex-wrap: wrap;
-            gap: 20px;
-            font-size: 15px; /* Slightly larger base font */
+            gap: 25px;
+            font-size: 16px;
         }
+        
         .section {
             border: 1px solid #ddd;
-            padding: 15px;
-            border-radius: 5px;
-            min-width: 300px;
+            padding: 18px;
+            border-radius: 6px;
+            min-width: 320px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            background-color: white;
         }
+        
         .section-title {
             background-color: #e6e6e6;
             font-weight: bold;
             text-align: center;
-            padding: 8px; /* Increased padding */
-            margin-bottom: 12px; /* Increased margin */
-            font-size: 16px; /* Larger section titles */
+            padding: 10px;
+            margin: -18px -18px 15px -18px;
+            font-size: 18px;
+            border-radius: 5px 5px 0 0;
         }
-        table {
+        
+        .dashboard table {
             border-collapse: collapse;
             width: 100%;
             table-layout: fixed;
-            font-size: 15px; /* Larger table text */
+            font-size: 16px;
         }
-        th, td {
+        
+        .dashboard th, .dashboard td {
             border: 1px solid #ddd;
-            padding: 10px; /* Increased padding */
+            padding: 12px;
             text-align: center;
         }
-        th {
+        
+        .dashboard th {
             background-color: #f2f2f2;
-            font-size: 15px; /* Larger header text */
+            font-size: 16px;
         }
-        input {
-            width: 80px;
-            padding: 6px; /* Slightly larger input padding */
+        
+        .dashboard input {
+            width: 85px;
+            padding: 8px;
             text-align: center;
             border: 1px solid #ccc;
             border-radius: 4px;
-            font-size: 14px; /* Larger input text */
+            font-size: 15px;
         }
+        
         .inline-form {
             display: flex;
             gap: 15px;
             margin-bottom: 15px;
             align-items: center;
         }
+        
         .form-label {
             font-weight: bold;
-            min-width: 120px;
-            font-size: 15px; /* Larger labels */
+            min-width: 130px;
+            font-size: 16px;
         }
-        .submit-btn {
-            background-color: #4CAF50;
-            color: white;
-            padding: 12px 24px; /* Larger button */
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px; /* Larger button text */
-            margin-top: 20px;
-        }
-        .submit-btn:hover {
-            background-color: #45a049;
-        }
+        
         .cost-details {
-            margin-top: 10px;
-            font-size: 15px; /* Larger cost details */
+            margin-top: 12px;
+            font-size: 16px;
         }
+        
         .cost-row {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
         }
+        
         .cost-label {
             font-weight: bold;
         }
+        
         .cost-value {
             text-align: right;
         }
+        
         .horizontal-container {
             display: flex;
-            gap: 20px;
-            margin-bottom: 20px;
+            gap: 25px;
+            margin-bottom: 25px;
+            width: 100%;
         }
+        
         .horizontal-section {
             border: 1px solid #ddd;
-            padding: 15px;
-            border-radius: 5px;
+            padding: 18px;
+            border-radius: 6px;
             flex: 1;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            background-color: white;
         }
+        
         .horizontal-table {
             display: flex;
             flex-direction: column;
         }
+        
         .horizontal-row {
             display: flex;
-            gap: 10px;
-            margin-bottom: 10px;
+            gap: 15px;
+            margin-bottom: 15px;
         }
+        
         .horizontal-cell {
             flex: 1;
             text-align: center;
         }
+        
         .horizontal-header {
             font-weight: bold;
             background-color: #f2f2f2;
-            padding: 10px; /* Increased padding */
-            font-size: 15px; /* Larger header */
+            padding: 12px;
+            font-size: 16px;
         }
+        
         .combined-table {
             width: 100%;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            background-color: white;
         }
+        
         .combined-table th, .combined-table td {
-            padding: 12px; /* Increased padding */
+            padding: 14px;
         }
+        
         .row-header {
             font-weight: bold;
             text-align: left;
             background-color: #f2f2f2;
-            font-size: 15px; /* Larger row headers */
+            font-size: 16px;
         }
+        
         .operations-container {
             display: flex;
-            gap: 20px;
-            margin-bottom: 20px;
+            gap: 25px;
+            margin-bottom: 25px;
             width: 100%;
         }
+        
         .operations-section {
             border: 1px solid #ddd;
-            padding: 15px;
-            border-radius: 5px;
+            padding: 18px;
+            border-radius: 6px;
             flex: 1;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            background-color: white;
         }
+        
         .operations-table {
             width: 100%;
         }
+        
         .operations-table th {
             background-color: #f2f2f2;
         }
-        /* FTD Section Styles */
+        
         .ftd-section {
             border: 1px solid #ddd;
-            padding: 15px;
-            border-radius: 5px;
-            margin-bottom: 20px;
-            width: 300px;
+            padding: 18px;
+            border-radius: 6px;
+            margin-bottom: 25px;
+            width: 320px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            background-color: white;
         }
+        
         .ftd-title {
             background-color: #e6e6e6;
             font-weight: bold;
             text-align: center;
-            padding: 8px;
-            margin-bottom: 12px;
-            font-size: 16px;
+            padding: 10px;
+            margin: -18px -18px 15px -18px;
+            font-size: 18px;
+            border-radius: 5px 5px 0 0;
         }
+        
         .ftd-table {
             border-collapse: collapse;
             width: 100%;
         }
+        
         .ftd-table th, .ftd-table td {
             border: 1px solid #ddd;
-            padding: 10px;
+            padding: 12px;
             text-align: left;
         }
+        
         .ftd-table th {
             background-color: #f2f2f2;
         }
+        
         .ftd-input-full {
             width: 100%;
-            padding: 6px;
+            padding: 8px;
             border: 1px solid #ccc;
             border-radius: 4px;
             box-sizing: border-box;
         }
+        
+        /* Cost Calculator Styles */
+        .cost-container {
+            display: flex;
+            gap: 40px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .cost-column {
+            flex: 1;
+            min-width: 400px;
+            max-width: 600px;
+        }
+        
+        .cost-table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 2px solid #000;
+            font-size: 18px;
+            margin-bottom: 30px;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .cost-table th {
+            background-color: #f2f2f2;
+            border: 1px solid #000;
+            padding: 14px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 20px;
+        }
+        
+        .cost-table td {
+            border: 1px solid #000;
+            padding: 14px;
+            text-align: center;
+        }
+        
+        .total-row {
+            font-weight: bold;
+            background-color: #e6f7ff;
+            font-size: 22px;
+        }
+        
+        .section-title {
+            background-color: #d9d9d9;
+            font-weight: bold;
+            text-align: center;
+            font-size: 24px;
+            padding: 12px;
+        }
+        
+        .calculator-title {
+            font-size: 32px;
+            margin-bottom: 40px;
+            text-align: center;
+            color: #333;
+        }
+        
+        .calculator-input {
+            width: 90%;
+            padding: 10px;
+            font-size: 18px;
+            text-align: center;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin: 0 auto;
+            display: block;
+        }
+        
+        .button-container {
+            margin: 30px 0;
+            display: flex;
+            gap: 25px;
+            justify-content: center;
+        }
+        
+        .calculator-btn {
+            padding: 14px 30px;
+            font-size: 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        .calculator-btn:hover {
+            background-color: #45a049;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .calculator-btn:active {
+            transform: translateY(0);
+        }
+        
+        .reset-btn {
+            background-color: #f44336;
+        }
+        
+        .reset-btn:hover {
+            background-color: #d32f2f;
+        }
+        
+        /* Print Styles */
         @media print {
             @page {
                 size: landscape;
                 margin: 10mm;
             }
+            
             body {
                 margin: 0;
                 padding: 10px;
-                zoom: 1; /* Reset zoom for printing */
-                font-size: 12px;
+                zoom: 1;
+                font-size: 14px;
+                background-color: white;
             }
-            .no-print {
+            
+            .tab-container, .no-print {
                 display: none;
             }
+            
+            .tab-content {
+                display: block !important;
+            }
+            
             input {
                 border: none;
                 background: transparent;
                 width: auto;
+                box-shadow: none;
             }
+            
             .header {
                 background-color: orange !important;
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
             }
+            
             .section-title, th, .row-header {
                 background-color: #f2f2f2 !important;
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
             }
+            
+            .cost-table {
+                box-shadow: none;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <div class="company-name">SGX MINERALS PVT LTD - MICRO DIVISION</div>
-        <div class="date-picker">
-            <label for="report-date">Date: </label>
-            <input type="date" id="report-date" name="report-date">
+    <!-- Tab Navigation -->
+    <div class="tab-container">
+        <div class="tab-buttons">
+            <button class="tab-button active" onclick="openTab('production')">Production Dashboard</button>
+            <button class="tab-button" onclick="openTab('cost')">Cost Calculator</button>
         </div>
     </div>
 
-    <div class="dashboard">
-        <!-- FTD Section -->
-        <div class="ftd-section">
-            <div class="section-title">FTD DETAILS</div>
-            <table class="ftd-table">
-                <tr>
-                    <th>FTD Dispatch</th>
-                    <td><input type="text" class="ftd-input-full"></td>
-                </tr>
-                <tr>
-                    <th>FTD Received</th>
-                    <td><input type="text" class="ftd-input-full"></td>
-                </tr>
+    <!-- Production Dashboard Tab -->
+    <div id="production" class="tab-content active">
+        <div class="header">
+            <div class="company-name">SGX MINERALS PVT LTD - MICRO DIVISION</div>
+            <div class="date-picker no-print">
+                <label for="report-date">Date: </label>
+                <input type="date" id="report-date" name="report-date">
+            </div>
+        </div>
+
+        <div class="dashboard">
+            <!-- FTD Section -->
+            <div class="ftd-section">
+                <div class="section-title">FTD DETAILS</div>
+                <table class="ftd-table">
+                    <tr>
+                        <th>FTD Dispatch</th>
+                        <td><input type="text" class="ftd-input-full"></td>
+                    </tr>
+                    <tr>
+                        <th>FTD Received</th>
+                        <td><input type="text" class="ftd-input-full"></td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- Combined Horizontal Section -->
+            <div class="horizontal-container">
+                <!-- Opening Stock -->
+                <div class="horizontal-section">
+                    <div class="section-title">OPENING STOCK</div>
+                    <div class="horizontal-row">
+                        <div class="horizontal-cell">
+                            <div class="form-label">SGX Raw</div>
+                            <input type="text" value="66">
+                        </div>
+                        <div class="horizontal-cell">
+                            <div class="form-label">RH</div>
+                            <input type="text" value="0">
+                        </div>
+                        <div class="horizontal-cell">
+                            <div class="form-label">OPC</div>
+                            <input type="text" value="21.6">
+                        </div>
+                        <div class="horizontal-cell">
+                            <div class="form-label">ACC</div>
+                            <input type="text" value="5.7">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mixing Details -->
+                <div class="horizontal-section">
+                    <div class="section-title">MIXING DETAILS</div>
+                    <div class="horizontal-row">
+                        <div class="horizontal-cell">
+                            <div class="form-label">DAY</div>
+                            <input type="text">
+                        </div>
+                        <div class="horizontal-cell">
+                            <div class="form-label">NIGHT</div>
+                            <input type="text">
+                        </div>
+                        <div class="horizontal-cell">
+                            <div class="form-label">TOTAL MIX</div>
+                            <input type="text" value="0">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Combined Table for Raw Materials and Production Output -->
+            <table class="combined-table">
+                <thead>
+                    <tr>
+                        <th style="width: 10%;">PRODUCT</th>
+                        <th style="width: 12.5%;">SGX</th>
+                        <th style="width: 12.5%;">RH</th>
+                        <th style="width: 12.5%;">OPC</th>
+                        <th style="width: 12.5%;">ACCLTR</th>
+                        <th style="width: 12.5%;">GROUND MIXING</th>
+                        <th style="width: 12.5%;">VRM OUTPUT</th>
+                        <th style="width: 12.5%;">DRYER OUTPUT</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="row-header">D-80</td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr>
+                        <td class="row-header">D-90</td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                    </tr>
+                </tbody>
             </table>
-        </div>
 
-        <!-- Combined Horizontal Section -->
-        <div class="horizontal-container">
-            <!-- Opening Stock -->
-            <div class="horizontal-section">
-                <div class="section-title">OPENING STOCK</div>
-                <div class="horizontal-row">
-                    <div class="horizontal-cell">
-                        <div class="form-label">SGX Raw</div>
-                        <input type="text" value="66">
-                    </div>
-                    <div class="horizontal-cell">
-                        <div class="form-label">RH</div>
-                        <input type="text" value="0">
-                    </div>
-                    <div class="horizontal-cell">
-                        <div class="form-label">OPC</div>
-                        <input type="text" value="21.6">
-                    </div>
-                    <div class="horizontal-cell">
-                        <div class="form-label">ACC</div>
-                        <input type="text" value="5.7">
-                    </div>
+            <!-- Operations Sections -->
+            <div class="operations-container">
+                <!-- Dryer Operations -->
+                <div class="operations-section">
+                    <div class="section-title">DRYER OPERATIONS</div>
+                    <table class="operations-table">
+                        <tr>
+                            <th></th>
+                            <th>DAY</th>
+                            <th>NIGHT</th>
+                            <th>TOTAL</th>
+                        </tr>
+                        <tr>
+                            <td>RUNNING Hrs</td>
+                            <td><input type="text"></td>
+                            <td><input type="text"></td>
+                            <td><input type="text" value="0"></td>
+                        </tr>
+                        <tr>
+                            <td>PRODUCTION</td>
+                            <td><input type="text"></td>
+                            <td><input type="text"></td>
+                            <td><input type="text" value="0"></td>
+                        </tr>
+                        <tr>
+                            <td>TPH</td>
+                            <td><input type="text"></td>
+                            <td><input type="text"></td>
+                            <td><input type="text" value="#DIV/0!"></td>
+                        </tr>
+                        <tr>
+                            <td>LDO (Ltrs)</td>
+                            <td><input type="text"></td>
+                            <td><input type="text"></td>
+                            <td><input type="text" value="0"></td>
+                        </tr>
+                        <tr>
+                            <td>JCB (Hrs)</td>
+                            <td><input type="text" value="4.4"></td>
+                            <td><input type="text" value="0"></td>
+                            <td><input type="text" value="4.4"></td>
+                        </tr>
+                    </table>
+                </div>
+
+                <!-- VRM Operations -->
+                <div class="operations-section">
+                    <div class="section-title">VRM OPERATIONS</div>
+                    <table class="operations-table">
+                        <tr>
+                            <th></th>
+                            <th>DAY</th>
+                            <th>NIGHT</th>
+                            <th>TOTAL</th>
+                        </tr>
+                        <tr>
+                            <td>RUNNING Hrs</td>
+                            <td><input type="text"></td>
+                            <td><input type="text"></td>
+                            <td><input type="text" value="0"></td>
+                        </tr>
+                        <tr>
+                            <td>PRODUCTION</td>
+                            <td><input type="text"></td>
+                            <td><input type="text"></td>
+                            <td><input type="text" value="0"></td>
+                        </tr>
+                        <tr>
+                            <td>TPH</td>
+                            <td><input type="text"></td>
+                            <td><input type="text"></td>
+                            <td><input type="text" value="#DIV/0!"></td>
+                        </tr>
+                        <tr>
+                            <td>EB (Units)</td>
+                            <td><input type="text" value="92"></td>
+                            <td><input type="text" value="60"></td>
+                            <td><input type="text" value="152"></td>
+                        </tr>
+                        <tr>
+                            <td>NMR (Hrs)</td>
+                            <td><input type="text" value="11"></td>
+                            <td><input type="text" value="0"></td>
+                            <td><input type="text" value="11"></td>
+                        </tr>
+                    </table>
                 </div>
             </div>
-
-            <!-- Mixing Details -->
-            <div class="horizontal-section">
-                <div class="section-title">MIXING DETAILS</div>
-                <div class="horizontal-row">
-                    <div class="horizontal-cell">
-                        <div class="form-label">DAY</div>
-                        <input type="text">
-                    </div>
-                    <div class="horizontal-cell">
-                        <div class="form-label">NIGHT</div>
-                        <input type="text">
-                    </div>
-                    <div class="horizontal-cell">
-                        <div class="form-label">TOTAL MIX</div>
-                        <input type="text" value="0">
-                    </div>
-                </div>
-            </div>
         </div>
 
-        <!-- Combined Table for Raw Materials and Production Output -->
-        <table class="combined-table">
-            <thead>
-                <tr>
-                    <th style="width: 10%;">PRODUCT</th>
-                    <th style="width: 12.5%;">SGX</th>
-                    <th style="width: 12.5%;">RH</th>
-                    <th style="width: 12.5%;">OPC</th>
-                    <th style="width: 12.5%;">ACCLTR</th>
-                    <th style="width: 12.5%;">GROUND MIXING</th>
-                    <th style="width: 12.5%;">VRM OUTPUT</th>
-                    <th style="width: 12.5%;">DRYER OUTPUT</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td class="row-header">D-80</td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                </tr>
-                <tr>
-                    <td class="row-header">D-90</td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                </tr>
-            </tbody>
-        </table>
-
-        <!-- Operations Sections -->
-        <div class="operations-container">
-            <!-- Dryer Operations -->
-            <div class="operations-section">
-                <div class="section-title">DRYER OPERATIONS</div>
-                <table class="operations-table">
-                    <tr>
-                        <th></th>
-                        <th>DAY</th>
-                        <th>NIGHT</th>
-                        <th>TOTAL</th>
-                    </tr>
-                    <tr>
-                        <td>RUNNING Hrs</td>
-                        <td><input type="text"></td>
-                        <td><input type="text"></td>
-                        <td><input type="text" value="0"></td>
-                    </tr>
-                    <tr>
-                        <td>PRODUCTION</td>
-                        <td><input type="text"></td>
-                        <td><input type="text"></td>
-                        <td><input type="text" value="0"></td>
-                    </tr>
-                    <tr>
-                        <td>TPH</td>
-                        <td><input type="text"></td>
-                        <td><input type="text"></td>
-                        <td><input type="text" value="#DIV/0!"></td>
-                    </tr>
-                    <tr>
-                        <td>LDO (Ltrs)</td>
-                        <td><input type="text"></td>
-                        <td><input type="text"></td>
-                        <td><input type="text" value="0"></td>
-                    </tr>
-                    <tr>
-                        <td>JCB (Hrs)</td>
-                        <td><input type="text" value="4.4"></td>
-                        <td><input type="text" value="0"></td>
-                        <td><input type="text" value="4.4"></td>
-                    </tr>
-                </table>
-            </div>
-
-            <!-- VRM Operations -->
-            <div class="operations-section">
-                <div class="section-title">VRM OPERATIONS</div>
-                <table class="operations-table">
-                    <tr>
-                        <th></th>
-                        <th>DAY</th>
-                        <th>NIGHT</th>
-                        <th>TOTAL</th>
-                    </tr>
-                    <tr>
-                        <td>RUNNING Hrs</td>
-                        <td><input type="text"></td>
-                        <td><input type="text"></td>
-                        <td><input type="text" value="0"></td>
-                    </tr>
-                    <tr>
-                        <td>PRODUCTION</td>
-                        <td><input type="text"></td>
-                        <td><input type="text"></td>
-                        <td><input type="text" value="0"></td>
-                    </tr>
-                    <tr>
-                        <td>TPH</td>
-                        <td><input type="text"></td>
-                        <td><input type="text"></td>
-                        <td><input type="text" value="#DIV/0!"></td>
-                    </tr>
-                    <tr>
-                        <td>EB (Units)</td>
-                        <td><input type="text" value="92"></td>
-                        <td><input type="text" value="60"></td>
-                        <td><input type="text" value="152"></td>
-                    </tr>
-                    <tr>
-                        <td>NMR (Hrs)</td>
-                        <td><input type="text" value="11"></td>
-                        <td><input type="text" value="0"></td>
-                        <td><input type="text" value="11"></td>
-                    </tr>
-                </table>
-            </div>
+        <div class="no-print">
+            <button class="submit-btn" onclick="submitData()">Submit Data</button>
+            <button class="submit-btn" onclick="window.print()" style="background-color: #2196F3; margin-left: 30px;">Print Report</button>
         </div>
     </div>
 
-    <div class="no-print" style="text-align: center;">
-        <button class="submit-btn" onclick="submitData()">Submit Data</button>
-        <button class="submit-btn" onclick="window.print()" style="background-color: #2196F3; margin-left: 20px;">Print Report</button>
+    <!-- Cost Calculator Tab -->
+    <div id="cost" class="tab-content">
+        <div class="header">
+            <div class="company-name">SGX MINERALS PVT LTD - COST CALCULATOR</div>
+            <div class="date-picker no-print">
+                <label for="cost-date">Date: </label>
+                <input type="date" id="cost-date" name="cost-date">
+            </div>
+        </div>
+
+        <h1 class="calculator-title">COST BREAKDOWN CALCULATOR</h1>
+        
+        <div class="cost-container">
+            <div class="cost-column">
+                <table class="cost-table" id="individualCosts">
+                    <tr>
+                        <th colspan="2" class="section-title">INDIVIDUAL COSTS</th>
+                    </tr>
+                    <tr>
+                        <th>COST ITEM</th>
+                        <th>AMOUNT (₹)</th>
+                    </tr>
+                    <tr>
+                        <td>MIXING COST</td>
+                        <td><input type="number" id="mixing" class="calculator-input" value="0.00" step="0.01"></td>
+                    </tr>
+                    <tr>
+                        <td>NMR COST</td>
+                        <td><input type="number" id="nmr" class="calculator-input" value="0.00" step="0.01"></td>
+                    </tr>
+                    <tr>
+                        <td>EB COST</td>
+                        <td><input type="number" id="eb" class="calculator-input" value="0.00" step="0.01"></td>
+                    </tr>
+                    <tr>
+                        <td>Forklift cost</td>
+                        <td><input type="number" id="forklift" class="calculator-input" value="0.00" step="0.01"></td>
+                    </tr>
+                    <tr>
+                        <td>BAG COST</td>
+                        <td><input type="number" id="bag" class="calculator-input" value="0.00" step="0.01"></td>
+                    </tr>
+                    <tr>
+                        <td>LDO COST</td>
+                        <td><input type="number" id="ldo" class="calculator-input" value="0.00" step="0.01"></td>
+                    </tr>
+                    <tr>
+                        <td>JCB operator</td>
+                        <td><input type="number" id="jcbOperator" class="calculator-input" value="0.00" step="0.01"></td>
+                    </tr>
+                    <tr>
+                        <td>JCB fuel cost</td>
+                        <td><input type="number" id="jcbFuel" class="calculator-input" value="0.00" step="0.01"></td>
+                    </tr>
+                    <tr>
+                        <td>Spare Part cost</td>
+                        <td><input type="number" id="spare" class="calculator-input" value="0.00" step="0.01"></td>
+                    </tr>
+                    <tr>
+                        <td>Maintenance Cost & misc. cost</td>
+                        <td><input type="number" id="maintenance" class="calculator-input" value="0.00" step="0.01"></td>
+                    </tr>
+                    <tr>
+                        <td>Vehicle Loading cost</td>
+                        <td><input type="number" id="loading" class="calculator-input" value="0.00" step="0.01"></td>
+                    </tr>
+                    <tr>
+                        <td>Vehicle Unloading Cost</td>
+                        <td><input type="number" id="unloading" class="calculator-input" value="0.00" step="0.01"></td>
+                    </tr>
+                </table>
+            </div>
+            
+            <div class="cost-column">
+                <table class="cost-table" id="totalCosts">
+                    <tr>
+                        <th colspan="2" class="section-title">TOTAL COSTS</th>
+                    </tr>
+                    <tr>
+                        <th>COST ITEM</th>
+                        <th>AMOUNT (₹)</th>
+                    </tr>
+                    <tr>
+                        <td>DRYER COST /MT</td>
+                        <td><input type="number" id="dryer" class="calculator-input" value="0.00" step="0.01"></td>
+                    </tr>
+                    <tr>
+                        <td>VRM COST /MT</td>
+                        <td><input type="number" id="vrm" class="calculator-input" value="0.00" step="0.01"></td>
+                    </tr>
+                    <tr class="total-row">
+                        <td>TOTAL COST/MT</td>
+                        <td id="totalMT">0.00</td>
+                    </tr>
+                    <tr class="total-row">
+                        <td>Total COST/KG</td>
+                        <td id="totalKG">0.00</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="button-container no-print">
+            <button class="calculator-btn" onclick="calculateTotals()">CALCULATE TOTALS</button>
+            <button class="calculator-btn reset-btn" onclick="resetValues()">RESET ALL</button>
+            <button class="calculator-btn" onclick="window.print()" style="background-color: #2196F3;">PRINT REPORT</button>
+        </div>
     </div>
 
     <script>
-        // Set default date to today
+        // Tab Navigation Functionality
+        function openTab(tabName) {
+            const tabContents = document.getElementsByClassName("tab-content");
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove("active");
+            }
+            
+            const tabButtons = document.getElementsByClassName("tab-button");
+            for (let i = 0; i < tabButtons.length; i++) {
+                tabButtons[i].classList.remove("active");
+            }
+            
+            document.getElementById(tabName).classList.add("active");
+            event.currentTarget.classList.add("active");
+            
+            // Set date for the active tab
+            if (tabName === 'production') {
+                document.getElementById('report-date').valueAsDate = new Date();
+            } else {
+                document.getElementById('cost-date').valueAsDate = new Date();
+            }
+        }
+
+        // Production Dashboard Functions
         document.getElementById('report-date').valueAsDate = new Date();
 
         function submitData() {
             const date = document.getElementById('report-date').value;
-            const inputs = document.querySelectorAll('input:not([type="date"])');
+            const inputs = document.querySelectorAll('#production input:not([type="date"])');
             const data = {
                 date: date,
                 values: []
@@ -468,9 +844,64 @@
                 data.values.push(input.value);
             });
             
-            console.log("Submitted data:", data);
-            alert(`Data for ${date} submitted! Check console for details.`);
+            console.log("Submitted production data:", data);
+            alert(`Production data for ${date} submitted! Check console for details.`);
         }
+
+        // Cost Calculator Functions
+        document.getElementById('cost-date').valueAsDate = new Date();
+
+        function calculateTotals() {
+            // Get all input values
+            const mixing = parseFloat(document.getElementById('mixing').value) || 0;
+            const nmr = parseFloat(document.getElementById('nmr').value) || 0;
+            const eb = parseFloat(document.getElementById('eb').value) || 0;
+            const forklift = parseFloat(document.getElementById('forklift').value) || 0;
+            const bag = parseFloat(document.getElementById('bag').value) || 0;
+            const ldo = parseFloat(document.getElementById('ldo').value) || 0;
+            const jcbOperator = parseFloat(document.getElementById('jcbOperator').value) || 0;
+            const jcbFuel = parseFloat(document.getElementById('jcbFuel').value) || 0;
+            const spare = parseFloat(document.getElementById('spare').value) || 0;
+            const maintenance = parseFloat(document.getElementById('maintenance').value) || 0;
+            const loading = parseFloat(document.getElementById('loading').value) || 0;
+            const unloading = parseFloat(document.getElementById('unloading').value) || 0;
+            const dryer = parseFloat(document.getElementById('dryer').value) || 0;
+            const vrm = parseFloat(document.getElementById('vrm').value) || 0;
+
+            // Calculate totals
+            const totalMT = mixing + nmr + eb + forklift + bag + ldo + jcbOperator + 
+                          jcbFuel + spare + maintenance + loading + unloading + dryer + vrm;
+            const totalKG = totalMT / 1000;
+
+            // Display results
+            document.getElementById('totalMT').textContent = totalMT.toFixed(2);
+            document.getElementById('totalKG').textContent = totalKG.toFixed(2);
+            
+            // Log the calculation
+            const date = document.getElementById('cost-date').value;
+            console.log(`Cost calculation for ${date}: Total ₹${totalMT.toFixed(2)}/MT (₹${totalKG.toFixed(2)}/KG)`);
+        }
+
+        function resetValues() {
+            // Reset all input fields to 0.00
+            const inputs = document.querySelectorAll('#cost input[type="number"]');
+            inputs.forEach(input => {
+                input.value = "0.00";
+            });
+            
+            // Reset calculated totals
+            document.getElementById('totalMT').textContent = "0.00";
+            document.getElementById('totalKG').textContent = "0.00";
+        }
+
+        // Add event listeners to all calculator input fields for better UX
+        document.querySelectorAll('#cost input').forEach(input => {
+            input.addEventListener('keyup', function(event) {
+                if (event.key === 'Enter') {
+                    calculateTotals();
+                }
+            });
+        });
     </script>
 </body>
 </html>
