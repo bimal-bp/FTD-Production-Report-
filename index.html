@@ -476,6 +476,61 @@
             background-color: #d32f2f;
         }
         
+        /* Remark Section Styles */
+        .remark-container {
+            width: 100%;
+            margin-bottom: 30px;
+        }
+        
+        .remark-box {
+            border: 1px solid #ddd;
+            padding: 18px;
+            border-radius: 6px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            background-color: white;
+            width: 100%;
+        }
+        
+        .remark-title {
+            background-color: #e6e6e6;
+            font-weight: bold;
+            text-align: center;
+            padding: 10px;
+            margin: -18px -18px 15px -18px;
+            font-size: 18px;
+            border-radius: 5px 5px 0 0;
+        }
+        
+        .remark-textarea {
+            width: 100%;
+            height: 100px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            resize: vertical;
+            box-sizing: border-box;
+        }
+        
+        .remark-button-container {
+            text-align: right;
+            margin-top: 15px;
+        }
+        
+        .remark-btn {
+            padding: 10px 20px;
+            background-color: orange;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        .remark-btn:hover {
+            background-color: #e69500;
+        }
+        
         /* Print Styles */
         @media print {
             @page {
@@ -500,6 +555,12 @@
                 background: transparent;
                 width: auto;
                 box-shadow: none;
+            }
+            
+            textarea {
+                border: none;
+                background: transparent;
+                resize: none;
             }
             
             .header, .compact-section-title, .compact-stock-header {
@@ -866,6 +927,17 @@
         </div>
     </div>
 
+    <!-- Remark Section -->
+    <div class="remark-container">
+        <div class="remark-box">
+            <div class="remark-title">REMARKS</div>
+            <textarea class="remark-textarea" placeholder="Enter your remarks here..."></textarea>
+            <div class="remark-button-container no-print">
+                <button class="remark-btn" onclick="saveRemark()">SAVE REMARK</button>
+            </div>
+        </div>
+    </div>
+
     <div class="button-container no-print">
         <button class="calculator-btn" onclick="window.print()">PRINT REPORT</button>
     </div>
@@ -929,6 +1001,12 @@
             inputs.forEach(input => {
                 input.value = "";
             });
+        }
+
+        function saveRemark() {
+            const remark = document.querySelector('.remark-textarea').value;
+            console.log("Remark saved:", remark);
+            alert("Remark saved successfully!");
         }
 
         // Add event listeners to all calculator input fields for better UX
