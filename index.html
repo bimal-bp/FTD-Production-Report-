@@ -109,7 +109,7 @@
             border-collapse: collapse;
         }
         .compact-section-table th, .compact-section-table td {
-            padding: 10px;
+            padding: 8px;
             border-bottom: 1px solid #ddd;
             text-align: left;
         }
@@ -119,10 +119,11 @@
         }
         .compact-input-field {
             width: 100%;
-            padding: 8px;
+            padding: 6px;
             border: 1px solid #ddd;
             border-radius: 4px;
             box-sizing: border-box;
+            height: 30px;
         }
         .compact-total-row {
             background-color: #ffe6cc;
@@ -375,7 +376,7 @@
             width: 100%;
             border-collapse: collapse;
             border: 2px solid #000;
-            font-size: 18px;
+            font-size: 16px;
             margin-bottom: 30px;
             background-color: white;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
@@ -384,30 +385,31 @@
         .cost-table th {
             background-color: #f2f2f2;
             border: 1px solid #000;
-            padding: 14px;
+            padding: 10px;
             text-align: center;
             font-weight: bold;
-            font-size: 20px;
+            font-size: 18px;
         }
         
         .cost-table td {
             border: 1px solid #000;
-            padding: 14px;
+            padding: 10px;
             text-align: center;
+            height: 40px;
         }
         
         .total-row {
             font-weight: bold;
             background-color: #ffe6cc;
-            font-size: 22px;
+            font-size: 18px;
         }
         
         .cost-section-title {
             background-color: #d9d9d9;
             font-weight: bold;
             text-align: center;
-            font-size: 24px;
-            padding: 12px;
+            font-size: 20px;
+            padding: 10px;
         }
         
         .calculator-title {
@@ -420,13 +422,14 @@
         
         .calculator-input {
             width: 90%;
-            padding: 10px;
-            font-size: 18px;
+            padding: 8px;
+            font-size: 16px;
             text-align: center;
             border: 1px solid #ccc;
             border-radius: 5px;
             margin: 0 auto;
             display: block;
+            height: 30px;
         }
         
         .button-container {
@@ -541,11 +544,11 @@
             <table class="compact-section-table">
                 <tr>
                     <th>FTD Dispatch</th>
-                    <td><input type="number" class="compact-input-field" placeholder="Value"></td>
+                    <td><input type="text" class="compact-input-field" placeholder="Enter value"></td>
                 </tr>
                 <tr>
                     <th>FTD Received</th>
-                    <td><input type="number" class="compact-input-field" placeholder="Value"></td>
+                    <td><input type="text" class="compact-input-field" placeholder="Enter value"></td>
                 </tr>
                 <tr>
                     <th>MTD DRYER</th>
@@ -624,12 +627,12 @@
                     <td><input type="number" class="compact-input-field" placeholder="Value"></td>
                 </tr>
                 <tr>
-                    <th>MTD Mixing</th>
+                    <th>FTD Mixing</th>
                     <td><input type="number" class="compact-input-field" placeholder="Value"></td>
                 </tr>
-                <tr class="compact-total-row">
-                    <th>TOTAL Mixing</th>
-                    <td><input type="number" class="compact-input-field compact-total-input" placeholder="Auto" readonly></td>
+                <tr>
+                    <th>MTD Mixing</th>
+                    <td><input type="number" class="compact-input-field" placeholder="Value"></td>
                 </tr>
             </table>
         </div>
@@ -846,11 +849,11 @@
                 </tr>
                 <tr class="total-row">
                     <td>TOTAL COST/MT</td>
-                    <td id="totalMT">0.00</td>
+                    <td><input type="number" id="totalMT" class="calculator-input" value="0.00" step="0.01"></td>
                 </tr>
                 <tr class="total-row">
                     <td>Total COST/KG</td>
-                    <td id="totalKG">0.00</td>
+                    <td><input type="number" id="totalKG" class="calculator-input" value="0.00" step="0.01"></td>
                 </tr>
             </table>
         </div>
@@ -907,8 +910,8 @@
             const totalKG = totalMT / 1000;
 
             // Display results
-            document.getElementById('totalMT').textContent = totalMT.toFixed(2);
-            document.getElementById('totalKG').textContent = totalKG.toFixed(2);
+            document.getElementById('totalMT').value = totalMT.toFixed(2);
+            document.getElementById('totalKG').value = totalKG.toFixed(2);
             
             // Log the calculation
             const date = document.getElementById('cost-date').value;
@@ -921,10 +924,6 @@
             inputs.forEach(input => {
                 input.value = "0.00";
             });
-            
-            // Reset calculated totals
-            document.getElementById('totalMT').textContent = "0.00";
-            document.getElementById('totalKG').textContent = "0.00";
         }
 
         // Add event listeners to all calculator input fields for better UX
@@ -934,22 +933,6 @@
                     calculateTotals();
                 }
             });
-        });
-
-        // Compact Dashboard - Calculate total mixing automatically
-        document.addEventListener('DOMContentLoaded', function() {
-            const dayInput = document.querySelector('.compact-section-title:contains("MIXING DETAILS")').parentNode.querySelectorAll('.compact-input-field')[0];
-            const nightInput = document.querySelector('.compact-section-title:contains("MIXING DETAILS")').parentNode.querySelectorAll('.compact-input-field')[1];
-            const totalInput = document.querySelector('.compact-total-input');
-            
-            function calculateTotal() {
-                const dayValue = parseFloat(dayInput.value) || 0;
-                const nightValue = parseFloat(nightInput.value) || 0;
-                totalInput.value = dayValue + nightValue;
-            }
-            
-            dayInput.addEventListener('input', calculateTotal);
-            nightInput.addEventListener('input', calculateTotal);
         });
     </script>
 </body>
