@@ -54,7 +54,7 @@
         
         /* Common Button Styles */
         .submit-btn {
-            background-color: #4CAF50;
+            background-color: orange;
             color: white;
             padding: 14px 28px;
             border: none;
@@ -66,7 +66,7 @@
         }
         
         .submit-btn:hover {
-            background-color: #45a049;
+            background-color: #e69500;
         }
         
         .no-print {
@@ -74,6 +74,71 @@
             margin-top: 30px;
         }
         
+        /* Compact Dashboard Styles */
+        .compact-dashboard {
+            display: flex;
+            gap: 15px;
+            min-width: fit-content;
+            margin-bottom: 25px;
+        }
+        .compact-section {
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+            min-width: 200px;
+            width: 100%;
+        }
+        .compact-section-title {
+            background-color: orange;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+            border-radius: 5px 5px 0 0;
+        }
+        .compact-section-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .compact-section-table th, .compact-section-table td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+        .compact-section-table th {
+            width: 40%;
+            font-weight: normal;
+        }
+        .compact-input-field {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .compact-total-row {
+            background-color: #ffe6cc;
+            font-weight: bold;
+        }
+        .compact-total-input {
+            background-color: #f0f0f0;
+        }
+        .compact-stock-box {
+            display: flex;
+            gap: 10px;
+        }
+        .compact-stock-column {
+            flex: 1;
+        }
+        .compact-stock-header {
+            background-color: orange;
+            color: white;
+            padding: 5px;
+            text-align: center;
+            margin-bottom: 5px;
+            border-radius: 3px;
+        }
+
         /* Production Dashboard Styles */
         .dashboard {
             display: flex;
@@ -325,7 +390,7 @@
         
         .total-row {
             font-weight: bold;
-            background-color: #e6f7ff;
+            background-color: #ffe6cc;
             font-size: 22px;
         }
         
@@ -365,7 +430,7 @@
         .calculator-btn {
             padding: 14px 30px;
             font-size: 20px;
-            background-color: #4CAF50;
+            background-color: orange;
             color: white;
             border: none;
             border-radius: 5px;
@@ -375,7 +440,7 @@
         }
         
         .calculator-btn:hover {
-            background-color: #45a049;
+            background-color: #e69500;
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
@@ -418,7 +483,7 @@
                 box-shadow: none;
             }
             
-            .header {
+            .header, .compact-section-title, .compact-stock-header {
                 background-color: orange !important;
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
@@ -445,7 +510,7 @@
         
         /* Cost calculator header */
         .cost-header {
-            background-color: #4CAF50;
+            background-color: orange;
             color: white;
             padding: 15px;
             text-align: center;
@@ -465,67 +530,106 @@
         </div>
     </div>
 
-    <div class="dashboard">
-        <!-- Top Sections (FTD, Opening Stock, Mixing) in one row -->
-        <div class="top-sections">
-            <!-- FTD Section -->
-            <div class="ftd-section">
-                <div class="section-title">FTD DETAILS</div>
-                <table class="ftd-table">
-                    <tr>
-                        <th>FTD Dispatch</th>
-                        <td><input type="text" class="ftd-input-full"></td>
-                    </tr>
-                    <tr>
-                        <th>FTD Received</th>
-                        <td><input type="text" class="ftd-input-full"></td>
-                    </tr>
-                </table>
-            </div>
+    <!-- Compact Dashboard Section -->
+    <div class="compact-dashboard">
+        <!-- FTD Section -->
+        <div class="compact-section">
+            <div class="compact-section-title">FTD DETAILS</div>
+            <table class="compact-section-table">
+                <tr>
+                    <th>FTD Dispatch</th>
+                    <td><input type="number" class="compact-input-field" placeholder="Value"></td>
+                </tr>
+                <tr>
+                    <th>FTD Received</th>
+                    <td><input type="number" class="compact-input-field" placeholder="Value"></td>
+                </tr>
+                <tr>
+                    <th>MTD DRYER</th>
+                    <td><input type="number" class="compact-input-field" placeholder="Value"></td>
+                </tr>
+                <tr>
+                    <th>MTD VRM</th>
+                    <td><input type="number" class="compact-input-field" placeholder="Value"></td>
+                </tr>
+                <tr>
+                    <th>MTD Dispatch</th>
+                    <td><input type="number" class="compact-input-field" placeholder="Value"></td>
+                </tr>
+            </table>
+        </div>
 
-            <!-- Opening Stock -->
-            <div class="ftd-section">
-                <div class="section-title">OPENING STOCK</div>
-                <table class="ftd-table">
-                    <tr>
-                        <th>SGX Raw</th>
-                        <td><input type="text" class="ftd-input-full" value="66"></td>
-                    </tr>
-                    <tr>
-                        <th>RH</th>
-                        <td><input type="text" class="ftd-input-full" value="0"></td>
-                    </tr>
-                    <tr>
-                        <th>OPC</th>
-                        <td><input type="text" class="ftd-input-full" value="21.6"></td>
-                    </tr>
-                    <tr>
-                        <th>ACC</th>
-                        <td><input type="text" class="ftd-input-full" value="5.7"></td>
-                    </tr>
-                </table>
-            </div>
-
-            <!-- Mixing Details -->
-            <div class="ftd-section">
-                <div class="section-title">MIXING DETAILS</div>
-                <table class="ftd-table">
-                    <tr>
-                        <th>DAY</th>
-                        <td><input type="text" class="ftd-input-full"></td>
-                    </tr>
-                    <tr>
-                        <th>NIGHT</th>
-                        <td><input type="text" class="ftd-input-full"></td>
-                    </tr>
-                    <tr>
-                        <th>TOTAL MIX</th>
-                        <td><input type="text" class="ftd-input-full" value="0"></td>
-                    </tr>
-                </table>
+        <!-- Combined Stock Box -->
+        <div class="compact-section">
+            <div class="compact-section-title">STOCK DETAILS</div>
+            <div class="compact-stock-box">
+                <div class="compact-stock-column">
+                    <div class="compact-stock-header">OPENING</div>
+                    <table class="compact-section-table">
+                        <tr>
+                            <th>SGX Raw (RM)</th>
+                            <td><input type="number" class="compact-input-field" placeholder="Value"></td>
+                        </tr>
+                        <tr>
+                            <th>RH</th>
+                            <td><input type="number" class="compact-input-field" placeholder="Value"></td>
+                        </tr>
+                        <tr>
+                            <th>OPC</th>
+                            <td><input type="number" class="compact-input-field" placeholder="Value"></td>
+                        </tr>
+                        <tr>
+                            <th>ACC</th>
+                            <td><input type="number" class="compact-input-field" placeholder="Value"></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="compact-stock-column">
+                    <div class="compact-stock-header">CLOSING</div>
+                    <table class="compact-section-table">
+                        <tr>
+                            <th>SGX Raw (RM)</th>
+                            <td><input type="number" class="compact-input-field" placeholder="Value"></td>
+                        </tr>
+                        <tr>
+                            <th>RH</th>
+                            <td><input type="number" class="compact-input-field" placeholder="Value"></td>
+                        </tr>
+                        <tr>
+                            <th>OPC</th>
+                            <td><input type="number" class="compact-input-field" placeholder="Value"></td>
+                        </tr>
+                        <tr>
+                            <th>ACC</th>
+                            <td><input type="number" class="compact-input-field" placeholder="Value"></td>
+                        </tr>
+                    </table>
+                </div>
             </div>
         </div>
 
+        <!-- Mixing Details -->
+        <div class="compact-section">
+            <div class="compact-section-title">MIXING DETAILS</div>
+            <table class="compact-section-table">
+                <tr>
+                    <th>DAY Mixing</th>
+                    <td><input type="number" class="compact-input-field" placeholder="Value"></td>
+                </tr>
+                <tr>
+                    <th>NIGHT Mixing</th>
+                    <td><input type="number" class="compact-input-field" placeholder="Value"></td>
+                </tr>
+                <tr class="compact-total-row">
+                    <th>TOTAL Mixing</th>
+                    <td><input type="number" class="compact-input-field compact-total-input" placeholder="Auto" readonly></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- Production Dashboard -->
+    <div class="dashboard">
         <!-- Combined Table for Raw Materials and Production Output -->
         <table class="combined-table">
             <thead>
@@ -838,6 +942,22 @@
                     calculateTotals();
                 }
             });
+        });
+
+        // Compact Dashboard - Calculate total mixing automatically
+        document.addEventListener('DOMContentLoaded', function() {
+            const dayInput = document.querySelector('.compact-section-title:contains("MIXING DETAILS")').parentNode.querySelectorAll('.compact-input-field')[0];
+            const nightInput = document.querySelector('.compact-section-title:contains("MIXING DETAILS")').parentNode.querySelectorAll('.compact-input-field')[1];
+            const totalInput = document.querySelector('.compact-total-input');
+            
+            function calculateTotal() {
+                const dayValue = parseFloat(dayInput.value) || 0;
+                const nightValue = parseFloat(nightInput.value) || 0;
+                totalInput.value = dayValue + nightValue;
+            }
+            
+            dayInput.addEventListener('input', calculateTotal);
+            nightInput.addEventListener('input', calculateTotal);
         });
     </script>
 </body>
