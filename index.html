@@ -531,64 +531,6 @@
         .cost-header {
             display: none; /* Hide the cost calculator header */
         }
-
-        /* Remarks box styles */
-        .remarks-box {
-            background-color: white;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            padding: 18px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            margin-bottom: 25px;
-            width: 200px;
-            margin-right: 25px;
-            float: left;
-        }
-        
-        .remarks-title {
-            background-color: #e6e6e6;
-            font-weight: bold;
-            text-align: center;
-            padding: 10px;
-            margin: -18px -18px 15px -18px;
-            font-size: 18px;
-            border-radius: 5px 5px 0 0;
-        }
-        
-        .remarks-textarea {
-            width: 100%;
-            height: 150px;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            resize: none;
-            font-family: Arial, sans-serif;
-            font-size: 14px;
-            box-sizing: border-box;
-        }
-
-        /* Clearfix for floating elements */
-        .clearfix::after {
-            content: "";
-            clear: both;
-            display: table;
-        }
-
-        /* Main content container */
-        .main-content {
-            display: flex;
-        }
-
-        /* Left column for remarks */
-        .left-column {
-            width: 200px;
-            margin-right: 25px;
-        }
-
-        /* Right column for main content */
-        .right-column {
-            flex: 1;
-        }
     </style>
 </head>
 <body>
@@ -601,239 +543,234 @@
         </div>
     </div>
 
-    <div class="main-content clearfix">
-        <!-- Left Column for Remarks -->
-        <div class="left-column">
-            <div class="remarks-box">
-                <div class="remarks-title">REMARKS</div>
-                <textarea class="remarks-textarea" placeholder="Enter remarks here..."></textarea>
+    <!-- Compact Dashboard Section -->
+    <div class="compact-dashboard">
+        <!-- FTD Section (25% width) -->
+        <div class="compact-section ftd-section-compact">
+            <div class="compact-section-title">FTD DETAILS</div>
+            <table class="compact-section-table">
+                <tr>
+                    <th>FTD Dispatch</th>
+                    <td><input type="text" class="compact-input-field"></td>
+                </tr>
+                <tr>
+                    <th>FTD Received</th>
+                    <td><input type="text" class="compact-input-field"></td>
+                </tr>
+                <tr>
+                    <th>MTD DRYER</th>
+                    <td><input type="number" class="compact-input-field"></td>
+                </tr>
+                <tr>
+                    <th>MTD VRM</th>
+                    <td><input type="number" class="compact-input-field"></td>
+                </tr>
+                <tr>
+                    <th>MTD Dispatch</th>
+                    <td><input type="number" class="compact-input-field"></td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Combined Stock Box (50% width) -->
+        <div class="compact-section stock-section-compact">
+            <div class="compact-section-title">STOCK DETAILS</div>
+            <div class="compact-stock-box">
+                <div class="compact-stock-column">
+                    <div class="compact-stock-header">OPENING</div>
+                    <table class="compact-section-table">
+                        <tr>
+                            <th>SGX Raw (RM)</th>
+                            <td><input type="number" class="compact-input-field"></td>
+                        </tr>
+                        <tr>
+                            <th>RH</th>
+                            <td><input type="number" class="compact-input-field"></td>
+                        </tr>
+                        <tr>
+                            <th>OPC</th>
+                            <td><input type="number" class="compact-input-field"></td>
+                        </tr>
+                        <tr>
+                            <th>ACC</th>
+                            <td><input type="number" class="compact-input-field"></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="compact-stock-column">
+                    <div class="compact-stock-header">CLOSING</div>
+                    <table class="compact-section-table">
+                        <tr>
+                            <th>SGX Raw (RM)</th>
+                            <td><input type="number" class="compact-input-field"></td>
+                        </tr>
+                        <tr>
+                            <th>RH</th>
+                            <td><input type="number" class="compact-input-field"></td>
+                        </tr>
+                        <tr>
+                            <th>OPC</th>
+                            <td><input type="number" class="compact-input-field"></td>
+                        </tr>
+                        <tr>
+                            <th>ACC</th>
+                            <td><input type="number" class="compact-input-field"></td>
+                        </tr>
+                    </table>
+                </div>
             </div>
         </div>
 
-        <!-- Right Column for Main Content -->
-        <div class="right-column">
-            <!-- Compact Dashboard Section -->
-            <div class="compact-dashboard">
-                <!-- FTD Section (25% width) -->
-                <div class="compact-section ftd-section-compact">
-                    <div class="compact-section-title">FTD DETAILS</div>
-                    <table class="compact-section-table">
-                        <tr>
-                            <th>FTD Dispatch</th>
-                            <td><input type="text" class="compact-input-field"></td>
-                        </tr>
-                        <tr>
-                            <th>FTD Received</th>
-                            <td><input type="text" class="compact-input-field"></td>
-                        </tr>
-                        <tr>
-                            <th>MTD DRYER</th>
-                            <td><input type="number" class="compact-input-field"></td>
-                        </tr>
-                        <tr>
-                            <th>MTD VRM</th>
-                            <td><input type="number" class="compact-input-field"></td>
-                        </tr>
-                        <tr>
-                            <th>MTD Dispatch</th>
-                            <td><input type="number" class="compact-input-field"></td>
-                        </tr>
-                    </table>
-                </div>
+        <!-- Mixing Details (25% width) -->
+        <div class="compact-section mixing-section-compact">
+            <div class="compact-section-title">MIXING DETAILS</div>
+            <table class="compact-section-table">
+                <tr>
+                    <th>DAY Mixing</th>
+                    <td><input type="number" class="compact-input-field"></td>
+                </tr>
+                <tr>
+                    <th>NIGHT Mixing</th>
+                    <td><input type="number" class="compact-input-field"></td>
+                </tr>
+                <tr>
+                    <th>FTD Mixing</th>
+                    <td><input type="number" class="compact-input-field"></td>
+                </tr>
+                <tr>
+                    <th>MTD Mixing</th>
+                    <td><input type="number" class="compact-input-field"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
 
-                <!-- Combined Stock Box (50% width) -->
-                <div class="compact-section stock-section-compact">
-                    <div class="compact-section-title">STOCK DETAILS</div>
-                    <div class="compact-stock-box">
-                        <div class="compact-stock-column">
-                            <div class="compact-stock-header">OPENING</div>
-                            <table class="compact-section-table">
-                                <tr>
-                                    <th>SGX-RAW</th>
-                                    <td><input type="number" class="compact-input-field"></td>
-                                </tr>
-                                <tr>
-                                    <th>RH</th>
-                                    <td><input type="number" class="compact-input-field"></td>
-                                </tr>
-                                <tr>
-                                    <th>OPC</th>
-                                    <td><input type="number" class="compact-input-field"></td>
-                                </tr>
-                            </table>
-                        </div>
-                        <div class="compact-stock-column">
-                            <div class="compact-stock-header">CLOSING</div>
-                            <table class="compact-section-table">
-                                <tr>
-                                    <th>SGX-RAW</th>
-                                    <td><input type="number" class="compact-input-field"></td>
-                                </tr>
-                                <tr>
-                                    <th>RH</th>
-                                    <td><input type="number" class="compact-input-field"></td>
-                                </tr>
-                                <tr>
-                                    <th>OPC</th>
-                                    <td><input type="number" class="compact-input-field"></td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+    <!-- Production Dashboard -->
+    <div class="dashboard">
+        <!-- Combined Table for Raw Materials and Production Output -->
+        <table class="combined-table">
+            <thead>
+                <tr>
+                    <th style="width: 10%;">PRODUCT</th>
+                    <th style="width: 12.5%;">SGX</th>
+                    <th style="width: 12.5%;">RH</th>
+                    <th style="width: 12.5%;">OPC</th>
+                    <th style="width: 12.5%;">ACCLTR</th>
+                    <th style="width: 12.5%;">GROUND MIXING</th>
+                    <th style="width: 12.5%;">VRM OUTPUT</th>
+                    <th style="width: 12.5%;">DRYER OUTPUT</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="row-header">D-80</td>
+                    <td><input type="text"></td>
+                    <td><input type="text"></td>
+                    <td><input type="text"></td>
+                    <td><input type="text"></td>
+                    <td><input type="text"></td>
+                    <td><input type="text"></td>
+                    <td><input type="text"></td>
+                </tr>
+                <tr>
+                    <td class="row-header">D-90</td>
+                    <td><input type="text"></td>
+                    <td><input type="text"></td>
+                    <td><input type="text"></td>
+                    <td><input type="text"></td>
+                    <td><input type="text"></td>
+                    <td><input type="text"></td>
+                    <td><input type="text"></td>
+                </tr>
+            </tbody>
+        </table>
 
-                <!-- Mixing Details (25% width) -->
-                <div class="compact-section mixing-section-compact">
-                    <div class="compact-section-title">MIXING DETAILS</div>
-                    <table class="compact-section-table">
-                        <tr>
-                            <th>DAY Mixing</th>
-                            <td><input type="number" class="compact-input-field"></td>
-                        </tr>
-                        <tr>
-                            <th>NIGHT Mixing</th>
-                            <td><input type="number" class="compact-input-field"></td>
-                        </tr>
-                        <tr>
-                            <th>FTD Mixing</th>
-                            <td><input type="number" class="compact-input-field"></td>
-                        </tr>
-                        <tr>
-                            <th>MTD Mixing</th>
-                            <td><input type="number" class="compact-input-field"></td>
-                        </tr>
-                    </table>
-                </div>
+        <!-- Operations Sections -->
+        <div class="operations-container">
+            <!-- Dryer Operations -->
+            <div class="operations-section">
+                <div class="section-title">DRYER OPERATIONS</div>
+                <table class="operations-table">
+                    <tr>
+                        <th></th>
+                        <th>DAY</th>
+                        <th>NIGHT</th>
+                        <th>TOTAL</th>
+                    </tr>
+                    <tr>
+                        <td>RUNNING Hrs</td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr>
+                        <td>PRODUCTION</td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr>
+                        <td>TPH</td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr>
+                        <td>LDO (Ltrs)</td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr>
+                        <td>JCB (Hrs)</td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                    </tr>
+                </table>
             </div>
 
-            <!-- Production Dashboard -->
-            <div class="dashboard">
-                <!-- Combined Table for Raw Materials and Production Output -->
-                <table class="combined-table">
-                    <thead>
-                        <tr>
-                            <th style="width: 10%;">PRODUCT</th>
-                            <th style="width: 12.5%;">SGX-RAW</th>
-                            <th style="width: 12.5%;">RH</th>
-                            <th style="width: 12.5%;">OPC</th>
-                            <th style="width: 12.5%;">GROUND MIXING</th>
-                            <th style="width: 12.5%;">DRYER OUTPUT</th>
-                            <th style="width: 12.5%;">SILO OUTPUT</th>
-                            <th style="width: 12.5%;">VRM OUTPUT</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="row-header">D-80</td>
-                            <td><input type="text"></td>
-                            <td><input type="text"></td>
-                            <td><input type="text"></td>
-                            <td><input type="text"></td>
-                            <td><input type="text"></td>
-                            <td><input type="text"></td>
-                            <td><input type="text"></td>
-                        </tr>
-                        <tr>
-                            <td class="row-header">D-90</td>
-                            <td><input type="text"></td>
-                            <td><input type="text"></td>
-                            <td><input type="text"></td>
-                            <td><input type="text"></td>
-                            <td><input type="text"></td>
-                            <td><input type="text"></td>
-                            <td><input type="text"></td>
-                        </tr>
-                    </tbody>
+            <!-- VRM Operations -->
+            <div class="operations-section">
+                <div class="section-title">VRM OPERATIONS</div>
+                <table class="operations-table">
+                    <tr>
+                        <th></th>
+                        <th>DAY</th>
+                        <th>NIGHT</th>
+                        <th>TOTAL</th>
+                    </tr>
+                    <tr>
+                        <td>RUNNING Hrs</td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr>
+                        <td>PRODUCTION</td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr>
+                        <td>TPH</td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr>
+                        <td>EB (Units)</td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr>
+                        <td>NMR (Hrs)</td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                    </tr>
                 </table>
-
-                <!-- Operations Sections -->
-                <div class="operations-container">
-                    <!-- Dryer Operations -->
-                    <div class="operations-section">
-                        <div class="section-title">DRYER OPERATIONS</div>
-                        <table class="operations-table">
-                            <tr>
-                                <th></th>
-                                <th>DAY</th>
-                                <th>NIGHT</th>
-                                <th>TOTAL</th>
-                            </tr>
-                            <tr>
-                                <td>RUNNING Hrs</td>
-                                <td><input type="text"></td>
-                                <td><input type="text"></td>
-                                <td><input type="text"></td>
-                            </tr>
-                            <tr>
-                                <td>PRODUCTION</td>
-                                <td><input type="text"></td>
-                                <td><input type="text"></td>
-                                <td><input type="text"></td>
-                            </tr>
-                            <tr>
-                                <td>TPH</td>
-                                <td><input type="text"></td>
-                                <td><input type="text"></td>
-                                <td><input type="text"></td>
-                            </tr>
-                            <tr>
-                                <td>LDO (Ltrs)</td>
-                                <td><input type="text"></td>
-                                <td><input type="text"></td>
-                                <td><input type="text"></td>
-                            </tr>
-                            <tr>
-                                <td>JCB (Hrs)</td>
-                                <td><input type="text"></td>
-                                <td><input type="text"></td>
-                                <td><input type="text"></td>
-                            </tr>
-                        </table>
-                    </div>
-
-                    <!-- VRM Operations -->
-                    <div class="operations-section">
-                        <div class="section-title">VRM OPERATIONS</div>
-                        <table class="operations-table">
-                            <tr>
-                                <th></th>
-                                <th>DAY</th>
-                                <th>NIGHT</th>
-                                <th>TOTAL</th>
-                            </tr>
-                            <tr>
-                                <td>RUNNING Hrs</td>
-                                <td><input type="text"></td>
-                                <td><input type="text"></td>
-                                <td><input type="text"></td>
-                            </tr>
-                            <tr>
-                                <td>PRODUCTION</td>
-                                <td><input type="text"></td>
-                                <td><input type="text"></td>
-                                <td><input type="text"></td>
-                            </tr>
-                            <tr>
-                                <td>TPH</td>
-                                <td><input type="text"></td>
-                                <td><input type="text"></td>
-                                <td><input type="text"></td>
-                            </tr>
-                            <tr>
-                                <td>EB (Units)</td>
-                                <td><input type="text"></td>
-                                <td><input type="text"></td>
-                                <td><input type="text"></td>
-                            </tr>
-                            <tr>
-                                <td>NMR (Hrs)</td>
-                                <td><input type="text"></td>
-                                <td><input type="text"></td>
-                                <td><input type="text"></td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -924,22 +861,6 @@
                 <tr class="cost-kg-row">
                     <td>Total COST/KG</td>
                     <td><input type="number" id="totalKG" class="calculator-input"></td>
-                </tr>
-            </table>
-        </div>
-    </div>
-
-    <!-- Additional Remarks Box (same size as cost boxes) -->
-    <div class="cost-container">
-        <div class="cost-column">
-            <table class="cost-table">
-                <tr>
-                    <th colspan="2" class="cost-section-title">ADDITIONAL REMARKS</th>
-                </tr>
-                <tr>
-                    <td colspan="2">
-                        <textarea style="width: 100%; height: 200px; border: none; padding: 10px; resize: none;" placeholder="Enter additional remarks here..."></textarea>
-                    </td>
                 </tr>
             </table>
         </div>
