@@ -592,6 +592,121 @@
         .cost-header {
             display: none; /* Hide the cost calculator header */
         }
+        
+        /* New styles for additional boxes */
+        .total-cost-box {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .total-cost-item {
+            flex: 1;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .total-cost-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-align: center;
+            background-color: #f2f2f2;
+            padding: 8px;
+            border-radius: 4px;
+        }
+        
+        .total-cost-value {
+            text-align: center;
+            font-size: 18px;
+            padding: 10px;
+        }
+        
+        .total-cost-value input {
+            width: 100%;
+            padding: 8px;
+            text-align: center;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        .note-box {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+        }
+        
+        .note-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .note-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        .additional-box {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+        }
+        
+        .additional-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .remark-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .remark-cell {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            min-height: 60px;
+        }
+        
+        .remark-label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .simple-remark {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .simple-remark-label {
+            font-weight: bold;
+            margin-right: 10px;
+            min-width: 80px;
+        }
+        
+        .simple-remark-input {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
     </style>
 </head>
 <body>
@@ -745,6 +860,28 @@
                 </tr>
             </tbody>
         </table>
+
+        <!-- Total Cost Boxes -->
+        <div class="total-cost-box">
+            <div class="total-cost-item">
+                <div class="total-cost-title">TOTAL DRYER COST</div>
+                <div class="total-cost-value"><input type="text" placeholder="Enter amount"></div>
+            </div>
+            <div class="total-cost-item">
+                <div class="total-cost-title">TOTAL VRM COST</div>
+                <div class="total-cost-value"><input type="text" placeholder="Enter amount"></div>
+            </div>
+            <div class="total-cost-item">
+                <div class="total-cost-title">OVERALL TOTAL COST</div>
+                <div class="total-cost-value"><input type="text" placeholder="Enter amount"></div>
+            </div>
+        </div>
+
+        <!-- Note Box -->
+        <div class="note-box">
+            <div class="note-title">NOTE</div>
+            <input type="text" class="note-input" placeholder="Enter your note here...">
+        </div>
 
         <!-- Operations Sections -->
         <div class="operations-container">
@@ -924,16 +1061,47 @@
                     <td><input type="number" id="totalKG" class="calculator-input"></td>
                 </tr>
             </table>
+            
+            <!-- Additional Box -->
+            <div class="additional-box">
+                <div class="additional-title">ADDITIONAL DATA</div>
+                <p>This section can be used for additional cost data or notes.</p>
+                <p>We can add more fields here as needed.</p>
+                <p>This box matches the size of the individual costs table.</p>
+                <p>It provides space for 3-4 more data points.</p>
+                <p>Or can be used for summary information.</p>
+            </div>
         </div>
     </div>
 
     <!-- Remark Section -->
     <div class="remark-container">
         <div class="remark-box">
-            <div class="remark-title">REMARKS</div>
-            <textarea class="remark-textarea" placeholder="Enter your remarks here..."></textarea>
-            <div class="remark-button-container no-print">
-                <button class="remark-btn" onclick="saveRemark()">SAVE REMARK</button>
+            <div class="simple-remark">
+                <span class="simple-remark-label">REMARKS:</span>
+                <input type="text" class="simple-remark-input" placeholder="Enter your remarks here...">
+            </div>
+            <div class="remark-grid">
+                <div class="remark-cell">
+                    <div class="remark-label">Point 1</div>
+                    <input type="text" style="width: 100%;">
+                </div>
+                <div class="remark-cell">
+                    <div class="remark-label">Point 2</div>
+                    <input type="text" style="width: 100%;">
+                </div>
+                <div class="remark-cell">
+                    <div class="remark-label">Point 3</div>
+                    <input type="text" style="width: 100%;">
+                </div>
+                <div class="remark-cell">
+                    <div class="remark-label">Point 4</div>
+                    <input type="text" style="width: 100%;">
+                </div>
+                <div class="remark-cell">
+                    <div class="remark-label">Point 5</div>
+                    <input type="text" style="width: 100%;">
+                </div>
             </div>
         </div>
     </div>
@@ -990,6 +1158,11 @@
             document.getElementById('totalMT').value = totalMT.toFixed(2);
             document.getElementById('totalKG').value = totalKG.toFixed(2);
             
+            // Update the total cost boxes
+            document.querySelectorAll('.total-cost-value input')[0].value = dryer.toFixed(2);
+            document.querySelectorAll('.total-cost-value input')[1].value = vrm.toFixed(2);
+            document.querySelectorAll('.total-cost-value input')[2].value = totalMT.toFixed(2);
+            
             // Log the calculation
             const date = document.getElementById('cost-date').value;
             console.log(`Cost calculation for ${date}: Total ₹${totalMT.toFixed(2)}/MT (₹${totalKG.toFixed(2)}/KG)`);
@@ -997,16 +1170,10 @@
 
         function resetValues() {
             // Reset all input fields to empty
-            const inputs = document.querySelectorAll('input[type="number"]');
+            const inputs = document.querySelectorAll('input[type="number"], input[type="text"]');
             inputs.forEach(input => {
                 input.value = "";
             });
-        }
-
-        function saveRemark() {
-            const remark = document.querySelector('.remark-textarea').value;
-            console.log("Remark saved:", remark);
-            alert("Remark saved successfully!");
         }
 
         // Add event listeners to all calculator input fields for better UX
