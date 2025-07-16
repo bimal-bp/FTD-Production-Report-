@@ -393,14 +393,21 @@
         
         .cost-table td {
             border: 1px solid #000;
-            padding: 10px;
+            padding: 8px;
             text-align: center;
-            height: 40px;
+            height: 30px;
         }
         
         .total-row {
             font-weight: bold;
             background-color: #ffe6cc;
+            font-size: 18px;
+        }
+        
+        .cost-kg-row {
+            font-weight: bold;
+            background-color: orange;
+            color: white;
             font-size: 18px;
         }
         
@@ -422,14 +429,14 @@
         
         .calculator-input {
             width: 90%;
-            padding: 8px;
+            padding: 6px;
             font-size: 16px;
             text-align: center;
             border: 1px solid #ccc;
             border-radius: 5px;
             margin: 0 auto;
             display: block;
-            height: 30px;
+            height: 25px;
         }
         
         .button-container {
@@ -544,23 +551,23 @@
             <table class="compact-section-table">
                 <tr>
                     <th>FTD Dispatch</th>
-                    <td><input type="text" class="compact-input-field" placeholder="Enter value"></td>
+                    <td><input type="text" class="compact-input-field"></td>
                 </tr>
                 <tr>
                     <th>FTD Received</th>
-                    <td><input type="text" class="compact-input-field" placeholder="Enter value"></td>
+                    <td><input type="text" class="compact-input-field"></td>
                 </tr>
                 <tr>
                     <th>MTD DRYER</th>
-                    <td><input type="number" class="compact-input-field" placeholder="Value"></td>
+                    <td><input type="number" class="compact-input-field"></td>
                 </tr>
                 <tr>
                     <th>MTD VRM</th>
-                    <td><input type="number" class="compact-input-field" placeholder="Value"></td>
+                    <td><input type="number" class="compact-input-field"></td>
                 </tr>
                 <tr>
                     <th>MTD Dispatch</th>
-                    <td><input type="number" class="compact-input-field" placeholder="Value"></td>
+                    <td><input type="number" class="compact-input-field"></td>
                 </tr>
             </table>
         </div>
@@ -574,19 +581,19 @@
                     <table class="compact-section-table">
                         <tr>
                             <th>SGX Raw (RM)</th>
-                            <td><input type="number" class="compact-input-field" placeholder="Value"></td>
+                            <td><input type="number" class="compact-input-field"></td>
                         </tr>
                         <tr>
                             <th>RH</th>
-                            <td><input type="number" class="compact-input-field" placeholder="Value"></td>
+                            <td><input type="number" class="compact-input-field"></td>
                         </tr>
                         <tr>
                             <th>OPC</th>
-                            <td><input type="number" class="compact-input-field" placeholder="Value"></td>
+                            <td><input type="number" class="compact-input-field"></td>
                         </tr>
                         <tr>
                             <th>ACC</th>
-                            <td><input type="number" class="compact-input-field" placeholder="Value"></td>
+                            <td><input type="number" class="compact-input-field"></td>
                         </tr>
                     </table>
                 </div>
@@ -595,19 +602,19 @@
                     <table class="compact-section-table">
                         <tr>
                             <th>SGX Raw (RM)</th>
-                            <td><input type="number" class="compact-input-field" placeholder="Value"></td>
+                            <td><input type="number" class="compact-input-field"></td>
                         </tr>
                         <tr>
                             <th>RH</th>
-                            <td><input type="number" class="compact-input-field" placeholder="Value"></td>
+                            <td><input type="number" class="compact-input-field"></td>
                         </tr>
                         <tr>
                             <th>OPC</th>
-                            <td><input type="number" class="compact-input-field" placeholder="Value"></td>
+                            <td><input type="number" class="compact-input-field"></td>
                         </tr>
                         <tr>
                             <th>ACC</th>
-                            <td><input type="number" class="compact-input-field" placeholder="Value"></td>
+                            <td><input type="number" class="compact-input-field"></td>
                         </tr>
                     </table>
                 </div>
@@ -620,19 +627,19 @@
             <table class="compact-section-table">
                 <tr>
                     <th>DAY Mixing</th>
-                    <td><input type="number" class="compact-input-field" placeholder="Value"></td>
+                    <td><input type="number" class="compact-input-field"></td>
                 </tr>
                 <tr>
                     <th>NIGHT Mixing</th>
-                    <td><input type="number" class="compact-input-field" placeholder="Value"></td>
+                    <td><input type="number" class="compact-input-field"></td>
                 </tr>
                 <tr>
                     <th>FTD Mixing</th>
-                    <td><input type="number" class="compact-input-field" placeholder="Value"></td>
+                    <td><input type="number" class="compact-input-field"></td>
                 </tr>
                 <tr>
                     <th>MTD Mixing</th>
-                    <td><input type="number" class="compact-input-field" placeholder="Value"></td>
+                    <td><input type="number" class="compact-input-field"></td>
                 </tr>
             </table>
         </div>
@@ -694,31 +701,31 @@
                         <td>RUNNING Hrs</td>
                         <td><input type="text"></td>
                         <td><input type="text"></td>
-                        <td><input type="text" value="0"></td>
+                        <td><input type="text"></td>
                     </tr>
                     <tr>
                         <td>PRODUCTION</td>
                         <td><input type="text"></td>
                         <td><input type="text"></td>
-                        <td><input type="text" value="0"></td>
+                        <td><input type="text"></td>
                     </tr>
                     <tr>
                         <td>TPH</td>
                         <td><input type="text"></td>
                         <td><input type="text"></td>
-                        <td><input type="text" value="#DIV/0!"></td>
+                        <td><input type="text"></td>
                     </tr>
                     <tr>
                         <td>LDO (Ltrs)</td>
                         <td><input type="text"></td>
                         <td><input type="text"></td>
-                        <td><input type="text" value="0"></td>
+                        <td><input type="text"></td>
                     </tr>
                     <tr>
                         <td>JCB (Hrs)</td>
-                        <td><input type="text" value="4.4"></td>
-                        <td><input type="text" value="0"></td>
-                        <td><input type="text" value="4.4"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
                     </tr>
                 </table>
             </div>
@@ -737,31 +744,31 @@
                         <td>RUNNING Hrs</td>
                         <td><input type="text"></td>
                         <td><input type="text"></td>
-                        <td><input type="text" value="0"></td>
+                        <td><input type="text"></td>
                     </tr>
                     <tr>
                         <td>PRODUCTION</td>
                         <td><input type="text"></td>
                         <td><input type="text"></td>
-                        <td><input type="text" value="0"></td>
+                        <td><input type="text"></td>
                     </tr>
                     <tr>
                         <td>TPH</td>
                         <td><input type="text"></td>
                         <td><input type="text"></td>
-                        <td><input type="text" value="#DIV/0!"></td>
+                        <td><input type="text"></td>
                     </tr>
                     <tr>
                         <td>EB (Units)</td>
-                        <td><input type="text" value="92"></td>
-                        <td><input type="text" value="60"></td>
-                        <td><input type="text" value="152"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
                     </tr>
                     <tr>
                         <td>NMR (Hrs)</td>
-                        <td><input type="text" value="11"></td>
-                        <td><input type="text" value="0"></td>
-                        <td><input type="text" value="11"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
                     </tr>
                 </table>
             </div>
@@ -781,51 +788,51 @@
                 </tr>
                 <tr>
                     <td>MIXING COST</td>
-                    <td><input type="number" id="mixing" class="calculator-input" value="0.00" step="0.01"></td>
+                    <td><input type="number" id="mixing" class="calculator-input"></td>
                 </tr>
                 <tr>
                     <td>NMR COST</td>
-                    <td><input type="number" id="nmr" class="calculator-input" value="0.00" step="0.01"></td>
+                    <td><input type="number" id="nmr" class="calculator-input"></td>
                 </tr>
                 <tr>
                     <td>EB COST</td>
-                    <td><input type="number" id="eb" class="calculator-input" value="0.00" step="0.01"></td>
+                    <td><input type="number" id="eb" class="calculator-input"></td>
                 </tr>
                 <tr>
                     <td>Forklift cost</td>
-                    <td><input type="number" id="forklift" class="calculator-input" value="0.00" step="0.01"></td>
+                    <td><input type="number" id="forklift" class="calculator-input"></td>
                 </tr>
                 <tr>
                     <td>BAG COST</td>
-                    <td><input type="number" id="bag" class="calculator-input" value="0.00" step="0.01"></td>
+                    <td><input type="number" id="bag" class="calculator-input"></td>
                 </tr>
                 <tr>
                     <td>LDO COST</td>
-                    <td><input type="number" id="ldo" class="calculator-input" value="0.00" step="0.01"></td>
+                    <td><input type="number" id="ldo" class="calculator-input"></td>
                 </tr>
                 <tr>
                     <td>JCB operator</td>
-                    <td><input type="number" id="jcbOperator" class="calculator-input" value="0.00" step="0.01"></td>
+                    <td><input type="number" id="jcbOperator" class="calculator-input"></td>
                 </tr>
                 <tr>
                     <td>JCB fuel cost</td>
-                    <td><input type="number" id="jcbFuel" class="calculator-input" value="0.00" step="0.01"></td>
+                    <td><input type="number" id="jcbFuel" class="calculator-input"></td>
                 </tr>
                 <tr>
                     <td>Spare Part cost</td>
-                    <td><input type="number" id="spare" class="calculator-input" value="0.00" step="0.01"></td>
+                    <td><input type="number" id="spare" class="calculator-input"></td>
                 </tr>
                 <tr>
                     <td>Maintenance Cost & misc. cost</td>
-                    <td><input type="number" id="maintenance" class="calculator-input" value="0.00" step="0.01"></td>
+                    <td><input type="number" id="maintenance" class="calculator-input"></td>
                 </tr>
                 <tr>
                     <td>Vehicle Loading cost</td>
-                    <td><input type="number" id="loading" class="calculator-input" value="0.00" step="0.01"></td>
+                    <td><input type="number" id="loading" class="calculator-input"></td>
                 </tr>
                 <tr>
                     <td>Vehicle Unloading Cost</td>
-                    <td><input type="number" id="unloading" class="calculator-input" value="0.00" step="0.01"></td>
+                    <td><input type="number" id="unloading" class="calculator-input"></td>
                 </tr>
             </table>
         </div>
@@ -841,28 +848,26 @@
                 </tr>
                 <tr>
                     <td>DRYER COST /MT</td>
-                    <td><input type="number" id="dryer" class="calculator-input" value="0.00" step="0.01"></td>
+                    <td><input type="number" id="dryer" class="calculator-input"></td>
                 </tr>
                 <tr>
                     <td>VRM COST /MT</td>
-                    <td><input type="number" id="vrm" class="calculator-input" value="0.00" step="0.01"></td>
+                    <td><input type="number" id="vrm" class="calculator-input"></td>
                 </tr>
                 <tr class="total-row">
                     <td>TOTAL COST/MT</td>
-                    <td><input type="number" id="totalMT" class="calculator-input" value="0.00" step="0.01"></td>
+                    <td><input type="number" id="totalMT" class="calculator-input"></td>
                 </tr>
-                <tr class="total-row">
+                <tr class="cost-kg-row">
                     <td>Total COST/KG</td>
-                    <td><input type="number" id="totalKG" class="calculator-input" value="0.00" step="0.01"></td>
+                    <td><input type="number" id="totalKG" class="calculator-input"></td>
                 </tr>
             </table>
         </div>
     </div>
 
     <div class="button-container no-print">
-        <button class="calculator-btn" onclick="calculateTotals()">CALCULATE TOTALS</button>
-        <button class="calculator-btn reset-btn" onclick="resetValues()">RESET ALL</button>
-        <button class="calculator-btn" onclick="window.print()" style="background-color: #2196F3;">PRINT REPORT</button>
+        <button class="calculator-btn" onclick="window.print()">PRINT REPORT</button>
     </div>
 
     <script>
@@ -919,10 +924,10 @@
         }
 
         function resetValues() {
-            // Reset all input fields to 0.00
+            // Reset all input fields to empty
             const inputs = document.querySelectorAll('input[type="number"]');
             inputs.forEach(input => {
-                input.value = "0.00";
+                input.value = "";
             });
         }
 
