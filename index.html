@@ -86,7 +86,15 @@
             border-radius: 5px;
             box-shadow: 0 0 5px rgba(0,0,0,0.1);
             min-width: 200px;
-            width: 100%;
+        }
+        .ftd-section-compact {
+            width: 25%;
+        }
+        .stock-section-compact {
+            width: 50%;
+        }
+        .mixing-section-compact {
+            width: 25%;
         }
         .compact-section-title {
             background-color: orange;
@@ -407,6 +415,7 @@
             margin-bottom: 40px;
             text-align: center;
             color: #333;
+            display: none; /* Hide the calculator title */
         }
         
         .calculator-input {
@@ -510,13 +519,7 @@
         
         /* Cost calculator header */
         .cost-header {
-            background-color: orange;
-            color: white;
-            padding: 15px;
-            text-align: center;
-            margin: 40px 0 25px 0;
-            position: relative;
-            border-radius: 5px;
+            display: none; /* Hide the cost calculator header */
         }
     </style>
 </head>
@@ -532,8 +535,8 @@
 
     <!-- Compact Dashboard Section -->
     <div class="compact-dashboard">
-        <!-- FTD Section -->
-        <div class="compact-section">
+        <!-- FTD Section (25% width) -->
+        <div class="compact-section ftd-section-compact">
             <div class="compact-section-title">FTD DETAILS</div>
             <table class="compact-section-table">
                 <tr>
@@ -559,8 +562,8 @@
             </table>
         </div>
 
-        <!-- Combined Stock Box -->
-        <div class="compact-section">
+        <!-- Combined Stock Box (50% width) -->
+        <div class="compact-section stock-section-compact">
             <div class="compact-section-title">STOCK DETAILS</div>
             <div class="compact-stock-box">
                 <div class="compact-stock-column">
@@ -608,8 +611,8 @@
             </div>
         </div>
 
-        <!-- Mixing Details -->
-        <div class="compact-section">
+        <!-- Mixing Details (25% width) -->
+        <div class="compact-section mixing-section-compact">
             <div class="compact-section-title">MIXING DETAILS</div>
             <table class="compact-section-table">
                 <tr>
@@ -618,6 +621,10 @@
                 </tr>
                 <tr>
                     <th>NIGHT Mixing</th>
+                    <td><input type="number" class="compact-input-field" placeholder="Value"></td>
+                </tr>
+                <tr>
+                    <th>MTD Mixing</th>
                     <td><input type="number" class="compact-input-field" placeholder="Value"></td>
                 </tr>
                 <tr class="compact-total-row">
@@ -758,22 +765,7 @@
         </div>
     </div>
 
-    <div class="no-print">
-        <button class="submit-btn" onclick="submitData()">Submit Data</button>
-        <button class="submit-btn" onclick="window.print()" style="background-color: #2196F3; margin-left: 30px;">Print Report</button>
-    </div>
-
     <!-- Cost Calculator Section -->
-    <div class="cost-header">
-        <div class="company-name">SGX MINERALS PVT LTD - COST CALCULATOR</div>
-        <div class="date-picker no-print">
-            <label for="cost-date">Date: </label>
-            <input type="date" id="cost-date" name="cost-date">
-        </div>
-    </div>
-
-    <h1 class="calculator-title">COST BREAKDOWN CALCULATOR</h1>
-    
     <div class="cost-container">
         <div class="cost-column">
             <table class="cost-table" id="individualCosts">
