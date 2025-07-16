@@ -3,57 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SGX Minerals - Production Management</title>
+    <title>SGX Minerals - Production & Cost Management</title>
     <style>
         /* Global Styles */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
-            padding: 0;
+            padding: 20px;
             background-color: #f5f5f5;
         }
         
-        /* Tab Navigation */
-        .tab-container {
-            width: 100%;
-            background-color: #333;
-            overflow: hidden;
-        }
-        
-        .tab-buttons {
-            display: flex;
-        }
-        
-        .tab-button {
-            background-color: #555;
-            color: white;
-            border: none;
-            outline: none;
-            cursor: pointer;
-            padding: 14px 20px;
-            font-size: 18px;
-            flex: 1;
-            transition: background-color 0.3s;
-        }
-        
-        .tab-button:hover {
-            background-color: #777;
-        }
-        
-        .tab-button.active {
-            background-color: orange;
-            font-weight: bold;
-        }
-        
-        .tab-content {
-            display: none;
-            padding: 20px;
-        }
-        
-        .tab-content.active {
-            display: block;
-        }
-
         /* Common Header Styles */
         .header {
             background-color: orange;
@@ -286,10 +245,9 @@
             border: 1px solid #ddd;
             padding: 18px;
             border-radius: 6px;
-            margin-bottom: 25px;
-            width: 320px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             background-color: white;
+            flex: 1;
         }
         
         .ftd-title {
@@ -371,7 +329,7 @@
             font-size: 22px;
         }
         
-        .section-title {
+        .cost-section-title {
             background-color: #d9d9d9;
             font-weight: bold;
             text-align: center;
@@ -449,12 +407,8 @@
                 background-color: white;
             }
             
-            .tab-container, .no-print {
+            .no-print {
                 display: none;
-            }
-            
-            .tab-content {
-                display: block !important;
             }
             
             input {
@@ -480,28 +434,40 @@
                 box-shadow: none;
             }
         }
+        
+        /* Top sections container */
+        .top-sections {
+            display: flex;
+            gap: 25px;
+            margin-bottom: 25px;
+            width: 100%;
+        }
+        
+        /* Cost calculator header */
+        .cost-header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            margin: 40px 0 25px 0;
+            position: relative;
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body>
-    <!-- Tab Navigation -->
-    <div class="tab-container">
-        <div class="tab-buttons">
-            <button class="tab-button active" onclick="openTab('production')">Production Dashboard</button>
-            <button class="tab-button" onclick="openTab('cost')">Cost Calculator</button>
+    <!-- Production Dashboard -->
+    <div class="header">
+        <div class="company-name">SGX MINERALS PVT LTD - MICRO DIVISION</div>
+        <div class="date-picker no-print">
+            <label for="report-date">Date: </label>
+            <input type="date" id="report-date" name="report-date">
         </div>
     </div>
 
-    <!-- Production Dashboard Tab -->
-    <div id="production" class="tab-content active">
-        <div class="header">
-            <div class="company-name">SGX MINERALS PVT LTD - MICRO DIVISION</div>
-            <div class="date-picker no-print">
-                <label for="report-date">Date: </label>
-                <input type="date" id="report-date" name="report-date">
-            </div>
-        </div>
-
-        <div class="dashboard">
+    <div class="dashboard">
+        <!-- Top Sections (FTD, Opening Stock, Mixing) in one row -->
+        <div class="top-sections">
             <!-- FTD Section -->
             <div class="ftd-section">
                 <div class="section-title">FTD DETAILS</div>
@@ -517,324 +483,297 @@
                 </table>
             </div>
 
-            <!-- Combined Horizontal Section -->
-            <div class="horizontal-container">
-                <!-- Opening Stock -->
-                <div class="horizontal-section">
-                    <div class="section-title">OPENING STOCK</div>
-                    <div class="horizontal-row">
-                        <div class="horizontal-cell">
-                            <div class="form-label">SGX Raw</div>
-                            <input type="text" value="66">
-                        </div>
-                        <div class="horizontal-cell">
-                            <div class="form-label">RH</div>
-                            <input type="text" value="0">
-                        </div>
-                        <div class="horizontal-cell">
-                            <div class="form-label">OPC</div>
-                            <input type="text" value="21.6">
-                        </div>
-                        <div class="horizontal-cell">
-                            <div class="form-label">ACC</div>
-                            <input type="text" value="5.7">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Mixing Details -->
-                <div class="horizontal-section">
-                    <div class="section-title">MIXING DETAILS</div>
-                    <div class="horizontal-row">
-                        <div class="horizontal-cell">
-                            <div class="form-label">DAY</div>
-                            <input type="text">
-                        </div>
-                        <div class="horizontal-cell">
-                            <div class="form-label">NIGHT</div>
-                            <input type="text">
-                        </div>
-                        <div class="horizontal-cell">
-                            <div class="form-label">TOTAL MIX</div>
-                            <input type="text" value="0">
-                        </div>
-                    </div>
-                </div>
+            <!-- Opening Stock -->
+            <div class="ftd-section">
+                <div class="section-title">OPENING STOCK</div>
+                <table class="ftd-table">
+                    <tr>
+                        <th>SGX Raw</th>
+                        <td><input type="text" class="ftd-input-full" value="66"></td>
+                    </tr>
+                    <tr>
+                        <th>RH</th>
+                        <td><input type="text" class="ftd-input-full" value="0"></td>
+                    </tr>
+                    <tr>
+                        <th>OPC</th>
+                        <td><input type="text" class="ftd-input-full" value="21.6"></td>
+                    </tr>
+                    <tr>
+                        <th>ACC</th>
+                        <td><input type="text" class="ftd-input-full" value="5.7"></td>
+                    </tr>
+                </table>
             </div>
 
-            <!-- Combined Table for Raw Materials and Production Output -->
-            <table class="combined-table">
-                <thead>
+            <!-- Mixing Details -->
+            <div class="ftd-section">
+                <div class="section-title">MIXING DETAILS</div>
+                <table class="ftd-table">
                     <tr>
-                        <th style="width: 10%;">PRODUCT</th>
-                        <th style="width: 12.5%;">SGX</th>
-                        <th style="width: 12.5%;">RH</th>
-                        <th style="width: 12.5%;">OPC</th>
-                        <th style="width: 12.5%;">ACCLTR</th>
-                        <th style="width: 12.5%;">GROUND MIXING</th>
-                        <th style="width: 12.5%;">VRM OUTPUT</th>
-                        <th style="width: 12.5%;">DRYER OUTPUT</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td class="row-header">D-80</td>
-                        <td><input type="text"></td>
-                        <td><input type="text"></td>
-                        <td><input type="text"></td>
-                        <td><input type="text"></td>
-                        <td><input type="text"></td>
-                        <td><input type="text"></td>
-                        <td><input type="text"></td>
+                        <th>DAY</th>
+                        <td><input type="text" class="ftd-input-full"></td>
                     </tr>
                     <tr>
-                        <td class="row-header">D-90</td>
-                        <td><input type="text"></td>
-                        <td><input type="text"></td>
-                        <td><input type="text"></td>
-                        <td><input type="text"></td>
-                        <td><input type="text"></td>
-                        <td><input type="text"></td>
-                        <td><input type="text"></td>
+                        <th>NIGHT</th>
+                        <td><input type="text" class="ftd-input-full"></td>
                     </tr>
-                </tbody>
-            </table>
-
-            <!-- Operations Sections -->
-            <div class="operations-container">
-                <!-- Dryer Operations -->
-                <div class="operations-section">
-                    <div class="section-title">DRYER OPERATIONS</div>
-                    <table class="operations-table">
-                        <tr>
-                            <th></th>
-                            <th>DAY</th>
-                            <th>NIGHT</th>
-                            <th>TOTAL</th>
-                        </tr>
-                        <tr>
-                            <td>RUNNING Hrs</td>
-                            <td><input type="text"></td>
-                            <td><input type="text"></td>
-                            <td><input type="text" value="0"></td>
-                        </tr>
-                        <tr>
-                            <td>PRODUCTION</td>
-                            <td><input type="text"></td>
-                            <td><input type="text"></td>
-                            <td><input type="text" value="0"></td>
-                        </tr>
-                        <tr>
-                            <td>TPH</td>
-                            <td><input type="text"></td>
-                            <td><input type="text"></td>
-                            <td><input type="text" value="#DIV/0!"></td>
-                        </tr>
-                        <tr>
-                            <td>LDO (Ltrs)</td>
-                            <td><input type="text"></td>
-                            <td><input type="text"></td>
-                            <td><input type="text" value="0"></td>
-                        </tr>
-                        <tr>
-                            <td>JCB (Hrs)</td>
-                            <td><input type="text" value="4.4"></td>
-                            <td><input type="text" value="0"></td>
-                            <td><input type="text" value="4.4"></td>
-                        </tr>
-                    </table>
-                </div>
-
-                <!-- VRM Operations -->
-                <div class="operations-section">
-                    <div class="section-title">VRM OPERATIONS</div>
-                    <table class="operations-table">
-                        <tr>
-                            <th></th>
-                            <th>DAY</th>
-                            <th>NIGHT</th>
-                            <th>TOTAL</th>
-                        </tr>
-                        <tr>
-                            <td>RUNNING Hrs</td>
-                            <td><input type="text"></td>
-                            <td><input type="text"></td>
-                            <td><input type="text" value="0"></td>
-                        </tr>
-                        <tr>
-                            <td>PRODUCTION</td>
-                            <td><input type="text"></td>
-                            <td><input type="text"></td>
-                            <td><input type="text" value="0"></td>
-                        </tr>
-                        <tr>
-                            <td>TPH</td>
-                            <td><input type="text"></td>
-                            <td><input type="text"></td>
-                            <td><input type="text" value="#DIV/0!"></td>
-                        </tr>
-                        <tr>
-                            <td>EB (Units)</td>
-                            <td><input type="text" value="92"></td>
-                            <td><input type="text" value="60"></td>
-                            <td><input type="text" value="152"></td>
-                        </tr>
-                        <tr>
-                            <td>NMR (Hrs)</td>
-                            <td><input type="text" value="11"></td>
-                            <td><input type="text" value="0"></td>
-                            <td><input type="text" value="11"></td>
-                        </tr>
-                    </table>
-                </div>
+                    <tr>
+                        <th>TOTAL MIX</th>
+                        <td><input type="text" class="ftd-input-full" value="0"></td>
+                    </tr>
+                </table>
             </div>
         </div>
 
-        <div class="no-print">
-            <button class="submit-btn" onclick="submitData()">Submit Data</button>
-            <button class="submit-btn" onclick="window.print()" style="background-color: #2196F3; margin-left: 30px;">Print Report</button>
+        <!-- Combined Table for Raw Materials and Production Output -->
+        <table class="combined-table">
+            <thead>
+                <tr>
+                    <th style="width: 10%;">PRODUCT</th>
+                    <th style="width: 12.5%;">SGX</th>
+                    <th style="width: 12.5%;">RH</th>
+                    <th style="width: 12.5%;">OPC</th>
+                    <th style="width: 12.5%;">ACCLTR</th>
+                    <th style="width: 12.5%;">GROUND MIXING</th>
+                    <th style="width: 12.5%;">VRM OUTPUT</th>
+                    <th style="width: 12.5%;">DRYER OUTPUT</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="row-header">D-80</td>
+                    <td><input type="text"></td>
+                    <td><input type="text"></td>
+                    <td><input type="text"></td>
+                    <td><input type="text"></td>
+                    <td><input type="text"></td>
+                    <td><input type="text"></td>
+                    <td><input type="text"></td>
+                </tr>
+                <tr>
+                    <td class="row-header">D-90</td>
+                    <td><input type="text"></td>
+                    <td><input type="text"></td>
+                    <td><input type="text"></td>
+                    <td><input type="text"></td>
+                    <td><input type="text"></td>
+                    <td><input type="text"></td>
+                    <td><input type="text"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Operations Sections -->
+        <div class="operations-container">
+            <!-- Dryer Operations -->
+            <div class="operations-section">
+                <div class="section-title">DRYER OPERATIONS</div>
+                <table class="operations-table">
+                    <tr>
+                        <th></th>
+                        <th>DAY</th>
+                        <th>NIGHT</th>
+                        <th>TOTAL</th>
+                    </tr>
+                    <tr>
+                        <td>RUNNING Hrs</td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text" value="0"></td>
+                    </tr>
+                    <tr>
+                        <td>PRODUCTION</td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text" value="0"></td>
+                    </tr>
+                    <tr>
+                        <td>TPH</td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text" value="#DIV/0!"></td>
+                    </tr>
+                    <tr>
+                        <td>LDO (Ltrs)</td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text" value="0"></td>
+                    </tr>
+                    <tr>
+                        <td>JCB (Hrs)</td>
+                        <td><input type="text" value="4.4"></td>
+                        <td><input type="text" value="0"></td>
+                        <td><input type="text" value="4.4"></td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- VRM Operations -->
+            <div class="operations-section">
+                <div class="section-title">VRM OPERATIONS</div>
+                <table class="operations-table">
+                    <tr>
+                        <th></th>
+                        <th>DAY</th>
+                        <th>NIGHT</th>
+                        <th>TOTAL</th>
+                    </tr>
+                    <tr>
+                        <td>RUNNING Hrs</td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text" value="0"></td>
+                    </tr>
+                    <tr>
+                        <td>PRODUCTION</td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text" value="0"></td>
+                    </tr>
+                    <tr>
+                        <td>TPH</td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text" value="#DIV/0!"></td>
+                    </tr>
+                    <tr>
+                        <td>EB (Units)</td>
+                        <td><input type="text" value="92"></td>
+                        <td><input type="text" value="60"></td>
+                        <td><input type="text" value="152"></td>
+                    </tr>
+                    <tr>
+                        <td>NMR (Hrs)</td>
+                        <td><input type="text" value="11"></td>
+                        <td><input type="text" value="0"></td>
+                        <td><input type="text" value="11"></td>
+                    </tr>
+                </table>
+            </div>
         </div>
     </div>
 
-    <!-- Cost Calculator Tab -->
-    <div id="cost" class="tab-content">
-        <div class="header">
-            <div class="company-name">SGX MINERALS PVT LTD - COST CALCULATOR</div>
-            <div class="date-picker no-print">
-                <label for="cost-date">Date: </label>
-                <input type="date" id="cost-date" name="cost-date">
-            </div>
-        </div>
+    <div class="no-print">
+        <button class="submit-btn" onclick="submitData()">Submit Data</button>
+        <button class="submit-btn" onclick="window.print()" style="background-color: #2196F3; margin-left: 30px;">Print Report</button>
+    </div>
 
-        <h1 class="calculator-title">COST BREAKDOWN CALCULATOR</h1>
+    <!-- Cost Calculator Section -->
+    <div class="cost-header">
+        <div class="company-name">SGX MINERALS PVT LTD - COST CALCULATOR</div>
+        <div class="date-picker no-print">
+            <label for="cost-date">Date: </label>
+            <input type="date" id="cost-date" name="cost-date">
+        </div>
+    </div>
+
+    <h1 class="calculator-title">COST BREAKDOWN CALCULATOR</h1>
+    
+    <div class="cost-container">
+        <div class="cost-column">
+            <table class="cost-table" id="individualCosts">
+                <tr>
+                    <th colspan="2" class="cost-section-title">INDIVIDUAL COSTS</th>
+                </tr>
+                <tr>
+                    <th>COST ITEM</th>
+                    <th>AMOUNT (₹)</th>
+                </tr>
+                <tr>
+                    <td>MIXING COST</td>
+                    <td><input type="number" id="mixing" class="calculator-input" value="0.00" step="0.01"></td>
+                </tr>
+                <tr>
+                    <td>NMR COST</td>
+                    <td><input type="number" id="nmr" class="calculator-input" value="0.00" step="0.01"></td>
+                </tr>
+                <tr>
+                    <td>EB COST</td>
+                    <td><input type="number" id="eb" class="calculator-input" value="0.00" step="0.01"></td>
+                </tr>
+                <tr>
+                    <td>Forklift cost</td>
+                    <td><input type="number" id="forklift" class="calculator-input" value="0.00" step="0.01"></td>
+                </tr>
+                <tr>
+                    <td>BAG COST</td>
+                    <td><input type="number" id="bag" class="calculator-input" value="0.00" step="0.01"></td>
+                </tr>
+                <tr>
+                    <td>LDO COST</td>
+                    <td><input type="number" id="ldo" class="calculator-input" value="0.00" step="0.01"></td>
+                </tr>
+                <tr>
+                    <td>JCB operator</td>
+                    <td><input type="number" id="jcbOperator" class="calculator-input" value="0.00" step="0.01"></td>
+                </tr>
+                <tr>
+                    <td>JCB fuel cost</td>
+                    <td><input type="number" id="jcbFuel" class="calculator-input" value="0.00" step="0.01"></td>
+                </tr>
+                <tr>
+                    <td>Spare Part cost</td>
+                    <td><input type="number" id="spare" class="calculator-input" value="0.00" step="0.01"></td>
+                </tr>
+                <tr>
+                    <td>Maintenance Cost & misc. cost</td>
+                    <td><input type="number" id="maintenance" class="calculator-input" value="0.00" step="0.01"></td>
+                </tr>
+                <tr>
+                    <td>Vehicle Loading cost</td>
+                    <td><input type="number" id="loading" class="calculator-input" value="0.00" step="0.01"></td>
+                </tr>
+                <tr>
+                    <td>Vehicle Unloading Cost</td>
+                    <td><input type="number" id="unloading" class="calculator-input" value="0.00" step="0.01"></td>
+                </tr>
+            </table>
+        </div>
         
-        <div class="cost-container">
-            <div class="cost-column">
-                <table class="cost-table" id="individualCosts">
-                    <tr>
-                        <th colspan="2" class="section-title">INDIVIDUAL COSTS</th>
-                    </tr>
-                    <tr>
-                        <th>COST ITEM</th>
-                        <th>AMOUNT (₹)</th>
-                    </tr>
-                    <tr>
-                        <td>MIXING COST</td>
-                        <td><input type="number" id="mixing" class="calculator-input" value="0.00" step="0.01"></td>
-                    </tr>
-                    <tr>
-                        <td>NMR COST</td>
-                        <td><input type="number" id="nmr" class="calculator-input" value="0.00" step="0.01"></td>
-                    </tr>
-                    <tr>
-                        <td>EB COST</td>
-                        <td><input type="number" id="eb" class="calculator-input" value="0.00" step="0.01"></td>
-                    </tr>
-                    <tr>
-                        <td>Forklift cost</td>
-                        <td><input type="number" id="forklift" class="calculator-input" value="0.00" step="0.01"></td>
-                    </tr>
-                    <tr>
-                        <td>BAG COST</td>
-                        <td><input type="number" id="bag" class="calculator-input" value="0.00" step="0.01"></td>
-                    </tr>
-                    <tr>
-                        <td>LDO COST</td>
-                        <td><input type="number" id="ldo" class="calculator-input" value="0.00" step="0.01"></td>
-                    </tr>
-                    <tr>
-                        <td>JCB operator</td>
-                        <td><input type="number" id="jcbOperator" class="calculator-input" value="0.00" step="0.01"></td>
-                    </tr>
-                    <tr>
-                        <td>JCB fuel cost</td>
-                        <td><input type="number" id="jcbFuel" class="calculator-input" value="0.00" step="0.01"></td>
-                    </tr>
-                    <tr>
-                        <td>Spare Part cost</td>
-                        <td><input type="number" id="spare" class="calculator-input" value="0.00" step="0.01"></td>
-                    </tr>
-                    <tr>
-                        <td>Maintenance Cost & misc. cost</td>
-                        <td><input type="number" id="maintenance" class="calculator-input" value="0.00" step="0.01"></td>
-                    </tr>
-                    <tr>
-                        <td>Vehicle Loading cost</td>
-                        <td><input type="number" id="loading" class="calculator-input" value="0.00" step="0.01"></td>
-                    </tr>
-                    <tr>
-                        <td>Vehicle Unloading Cost</td>
-                        <td><input type="number" id="unloading" class="calculator-input" value="0.00" step="0.01"></td>
-                    </tr>
-                </table>
-            </div>
-            
-            <div class="cost-column">
-                <table class="cost-table" id="totalCosts">
-                    <tr>
-                        <th colspan="2" class="section-title">TOTAL COSTS</th>
-                    </tr>
-                    <tr>
-                        <th>COST ITEM</th>
-                        <th>AMOUNT (₹)</th>
-                    </tr>
-                    <tr>
-                        <td>DRYER COST /MT</td>
-                        <td><input type="number" id="dryer" class="calculator-input" value="0.00" step="0.01"></td>
-                    </tr>
-                    <tr>
-                        <td>VRM COST /MT</td>
-                        <td><input type="number" id="vrm" class="calculator-input" value="0.00" step="0.01"></td>
-                    </tr>
-                    <tr class="total-row">
-                        <td>TOTAL COST/MT</td>
-                        <td id="totalMT">0.00</td>
-                    </tr>
-                    <tr class="total-row">
-                        <td>Total COST/KG</td>
-                        <td id="totalKG">0.00</td>
-                    </tr>
-                </table>
-            </div>
+        <div class="cost-column">
+            <table class="cost-table" id="totalCosts">
+                <tr>
+                    <th colspan="2" class="cost-section-title">TOTAL COSTS</th>
+                </tr>
+                <tr>
+                    <th>COST ITEM</th>
+                    <th>AMOUNT (₹)</th>
+                </tr>
+                <tr>
+                    <td>DRYER COST /MT</td>
+                    <td><input type="number" id="dryer" class="calculator-input" value="0.00" step="0.01"></td>
+                </tr>
+                <tr>
+                    <td>VRM COST /MT</td>
+                    <td><input type="number" id="vrm" class="calculator-input" value="0.00" step="0.01"></td>
+                </tr>
+                <tr class="total-row">
+                    <td>TOTAL COST/MT</td>
+                    <td id="totalMT">0.00</td>
+                </tr>
+                <tr class="total-row">
+                    <td>Total COST/KG</td>
+                    <td id="totalKG">0.00</td>
+                </tr>
+            </table>
         </div>
+    </div>
 
-        <div class="button-container no-print">
-            <button class="calculator-btn" onclick="calculateTotals()">CALCULATE TOTALS</button>
-            <button class="calculator-btn reset-btn" onclick="resetValues()">RESET ALL</button>
-            <button class="calculator-btn" onclick="window.print()" style="background-color: #2196F3;">PRINT REPORT</button>
-        </div>
+    <div class="button-container no-print">
+        <button class="calculator-btn" onclick="calculateTotals()">CALCULATE TOTALS</button>
+        <button class="calculator-btn reset-btn" onclick="resetValues()">RESET ALL</button>
+        <button class="calculator-btn" onclick="window.print()" style="background-color: #2196F3;">PRINT REPORT</button>
     </div>
 
     <script>
-        // Tab Navigation Functionality
-        function openTab(tabName) {
-            const tabContents = document.getElementsByClassName("tab-content");
-            for (let i = 0; i < tabContents.length; i++) {
-                tabContents[i].classList.remove("active");
-            }
-            
-            const tabButtons = document.getElementsByClassName("tab-button");
-            for (let i = 0; i < tabButtons.length; i++) {
-                tabButtons[i].classList.remove("active");
-            }
-            
-            document.getElementById(tabName).classList.add("active");
-            event.currentTarget.classList.add("active");
-            
-            // Set date for the active tab
-            if (tabName === 'production') {
-                document.getElementById('report-date').valueAsDate = new Date();
-            } else {
-                document.getElementById('cost-date').valueAsDate = new Date();
-            }
-        }
-
         // Production Dashboard Functions
         document.getElementById('report-date').valueAsDate = new Date();
+        document.getElementById('cost-date').valueAsDate = new Date();
 
         function submitData() {
             const date = document.getElementById('report-date').value;
-            const inputs = document.querySelectorAll('#production input:not([type="date"])');
+            const inputs = document.querySelectorAll('input:not([type="date"])');
             const data = {
                 date: date,
                 values: []
@@ -845,12 +784,10 @@
             });
             
             console.log("Submitted production data:", data);
-            alert(`Production data for ${date} submitted! Check console for details.`);
+            alert(`Data for ${date} submitted! Check console for details.`);
         }
 
         // Cost Calculator Functions
-        document.getElementById('cost-date').valueAsDate = new Date();
-
         function calculateTotals() {
             // Get all input values
             const mixing = parseFloat(document.getElementById('mixing').value) || 0;
@@ -884,7 +821,7 @@
 
         function resetValues() {
             // Reset all input fields to 0.00
-            const inputs = document.querySelectorAll('#cost input[type="number"]');
+            const inputs = document.querySelectorAll('input[type="number"]');
             inputs.forEach(input => {
                 input.value = "0.00";
             });
