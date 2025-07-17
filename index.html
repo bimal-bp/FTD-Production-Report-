@@ -147,6 +147,12 @@
             margin-bottom: 5px;
             border-radius: 3px;
         }
+        .opening-stock {
+            background-color: #e6f7ff; /* Light blue for opening stock */
+        }
+        .closing-stock {
+            background-color: #e6ffe6; /* Light green for closing stock */
+        }
 
         /* Production Dashboard Styles */
         .dashboard {
@@ -578,6 +584,18 @@
             .cost-table {
                 box-shadow: none;
             }
+            
+            .opening-stock {
+                background-color: #e6f7ff !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            
+            .closing-stock {
+                background-color: #e6ffe6 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
         }
         
         /* Top sections container */
@@ -707,6 +725,115 @@
             border: 1px solid #ccc;
             border-radius: 4px;
         }
+        
+        /* New styles for cost summary boxes */
+        .cost-summary-container {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+            width: 100%;
+        }
+        
+        .cost-summary-box {
+            flex: 1;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .cost-summary-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            background-color: #f2f2f2;
+            padding: 8px;
+            border-radius: 4px;
+        }
+        
+        .cost-summary-value {
+            font-size: 18px;
+            padding: 10px;
+        }
+        
+        .cost-summary-value input {
+            width: 100%;
+            padding: 8px;
+            text-align: center;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        /* Spare parts stock styles */
+        .spare-parts-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .spare-parts-box {
+            flex: 1;
+            min-width: 200px;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .spare-parts-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-align: center;
+            background-color: #f2f2f2;
+            padding: 8px;
+            border-radius: 4px;
+        }
+        
+        .spare-parts-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .spare-parts-table th, .spare-parts-table td {
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+        
+        .spare-parts-table th {
+            width: 70%;
+            font-weight: normal;
+        }
+        
+        .spare-parts-table td {
+            width: 30%;
+        }
+        
+        .spare-parts-input {
+            width: 100%;
+            padding: 6px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        
+        /* New remark lines style */
+        .remark-lines {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .remark-line {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
     </style>
 </head>
 <body>
@@ -752,7 +879,7 @@
         <div class="compact-section stock-section-compact">
             <div class="compact-section-title">STOCK DETAILS</div>
             <div class="compact-stock-box">
-                <div class="compact-stock-column">
+                <div class="compact-stock-column opening-stock">
                     <div class="compact-stock-header">OPENING</div>
                     <table class="compact-section-table">
                         <tr>
@@ -773,7 +900,7 @@
                         </tr>
                     </table>
                 </div>
-                <div class="compact-stock-column">
+                <div class="compact-stock-column closing-stock">
                     <div class="compact-stock-header">CLOSING</div>
                     <table class="compact-section-table">
                         <tr>
@@ -861,19 +988,92 @@
             </tbody>
         </table>
 
-        <!-- Total Cost Boxes -->
-        <div class="total-cost-box">
-            <div class="total-cost-item">
-                <div class="total-cost-title">TOTAL DRYER COST</div>
-                <div class="total-cost-value"><input type="text" placeholder="Enter amount"></div>
+        <!-- Cost Summary Boxes -->
+        <div class="cost-summary-container">
+            <div class="cost-summary-box">
+                <div class="cost-summary-title">DRYER COST/MT</div>
+                <div class="cost-summary-value"><input type="text" id="dryerCost" placeholder="0.00"></div>
             </div>
-            <div class="total-cost-item">
-                <div class="total-cost-title">TOTAL VRM COST</div>
-                <div class="total-cost-value"><input type="text" placeholder="Enter amount"></div>
+            <div class="cost-summary-box">
+                <div class="cost-summary-title">VRM COST/MT</div>
+                <div class="cost-summary-value"><input type="text" id="vrmCost" placeholder="0.00"></div>
             </div>
-            <div class="total-cost-item">
-                <div class="total-cost-title">OVERALL TOTAL COST</div>
-                <div class="total-cost-value"><input type="text" placeholder="Enter amount"></div>
+            <div class="cost-summary-box">
+                <div class="cost-summary-title">TOTAL COST/MT</div>
+                <div class="cost-summary-value"><input type="text" id="totalCostMT" placeholder="0.00"></div>
+            </div>
+            <div class="cost-summary-box">
+                <div class="cost-summary-title">TOTAL COST/KG</div>
+                <div class="cost-summary-value"><input type="text" id="totalCostKG" placeholder="0.00"></div>
+            </div>
+        </div>
+
+        <!-- Spare Parts Stock -->
+        <div class="spare-parts-container">
+            <div class="spare-parts-box">
+                <div class="spare-parts-title">VRM SPARE PARTS</div>
+                <table class="spare-parts-table">
+                    <tr>
+                        <th>VRM Rings</th>
+                        <td><input type="number" class="spare-parts-input" value="6"></td>
+                    </tr>
+                    <tr>
+                        <th>VRM Pins</th>
+                        <td><input type="number" class="spare-parts-input" value="64"></td>
+                    </tr>
+                    <tr>
+                        <th>VRM Shaft</th>
+                        <td><input type="number" class="spare-parts-input" value="1"></td>
+                    </tr>
+                    <tr>
+                        <th>VRM Rollers</th>
+                        <td><input type="number" class="spare-parts-input" value="96"></td>
+                    </tr>
+                    <tr>
+                        <th>Turn Tables</th>
+                        <td><input type="number" class="spare-parts-input" value="4"></td>
+                    </tr>
+                    <tr>
+                        <th>Bearing Housing</th>
+                        <td><input type="number" class="spare-parts-input" value="1"></td>
+                    </tr>
+                </table>
+            </div>
+            
+            <div class="spare-parts-box">
+                <div class="spare-parts-title">CLASSIFIER PARTS</div>
+                <table class="spare-parts-table">
+                    <tr>
+                        <th>Classifier Standard</th>
+                        <td><input type="number" class="spare-parts-input" value="1"></td>
+                    </tr>
+                    <tr>
+                        <th>Classifier Antiware</th>
+                        <td><input type="number" class="spare-parts-input" value="3"></td>
+                    </tr>
+                </table>
+            </div>
+            
+            <div class="spare-parts-box">
+                <div class="spare-parts-title">STOCK DETAILS</div>
+                <table class="spare-parts-table">
+                    <tr>
+                        <th>Godown AMS Stock</th>
+                        <td><input type="number" class="spare-parts-input"></td>
+                    </tr>
+                    <tr>
+                        <th>Branding Bag Stock</th>
+                        <td><input type="number" class="spare-parts-input"></td>
+                    </tr>
+                    <tr>
+                        <th>Diesel Stock (Ltrs)</th>
+                        <td><input type="number" class="spare-parts-input"></td>
+                    </tr>
+                    <tr>
+                        <th>LDO Stock (Ltrs)</th>
+                        <td><input type="number" class="spare-parts-input"></td>
+                    </tr>
+                </table>
             </div>
         </div>
 
@@ -972,6 +1172,7 @@
             </div>
         </div>
     </div>
+
 
     <!-- Cost Calculator Section -->
     <div class="cost-container">
