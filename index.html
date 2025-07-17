@@ -74,7 +74,7 @@
             margin-top: 30px;
         }
         
-        /* Updated Compact Dashboard Styles */
+        /* Compact Dashboard Styles */
         .compact-dashboard {
             display: flex;
             gap: 15px;
@@ -97,7 +97,7 @@
             width: 25%;
         }
         .compact-section-title {
-            background-color: #333; /* Changed to black */
+            background-color: orange;
             color: white;
             padding: 10px;
             text-align: center;
@@ -119,12 +119,11 @@
         }
         .compact-input-field {
             width: 100%;
-            padding: 8px; /* Increased padding */
+            padding: 6px;
             border: 1px solid #ddd;
             border-radius: 4px;
             box-sizing: border-box;
-            height: 35px; /* Fixed height to match production boxes */
-            font-size: 14px;
+            height: 30px;
         }
         .compact-total-row {
             background-color: #ffe6cc;
@@ -141,19 +140,18 @@
             flex: 1;
         }
         .compact-stock-header {
-            background-color: #333; /* Changed to black */
+            background-color: orange;
             color: white;
-            padding: 8px;
+            padding: 5px;
             text-align: center;
             margin-bottom: 5px;
             border-radius: 3px;
-            font-weight: bold;
         }
         .opening-stock {
-            background-color: #e6f7ff;
+            background-color: #e6f7ff; /* Light blue for opening stock */
         }
         .closing-stock {
-            background-color: #e6ffe6;
+            background-color: #e6ffe6; /* Light green for closing stock */
         }
 
         /* Production Dashboard Styles */
@@ -183,50 +181,362 @@
             border-radius: 5px 5px 0 0;
         }
         
-        /* Updated Production Table Styles */
         .dashboard table {
             border-collapse: collapse;
             width: 100%;
             table-layout: fixed;
             font-size: 16px;
         }
+        
         .dashboard th, .dashboard td {
             border: 1px solid #ddd;
-            padding: 8px;
+            padding: 12px;
             text-align: center;
         }
+        
         .dashboard th {
             background-color: #f2f2f2;
             font-size: 16px;
         }
+        
         .dashboard input {
-            width: 90%;
+            width: 85px;
             padding: 8px;
             text-align: center;
             border: 1px solid #ccc;
             border-radius: 4px;
-            font-size: 14px;
-            height: 35px; /* Fixed height to match compact sections */
-            box-sizing: border-box;
+            font-size: 15px;
         }
         
-        /* Combined Table Styles */
+        .inline-form {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            align-items: center;
+        }
+        
+        .form-label {
+            font-weight: bold;
+            min-width: 130px;
+            font-size: 16px;
+        }
+        
+        .cost-details {
+            margin-top: 12px;
+            font-size: 16px;
+        }
+        
+        .cost-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        
+        .cost-label {
+            font-weight: bold;
+        }
+        
+        .cost-value {
+            text-align: right;
+        }
+        
+        .horizontal-container {
+            display: flex;
+            gap: 25px;
+            margin-bottom: 25px;
+            width: 100%;
+        }
+        
+        .horizontal-section {
+            border: 1px solid #ddd;
+            padding: 18px;
+            border-radius: 6px;
+            flex: 1;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            background-color: white;
+        }
+        
+        .horizontal-table {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .horizontal-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .horizontal-cell {
+            flex: 1;
+            text-align: center;
+        }
+        
+        .horizontal-header {
+            font-weight: bold;
+            background-color: #f2f2f2;
+            padding: 12px;
+            font-size: 16px;
+        }
+        
         .combined-table {
             width: 100%;
             margin-bottom: 25px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             background-color: white;
         }
+        
         .combined-table th, .combined-table td {
-            padding: 8px;
+            padding: 14px;
         }
+        
         .row-header {
             font-weight: bold;
             text-align: left;
             background-color: #f2f2f2;
             font-size: 16px;
         }
-
+        
+        .operations-container {
+            display: flex;
+            gap: 25px;
+            margin-bottom: 25px;
+            width: 100%;
+        }
+        
+        .operations-section {
+            border: 1px solid #ddd;
+            padding: 18px;
+            border-radius: 6px;
+            flex: 1;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            background-color: white;
+        }
+        
+        .operations-table {
+            width: 100%;
+        }
+        
+        .operations-table th {
+            background-color: #f2f2f2;
+        }
+        
+        .ftd-section {
+            border: 1px solid #ddd;
+            padding: 18px;
+            border-radius: 6px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            background-color: white;
+            flex: 1;
+        }
+        
+        .ftd-title {
+            background-color: #e6e6e6;
+            font-weight: bold;
+            text-align: center;
+            padding: 10px;
+            margin: -18px -18px 15px -18px;
+            font-size: 18px;
+            border-radius: 5px 5px 0 0;
+        }
+        
+        .ftd-table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        
+        .ftd-table th, .ftd-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        .ftd-table th {
+            background-color: #f2f2f2;
+        }
+        
+        .ftd-input-full {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        
+        /* Cost Calculator Styles */
+        .cost-container {
+            display: flex;
+            gap: 40px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .cost-column {
+            flex: 1;
+            min-width: 400px;
+            max-width: 600px;
+        }
+        
+        .cost-table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 2px solid #000;
+            font-size: 16px;
+            margin-bottom: 30px;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .cost-table th {
+            background-color: #f2f2f2;
+            border: 1px solid #000;
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        .cost-table td {
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: center;
+            height: 30px;
+        }
+        
+        .total-row {
+            font-weight: bold;
+            background-color: #ffe6cc;
+            font-size: 18px;
+        }
+        
+        .cost-kg-row {
+            font-weight: bold;
+            background-color: orange;
+            color: white;
+            font-size: 18px;
+        }
+        
+        .cost-section-title {
+            background-color: #d9d9d9;
+            font-weight: bold;
+            text-align: center;
+            font-size: 20px;
+            padding: 10px;
+        }
+        
+        .calculator-title {
+            font-size: 32px;
+            margin-bottom: 40px;
+            text-align: center;
+            color: #333;
+            display: none; /* Hide the calculator title */
+        }
+        
+        .calculator-input {
+            width: 90%;
+            padding: 6px;
+            font-size: 16px;
+            text-align: center;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin: 0 auto;
+            display: block;
+            height: 25px;
+        }
+        
+        .button-container {
+            margin: 30px 0;
+            display: flex;
+            gap: 25px;
+            justify-content: center;
+        }
+        
+        .calculator-btn {
+            padding: 14px 30px;
+            font-size: 20px;
+            background-color: orange;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        .calculator-btn:hover {
+            background-color: #e69500;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .calculator-btn:active {
+            transform: translateY(0);
+        }
+        
+        .reset-btn {
+            background-color: #f44336;
+        }
+        
+        .reset-btn:hover {
+            background-color: #d32f2f;
+        }
+        
+        /* Remark Section Styles */
+        .remark-container {
+            width: 100%;
+            margin-bottom: 30px;
+        }
+        
+        .remark-box {
+            border: 1px solid #ddd;
+            padding: 18px;
+            border-radius: 6px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            background-color: white;
+            width: 100%;
+        }
+        
+        .remark-title {
+            background-color: #e6e6e6;
+            font-weight: bold;
+            text-align: center;
+            padding: 10px;
+            margin: -18px -18px 15px -18px;
+            font-size: 18px;
+            border-radius: 5px 5px 0 0;
+        }
+        
+        .remark-textarea {
+            width: 100%;
+            height: 100px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            resize: vertical;
+            box-sizing: border-box;
+        }
+        
+        .remark-button-container {
+            text-align: right;
+            margin-top: 15px;
+        }
+        
+        .remark-btn {
+            padding: 10px 20px;
+            background-color: orange;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        .remark-btn:hover {
+            background-color: #e69500;
+        }
+        
         /* Print Styles */
         @media print {
             @page {
@@ -271,6 +581,10 @@
                 print-color-adjust: exact;
             }
             
+            .cost-table {
+                box-shadow: none;
+            }
+            
             .opening-stock {
                 background-color: #e6f7ff !important;
                 -webkit-print-color-adjust: exact;
@@ -282,6 +596,243 @@
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
             }
+        }
+        
+        /* Top sections container */
+        .top-sections {
+            display: flex;
+            gap: 25px;
+            margin-bottom: 25px;
+            width: 100%;
+        }
+        
+        /* Cost calculator header */
+        .cost-header {
+            display: none; /* Hide the cost calculator header */
+        }
+        
+        /* New styles for additional boxes */
+        .total-cost-box {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .total-cost-item {
+            flex: 1;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .total-cost-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-align: center;
+            background-color: #f2f2f2;
+            padding: 8px;
+            border-radius: 4px;
+        }
+        
+        .total-cost-value {
+            text-align: center;
+            font-size: 18px;
+            padding: 10px;
+        }
+        
+        .total-cost-value input {
+            width: 100%;
+            padding: 8px;
+            text-align: center;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        .note-box {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+        }
+        
+        .note-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .note-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        .additional-box {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+        }
+        
+        .additional-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .remark-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .remark-cell {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            min-height: 60px;
+        }
+        
+        .remark-label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .simple-remark {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .simple-remark-label {
+            font-weight: bold;
+            margin-right: 10px;
+            min-width: 80px;
+        }
+        
+        .simple-remark-input {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        
+        /* New styles for cost summary boxes */
+        .cost-summary-container {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+            width: 100%;
+        }
+        
+        .cost-summary-box {
+            flex: 1;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .cost-summary-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            background-color: #f2f2f2;
+            padding: 8px;
+            border-radius: 4px;
+        }
+        
+        .cost-summary-value {
+            font-size: 18px;
+            padding: 10px;
+        }
+        
+        .cost-summary-value input {
+            width: 100%;
+            padding: 8px;
+            text-align: center;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        /* Spare parts stock styles */
+        .spare-parts-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .spare-parts-box {
+            flex: 1;
+            min-width: 200px;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .spare-parts-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-align: center;
+            background-color: #f2f2f2;
+            padding: 8px;
+            border-radius: 4px;
+        }
+        
+        .spare-parts-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .spare-parts-table th, .spare-parts-table td {
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+        
+        .spare-parts-table th {
+            width: 70%;
+            font-weight: normal;
+        }
+        
+        .spare-parts-table td {
+            width: 30%;
+        }
+        
+        .spare-parts-input {
+            width: 100%;
+            padding: 6px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        
+        /* New remark lines style */
+        .remark-lines {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .remark-line {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
         }
     </style>
 </head>
@@ -436,9 +987,7 @@
                 </tr>
             </tbody>
         </table>
-    </div>
-</body>
-</html>
+
         <!-- Cost Summary Boxes -->
         <div class="cost-summary-container">
             <div class="cost-summary-box">
