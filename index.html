@@ -1226,93 +1226,82 @@
     </div>
 </div>
 
-<!-- Land Scope Section -->
-<div class="remark-container">
-    <div class="remark-box">
-        <div class="simple-remark">
-            <span class="simple-remark-label">REMARKS:</span>
-            <div class="lined-remark-box">
-                <div class="remark-line">1. </div>
-                <div class="remark-line">2. </div>
-                <div class="remark-line">3. </div>
-                <div class="remark-line">4. </div>
-                <div class="remark-line">5. </div>
-            </div>
+<!-- Fixed Length Land Scope Table -->
+<div class="fixed-landscope-container">
+    <div class="fixed-landscope-box">
+        <div class="fixed-landscope-title">LAND SCOPE:</div>
+        <div class="fixed-landscope-lines">
+            <div class="fixed-line">1. _______________________________________________________</div>
+            <div class="fixed-line">2. _______________________________________________________</div>
+            <div class="fixed-line">3. _______________________________________________________</div>
+            <div class="fixed-line">4. _______________________________________________________</div>
+            <div class="fixed-line">5. _______________________________________________________</div>
         </div>
     </div>
 </div>
 
 <style>
-.remark-container {
+.fixed-landscope-container {
     margin-top: 20px;
+    width: 100%;
+    overflow-x: auto;
 }
 
-.remark-box {
-    border: 1px solid #ddd;
-    padding: 15px;
-    border-radius: 4px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-}
-
-.simple-remark-label {
-    font-weight: bold;
-    display: block;
-    margin-bottom: 8px;
-    font-size: 16px;
-}
-
-.lined-remark-box {
-    border: 1px solid #ccc;
-    border-radius: 4px;
+.fixed-landscope-box {
+    width: 680px; /* Fixed width matching your requirement */
+    border: 1px solid #000;
     padding: 10px;
+    box-sizing: border-box;
     background-color: white;
-    min-height: 150px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
 }
 
-.lined-remark-box:focus {
-    outline: none;
-    border-color: #1565C0;
-    box-shadow: 0 0 0 2px rgba(21, 101, 192, 0.2);
+.fixed-landscope-title {
+    font-weight: bold;
+    font-size: 16px;
+    margin-bottom: 8px;
+    text-decoration: underline;
 }
 
-.remark-line {
+.fixed-landscope-lines {
+    font-family: monospace;
+    letter-spacing: 0.5px;
+}
+
+.fixed-line {
+    min-height: 24px;
+    line-height: 24px;
     border-bottom: 1px solid #eee;
-    min-height: 25px;
-    padding: 5px 0;
-    display: flex;
-    align-items: center;
+    white-space: nowrap;
+    overflow: hidden;
+    font-size: 14px;
 }
 
-.remark-line:last-child {
+.fixed-line:last-child {
     border-bottom: none;
-}
-
-.remark-line:focus {
-    background-color: #f5f5f5;
-    outline: none;
 }
 </style>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const remarkLines = document.querySelectorAll('.remark-line');
-    remarkLines.forEach(line => {
+    // Make the lines editable while preserving the numbering
+    const lines = document.querySelectorAll('.fixed-line');
+    lines.forEach(line => {
         line.setAttribute('contenteditable', 'true');
         
-        // Preserve the numbering when editing
+        // Preserve the numbering pattern
         line.addEventListener('focus', function() {
-            if (!this.textContent.startsWith(this.textContent.match(/^\d+/)[0] + ". ")) {
-                const num = this.textContent.match(/^\d+/)[0];
-                this.textContent = num + ". ";
+            const currentText = this.innerText;
+            if (!currentText.match(/^\d+\.\s/)) {
+                const lineNum = this.textContent.match(/^\d+/)[0];
+                this.innerHTML = lineNum + '. ';
             }
         });
         
         line.addEventListener('blur', function() {
-            if (this.textContent.trim() === this.textContent.match(/^\d+/)[0] + ".") {
-                this.textContent = this.textContent.match(/^\d+/)[0] + ". ";
+            const currentText = this.innerText;
+            if (!currentText.match(/^\d+\.\s/)) {
+                const lineNum = this.textContent.match(/^\d+/)[0];
+                this.innerHTML = lineNum + '. ' + currentText.replace(/^\d+\.\s?/, '');
             }
         });
     });
