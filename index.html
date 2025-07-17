@@ -1098,217 +1098,287 @@
     </div>
 
 
-    <!-- Cost Calculator Section -->
-    <div class="cost-container">
-        <div class="cost-column">
-            <table class="cost-table" id="individualCosts">
-                <tr>
-                    <th colspan="2" class="cost-section-title">INDIVIDUAL COSTS</th>
-                </tr>
-                <tr>
-                    <th>COST ITEM</th>
-                    <th>AMOUNT (₹)</th>
-                </tr>
-                <tr>
-                    <td>MIXING COST</td>
-                    <td><input type="number" id="mixing" class="calculator-input"></td>
-                </tr>
-                <tr>
-                    <td>NMR COST</td>
-                    <td><input type="number" id="nmr" class="calculator-input"></td>
-                </tr>
-                <tr>
-                    <td>EB COST</td>
-                    <td><input type="number" id="eb" class="calculator-input"></td>
-                </tr>
-                <tr>
-                    <td>Forklift cost</td>
-                    <td><input type="number" id="forklift" class="calculator-input"></td>
-                </tr>
-                <tr>
-                    <td>BAG COST</td>
-                    <td><input type="number" id="bag" class="calculator-input"></td>
-                </tr>
-                <tr>
-                    <td>LDO COST</td>
-                    <td><input type="number" id="ldo" class="calculator-input"></td>
-                </tr>
-                <tr>
-                    <td>JCB operator</td>
-                    <td><input type="number" id="jcbOperator" class="calculator-input"></td>
-                </tr>
-                <tr>
-                    <td>JCB fuel cost</td>
-                    <td><input type="number" id="jcbFuel" class="calculator-input"></td>
-                </tr>
-                <tr>
-                    <td>Spare Part cost</td>
-                    <td><input type="number" id="spare" class="calculator-input"></td>
-                </tr>
-                <tr>
-                    <td>Maintenance Cost & misc. cost</td>
-                    <td><input type="number" id="maintenance" class="calculator-input"></td>
-                </tr>
-                <tr>
-                    <td>Vehicle Loading cost</td>
-                    <td><input type="number" id="loading" class="calculator-input"></td>
-                </tr>
-                <tr>
-                    <td>Vehicle Unloading Cost</td>
-                    <td><input type="number" id="unloading" class="calculator-input"></td>
-                </tr>
-            </table>
-        </div>
+<div class="cost-container">
+    <!-- Individual Costs (Wider Column - 60%) -->
+    <div class="cost-column" style="flex: 3;">
+        <table class="cost-table" id="individualCosts">
+            <tr>
+                <th colspan="2" class="cost-section-title" style="background-color: #2E7D32;">INDIVIDUAL COSTS</th>
+            </tr>
+            <tr>
+                <th>COST ITEM</th>
+                <th>AMOUNT</th>
+            </tr>
+            <tr>
+                <td>MIXING COST</td>
+                <td><div class="input-with-symbol">₹ <input type="number" id="mixing" class="calculator-input"></div></td>
+            </tr>
+            <tr>
+                <td>NMR COST</td>
+                <td><div class="input-with-symbol">₹ <input type="number" id="nmr" class="calculator-input"></div></td>
+            </tr>
+            <tr>
+                <td>EB COST</td>
+                <td><div class="input-with-symbol">₹ <input type="number" id="eb" class="calculator-input"></div></td>
+            </tr>
+            <tr>
+                <td>Forklift cost</td>
+                <td><div class="input-with-symbol">₹ <input type="number" id="forklift" class="calculator-input"></div></td>
+            </tr>
+            <tr>
+                <td>BAG COST</td>
+                <td><div class="input-with-symbol">₹ <input type="number" id="bag" class="calculator-input"></div></td>
+            </tr>
+            <tr>
+                <td>LDO COST</td>
+                <td><div class="input-with-symbol">₹ <input type="number" id="ldo" class="calculator-input"></div></td>
+            </tr>
+            <tr>
+                <td>JCB operator</td>
+                <td><div class="input-with-symbol">₹ <input type="number" id="jcbOperator" class="calculator-input"></div></td>
+            </tr>
+            <tr>
+                <td>JCB fuel cost</td>
+                <td><div class="input-with-symbol">₹ <input type="number" id="jcbFuel" class="calculator-input"></div></td>
+            </tr>
+            <tr>
+                <td>Spare Part cost</td>
+                <td><div class="input-with-symbol">₹ <input type="number" id="spare" class="calculator-input"></div></td>
+            </tr>
+            <tr>
+                <td>Maintenance Cost & misc. cost</td>
+                <td><div class="input-with-symbol">₹ <input type="number" id="maintenance" class="calculator-input"></div></td>
+            </tr>
+            <tr>
+                <td>Vehicle Loading cost</td>
+                <td><div class="input-with-symbol">₹ <input type="number" id="loading" class="calculator-input"></div></td>
+            </tr>
+            <tr>
+                <td>Vehicle Unloading Cost</td>
+                <td><div class="input-with-symbol">₹ <input type="number" id="unloading" class="calculator-input"></div></td>
+            </tr>
+        </table>
+    </div>
+    
+    <!-- Stock Boxes (Narrower Column - 40%) -->
+    <div class="cost-column" style="flex: 2;">
+        <!-- Spare Parts Stock Box -->
+        <table class="cost-table stock-box">
+            <tr>
+                <th colspan="2" class="cost-section-title" style="background-color: #1565C0;">SPARE PARTS STOCK (6 ITEMS)</th>
+            </tr>
+            <tr>
+                <th>ITEM</th>
+                <th>QTY</th>
+            </tr>
+            <tr>
+                <td>VRM Rings</td>
+                <td><input type="number" value="6" class="calculator-input stock-input"></td>
+            </tr>
+            <tr>
+                <td>VRM Pins</td>
+                <td><input type="number" value="64" class="calculator-input stock-input"></td>
+            </tr>
+            <tr>
+                <td>VRM Rollers</td>
+                <td><input type="number" value="96" class="calculator-input stock-input"></td>
+            </tr>
+            <tr>
+                <td>Turn Tables</td>
+                <td><input type="number" value="4" class="calculator-input stock-input"></td>
+            </tr>
+            <tr>
+                <td>Bearing Housing</td>
+                <td><input type="number" value="1" class="calculator-input stock-input"></td>
+            </tr>
+            <tr>
+                <td>Classifier Antiware</td>
+                <td><input type="number" value="3" class="calculator-input stock-input"></td>
+            </tr>
+        </table>
         
-        <div class="cost-column">
-            <table class="cost-table" id="totalCosts">
-                <tr>
-                    <th colspan="2" class="cost-section-title">TOTAL COSTS</th>
-                </tr>
-                <tr>
-                    <th>COST ITEM</th>
-                    <th>AMOUNT (₹)</th>
-                </tr>
-                <tr>
-                    <td>DRYER COST /MT</td>
-                    <td><input type="number" id="dryer" class="calculator-input"></td>
-                </tr>
-                <tr>
-                    <td>VRM COST /MT</td>
-                    <td><input type="number" id="vrm" class="calculator-input"></td>
-                </tr>
-                <tr class="total-row">
-                    <td>TOTAL COST/MT</td>
-                    <td><input type="number" id="totalMT" class="calculator-input"></td>
-                </tr>
-                <tr class="cost-kg-row">
-                    <td>Total COST/KG</td>
-                    <td><input type="number" id="totalKG" class="calculator-input"></td>
-                </tr>
-            </table>
-            
-            <!-- Additional Box -->
-            <div class="additional-box">
-                <div class="additional-title">ADDITIONAL DATA</div>
-                <p>This section can be used for additional cost data or notes.</p>
-                <p>We can add more fields here as needed.</p>
-                <p>This box matches the size of the individual costs table.</p>
-                <p>It provides space for 3-4 more data points.</p>
-                <p>Or can be used for summary information.</p>
+        <!-- Material Stock Box -->
+        <table class="cost-table stock-box">
+            <tr>
+                <th colspan="2" class="cost-section-title" style="background-color: #6A1B9A;">MATERIAL STOCK (4 ITEMS)</th>
+            </tr>
+            <tr>
+                <th>ITEM</th>
+                <th>QTY</th>
+            </tr>
+            <tr>
+                <td>Godown AMS Stock</td>
+                <td><input type="number" class="calculator-input stock-input"></td>
+            </tr>
+            <tr>
+                <td>Branding Bag Stock</td>
+                <td><input type="number" class="calculator-input stock-input"></td>
+            </tr>
+            <tr>
+                <td>Diesel Stock (Ltrs)</td>
+                <td><input type="number" class="calculator-input stock-input"></td>
+            </tr>
+            <tr>
+                <td>LDO Stock (Ltrs)</td>
+                <td><input type="number" class="calculator-input stock-input"></td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<!-- Remark Section -->
+<div class="remark-container">
+    <div class="remark-box">
+        <div class="simple-remark">
+            <span class="simple-remark-label">REMARKS:</span>
+            <div class="lined-remark-box" contenteditable="true">
+                <div class="remark-line"></div>
+                <div class="remark-line"></div>
+                <div class="remark-line"></div>
+                <div class="remark-line"></div>
+                <div class="remark-line"></div>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- Remark Section -->
-    <div class="remark-container">
-        <div class="remark-box">
-            <div class="simple-remark">
-                <span class="simple-remark-label">REMARKS:</span>
-                <input type="text" class="simple-remark-input" placeholder="Enter your remarks here...">
-            </div>
-            <div class="remark-grid">
-                <div class="remark-cell">
-                    <div class="remark-label">Point 1</div>
-                    <input type="text" style="width: 100%;">
-                </div>
-                <div class="remark-cell">
-                    <div class="remark-label">Point 2</div>
-                    <input type="text" style="width: 100%;">
-                </div>
-                <div class="remark-cell">
-                    <div class="remark-label">Point 3</div>
-                    <input type="text" style="width: 100%;">
-                </div>
-                <div class="remark-cell">
-                    <div class="remark-label">Point 4</div>
-                    <input type="text" style="width: 100%;">
-                </div>
-                <div class="remark-cell">
-                    <div class="remark-label">Point 5</div>
-                    <input type="text" style="width: 100%;">
-                </div>
-            </div>
-        </div>
-    </div>
+<style>
+.cost-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    gap: 15px;
+}
 
-    <div class="button-container no-print">
-        <button class="calculator-btn" onclick="window.print()">PRINT REPORT</button>
-    </div>
+.cost-column {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
 
-    <script>
-        // Production Dashboard Functions
-        document.getElementById('report-date').valueAsDate = new Date();
-        document.getElementById('cost-date').valueAsDate = new Date();
+.cost-table {
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
 
-        function submitData() {
-            const date = document.getElementById('report-date').value;
-            const inputs = document.querySelectorAll('input:not([type="date"])');
-            const data = {
-                date: date,
-                values: []
-            };
-            
-            inputs.forEach(input => {
-                data.values.push(input.value);
-            });
-            
-            console.log("Submitted production data:", data);
-            alert(`Data for ${date} submitted! Check console for details.`);
-        }
+.stock-box {
+    height: 300px;
+}
 
-        // Cost Calculator Functions
-        function calculateTotals() {
-            // Get all input values
-            const mixing = parseFloat(document.getElementById('mixing').value) || 0;
-            const nmr = parseFloat(document.getElementById('nmr').value) || 0;
-            const eb = parseFloat(document.getElementById('eb').value) || 0;
-            const forklift = parseFloat(document.getElementById('forklift').value) || 0;
-            const bag = parseFloat(document.getElementById('bag').value) || 0;
-            const ldo = parseFloat(document.getElementById('ldo').value) || 0;
-            const jcbOperator = parseFloat(document.getElementById('jcbOperator').value) || 0;
-            const jcbFuel = parseFloat(document.getElementById('jcbFuel').value) || 0;
-            const spare = parseFloat(document.getElementById('spare').value) || 0;
-            const maintenance = parseFloat(document.getElementById('maintenance').value) || 0;
-            const loading = parseFloat(document.getElementById('loading').value) || 0;
-            const unloading = parseFloat(document.getElementById('unloading').value) || 0;
-            const dryer = parseFloat(document.getElementById('dryer').value) || 0;
-            const vrm = parseFloat(document.getElementById('vrm').value) || 0;
+.cost-table th, .cost-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
 
-            // Calculate totals
-            const totalMT = mixing + nmr + eb + forklift + bag + ldo + jcbOperator + 
-                          jcbFuel + spare + maintenance + loading + unloading + dryer + vrm;
-            const totalKG = totalMT / 1000;
+.cost-section-title {
+    color: white;
+    text-align: center;
+    font-size: 16px;
+    padding: 12px;
+}
 
-            // Display results
-            document.getElementById('totalMT').value = totalMT.toFixed(2);
-            document.getElementById('totalKG').value = totalKG.toFixed(2);
-            
-            // Update the total cost boxes
-            document.querySelectorAll('.total-cost-value input')[0].value = dryer.toFixed(2);
-            document.querySelectorAll('.total-cost-value input')[1].value = vrm.toFixed(2);
-            document.querySelectorAll('.total-cost-value input')[2].value = totalMT.toFixed(2);
-            
-            // Log the calculation
-            const date = document.getElementById('cost-date').value;
-            console.log(`Cost calculation for ${date}: Total ₹${totalMT.toFixed(2)}/MT (₹${totalKG.toFixed(2)}/KG)`);
-        }
+.calculator-input {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
 
-        function resetValues() {
-            // Reset all input fields to empty
-            const inputs = document.querySelectorAll('input[type="number"], input[type="text"]');
-            inputs.forEach(input => {
-                input.value = "";
-            });
-        }
+.stock-input {
+    background-color: #e3f2fd;
+}
 
-        // Add event listeners to all calculator input fields for better UX
-        document.querySelectorAll('#cost input').forEach(input => {
-            input.addEventListener('keyup', function(event) {
-                if (event.key === 'Enter') {
-                    calculateTotals();
-                }
-            });
+.input-with-symbol {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.input-with-symbol::before {
+    content: "₹";
+    font-weight: bold;
+}
+
+.remark-container {
+    margin-top: 20px;
+}
+
+.remark-box {
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.simple-remark-label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 8px;
+    font-size: 16px;
+}
+
+.lined-remark-box {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 10px;
+    background-color: white;
+    min-height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.lined-remark-box:focus {
+    outline: none;
+    border-color: #1565C0;
+    box-shadow: 0 0 0 2px rgba(21, 101, 192, 0.2);
+}
+
+.remark-line {
+    border-bottom: 1px solid #eee;
+    min-height: 25px;
+    padding: 5px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.remark-line:last-child {
+    border-bottom: none;
+}
+
+/* Make the lines look like writing areas when focused */
+.remark-line:focus {
+    background-color: #f5f5f5;
+    outline: none;
+}
+
+/* Style for the content when typing */
+.remark-line[contenteditable="true"]:empty::before {
+    content: "Type here...";
+    color: #999;
+    pointer-events: none;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Make each line editable and center content
+    const remarkLines = document.querySelectorAll('.remark-line');
+    remarkLines.forEach(line => {
+        line.setAttribute('contenteditable', 'true');
+        
+        // Center the text when typing
+        line.addEventListener('input', function() {
+            if (this.textContent.trim() !== '') {
+                this.style.textAlign = 'center';
+            } else {
+                this.style.textAlign = '';
+            }
         });
-    </script>
-</body>
-</html>
+    });
+});
+</script>
