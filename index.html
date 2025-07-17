@@ -1226,82 +1226,23 @@
     </div>
 </div>
 
-<!-- Remark Section -->
+<!-- Land Scope Section -->
 <div class="remark-container">
     <div class="remark-box">
         <div class="simple-remark">
             <span class="simple-remark-label">REMARKS:</span>
-            <div class="lined-remark-box" contenteditable="true">
-                <div class="remark-line"></div>
-                <div class="remark-line"></div>
-                <div class="remark-line"></div>
-                <div class="remark-line"></div>
-                <div class="remark-line"></div>
+            <div class="lined-remark-box">
+                <div class="remark-line">1. </div>
+                <div class="remark-line">2. </div>
+                <div class="remark-line">3. </div>
+                <div class="remark-line">4. </div>
+                <div class="remark-line">5. </div>
             </div>
         </div>
     </div>
 </div>
 
 <style>
-.cost-container {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
-    gap: 15px;
-}
-
-.cost-column {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.cost-table {
-    width: 100%;
-    border-collapse: collapse;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-}
-
-.stock-box {
-    height: 300px;
-}
-
-.cost-table th, .cost-table td {
-    border: 1px solid #ddd;
-    padding: 10px;
-    text-align: left;
-}
-
-.cost-section-title {
-    color: white;
-    text-align: center;
-    font-size: 16px;
-    padding: 12px;
-}
-
-.calculator-input {
-    width: 100%;
-    padding: 8px;
-    box-sizing: border-box;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-.stock-input {
-    background-color: #e3f2fd;
-}
-
-.input-with-symbol {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-
-.input-with-symbol::before {
-    content: "₹";
-    font-weight: bold;
-}
-
 .remark-container {
     margin-top: 20px;
 }
@@ -1343,40 +1284,35 @@
     padding: 5px 0;
     display: flex;
     align-items: center;
-    justify-content: center;
 }
 
 .remark-line:last-child {
     border-bottom: none;
 }
 
-/* Make the lines look like writing areas when focused */
 .remark-line:focus {
     background-color: #f5f5f5;
     outline: none;
-}
-
-/* Style for the content when typing */
-.remark-line[contenteditable="true"]:empty::before {
-    content: "Type here...";
-    color: #999;
-    pointer-events: none;
 }
 </style>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Make each line editable and center content
     const remarkLines = document.querySelectorAll('.remark-line');
     remarkLines.forEach(line => {
         line.setAttribute('contenteditable', 'true');
         
-        // Center the text when typing
-        line.addEventListener('input', function() {
-            if (this.textContent.trim() !== '') {
-                this.style.textAlign = 'center';
-            } else {
-                this.style.textAlign = '';
+        // Preserve the numbering when editing
+        line.addEventListener('focus', function() {
+            if (!this.textContent.startsWith(this.textContent.match(/^\d+/)[0] + ". ")) {
+                const num = this.textContent.match(/^\d+/)[0];
+                this.textContent = num + ". ";
+            }
+        });
+        
+        line.addEventListener('blur', function() {
+            if (this.textContent.trim() === this.textContent.match(/^\d+/)[0] + ".") {
+                this.textContent = this.textContent.match(/^\d+/)[0] + ". ";
             }
         });
     });
