@@ -1098,144 +1098,241 @@
     </div>
 
 
-<div class="cost-container">
-    <!-- Individual Costs (Wider Column - 60%) -->
-    <div class="cost-column" style="flex: 3;">
-        <table class="cost-table" id="individualCosts">
-            <tr>
-                <th colspan="2" class="cost-section-title" style="background-color: #2E7D32;">INDIVIDUAL COSTS</th>
-            </tr>
-            <tr>
-                <th>COST ITEM</th>
-                <th>AMOUNT</th>
-            </tr>
-            <tr>
-                <td>MIXING COST</td>
-                <td><div class="input-with-symbol">₹ <input type="number" id="mixing" class="calculator-input"></div></td>
-            </tr>
-            <tr>
-                <td>NMR COST</td>
-                <td><div class="input-with-symbol">₹ <input type="number" id="nmr" class="calculator-input"></div></td>
-            </tr>
-            <tr>
-                <td>EB COST</td>
-                <td><div class="input-with-symbol">₹ <input type="number" id="eb" class="calculator-input"></div></td>
-            </tr>
-            <tr>
-                <td>Forklift cost</td>
-                <td><div class="input-with-symbol">₹ <input type="number" id="forklift" class="calculator-input"></div></td>
-            </tr>
-            <tr>
-                <td>BAG COST</td>
-                <td><div class="input-with-symbol">₹ <input type="number" id="bag" class="calculator-input"></div></td>
-            </tr>
-            <tr>
-                <td>LDO COST</td>
-                <td><div class="input-with-symbol">₹ <input type="number" id="ldo" class="calculator-input"></div></td>
-            </tr>
-            <tr>
-                <td>JCB operator</td>
-                <td><div class="input-with-symbol">₹ <input type="number" id="jcbOperator" class="calculator-input"></div></td>
-            </tr>
-            <tr>
-                <td>JCB fuel cost</td>
-                <td><div class="input-with-symbol">₹ <input type="number" id="jcbFuel" class="calculator-input"></div></td>
-            </tr>
-            <tr>
-                <td>Spare Part cost</td>
-                <td><div class="input-with-symbol">₹ <input type="number" id="spare" class="calculator-input"></div></td>
-            </tr>
-            <tr>
-                <td>Maintenance Cost & misc. cost</td>
-                <td><div class="input-with-symbol">₹ <input type="number" id="maintenance" class="calculator-input"></div></td>
-            </tr>
-            <tr>
-                <td>Vehicle Loading cost</td>
-                <td><div class="input-with-symbol">₹ <input type="number" id="loading" class="calculator-input"></div></td>
-            </tr>
-            <tr>
-                <td>Vehicle Unloading Cost</td>
-                <td><div class="input-with-symbol">₹ <input type="number" id="unloading" class="calculator-input"></div></td>
-            </tr>
-        </table>
-    </div>
-    
-    <!-- Stock Boxes (Narrower Column - 40%) -->
-    <div class="cost-column" style="flex: 2;">
-        <!-- Spare Parts Stock Box -->
-        <table class="cost-table stock-box">
-            <tr>
-                <th colspan="2" class="cost-section-title" style="background-color: #1565C0;">SPARE PARTS STOCK (6 ITEMS)</th>
-            </tr>
-            <tr>
-                <th>ITEM</th>
-                <th>QTY</th>
-            </tr>
-            <tr>
-                <td>VRM Rings</td>
-                <td><input type="number" value="6" class="calculator-input stock-input"></td>
-            </tr>
-            <tr>
-                <td>VRM Pins</td>
-                <td><input type="number" value="64" class="calculator-input stock-input"></td>
-            </tr>
-            <tr>
-                <td>VRM Rollers</td>
-                <td><input type="number" value="96" class="calculator-input stock-input"></td>
-            </tr>
-            <tr>
-                <td>Turn Tables</td>
-                <td><input type="number" value="4" class="calculator-input stock-input"></td>
-            </tr>
-            <tr>
-                <td>Bearing Housing</td>
-                <td><input type="number" value="1" class="calculator-input stock-input"></td>
-            </tr>
-            <tr>
-                <td>Classifier Antiware</td>
-                <td><input type="number" value="3" class="calculator-input stock-input"></td>
-            </tr>
-        </table>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cost Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 10px;
+            background-color: #f5f5f5;
+        }
         
-        <!-- Material Stock Box -->
-        <table class="cost-table stock-box">
-            <tr>
-                <th colspan="2" class="cost-section-title" style="background-color: #6A1B9A;">MATERIAL STOCK (4 ITEMS)</th>
-            </tr>
-            <tr>
-                <th>ITEM</th>
-                <th>QTY</th>
-            </tr>
-            <tr>
-                <td>Godown AMS Stock</td>
-                <td><input type="number" class="calculator-input stock-input"></td>
-            </tr>
-            <tr>
-                <td>Branding Bag Stock</td>
-                <td><input type="number" class="calculator-input stock-input"></td>
-            </tr>
-            <tr>
-                <td>Diesel Stock (Ltrs)</td>
-                <td><input type="number" class="calculator-input stock-input"></td>
-            </tr>
-            <tr>
-                <td>LDO Stock (Ltrs)</td>
-                <td><input type="number" class="calculator-input stock-input"></td>
-            </tr>
-        </table>
+        .cost-container {
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .cost-column {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .cost-table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            table-layout: fixed;
+            height: auto;
+        }
+        
+        .cost-section-title {
+            color: white;
+            padding: 8px;
+            text-align: center;
+            font-size: 14px;
+        }
+        
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            font-size: 12px;
+            height: 30px;
+        }
+        
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        
+        .calculator-input {
+            width: 100%;
+            padding: 5px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            height: 30px;
+            font-size: 12px;
+        }
+        
+        .stock-box {
+            height: auto;
+        }
+        
+        .stock-input {
+            width: 60px;
+        }
+        
+        .input-with-symbol {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        
+        .input-with-symbol:before {
+            content: "₹";
+            position: absolute;
+            left: 8px;
+            color: #555;
+            z-index: 1;
+        }
+        
+        .input-with-symbol input {
+            padding-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="cost-container">
+        <!-- Individual Costs (Wider Column - 60%) -->
+        <div class="cost-column" style="flex: 3;">
+            <table class="cost-table" id="individualCosts">
+                <tr>
+                    <th colspan="2" class="cost-section-title" style="background-color: #2E7D32;">INDIVIDUAL COSTS</th>
+                </tr>
+                <tr>
+                    <th>COST ITEM</th>
+                    <th>AMOUNT</th>
+                </tr>
+                <tr>
+                    <td>MIXING COST</td>
+                    <td><div class="input-with-symbol"><input type="number" id="mixing" class="calculator-input"></div></td>
+                </tr>
+                <tr>
+                    <td>NMR COST</td>
+                    <td><div class="input-with-symbol"><input type="number" id="nmr" class="calculator-input"></div></td>
+                </tr>
+                <tr>
+                    <td>EB COST</td>
+                    <td><div class="input-with-symbol"><input type="number" id="eb" class="calculator-input"></div></td>
+                </tr>
+                <tr>
+                    <td>Forklift cost</td>
+                    <td><div class="input-with-symbol"><input type="number" id="forklift" class="calculator-input"></div></td>
+                </tr>
+                <tr>
+                    <td>BAG COST</td>
+                    <td><div class="input-with-symbol"><input type="number" id="bag" class="calculator-input"></div></td>
+                </tr>
+                <tr>
+                    <td>LDO COST</td>
+                    <td><div class="input-with-symbol"><input type="number" id="ldo" class="calculator-input"></div></td>
+                </tr>
+                <tr>
+                    <td>JCB operator</td>
+                    <td><div class="input-with-symbol"><input type="number" id="jcbOperator" class="calculator-input"></div></td>
+                </tr>
+                <tr>
+                    <td>JCB fuel cost</td>
+                    <td><div class="input-with-symbol"><input type="number" id="jcbFuel" class="calculator-input"></div></td>
+                </tr>
+                <tr>
+                    <td>Spare Part cost</td>
+                    <td><div class="input-with-symbol"><input type="number" id="spare" class="calculator-input"></div></td>
+                </tr>
+                <tr>
+                    <td>Maintenance Cost & misc. cost</td>
+                    <td><div class="input-with-symbol"><input type="number" id="maintenance" class="calculator-input"></div></td>
+                </tr>
+                <tr>
+                    <td>Vehicle Loading cost</td>
+                    <td><div class="input-with-symbol"><input type="number" id="loading" class="calculator-input"></div></td>
+                </tr>
+                <tr>
+                    <td>Vehicle Unloading Cost</td>
+                    <td><div class="input-with-symbol"><input type="number" id="unloading" class="calculator-input"></div></td>
+                </tr>
+            </table>
+        </div>
+        
+        <!-- Stock Boxes (Narrower Column - 40%) -->
+        <div class="cost-column" style="flex: 2;">
+            <!-- Spare Parts Stock Box -->
+            <table class="cost-table stock-box">
+                <tr>
+                    <th colspan="2" class="cost-section-title" style="background-color: #1565C0;">SPARE PARTS STOCK (6 ITEMS)</th>
+                </tr>
+                <tr>
+                    <th>ITEM</th>
+                    <th>QTY</th>
+                </tr>
+                <tr>
+                    <td>VRM Rings</td>
+                    <td><input type="number" value="6" class="calculator-input stock-input"></td>
+                </tr>
+                <tr>
+                    <td>VRM Pins</td>
+                    <td><input type="number" value="64" class="calculator-input stock-input"></td>
+                </tr>
+                <tr>
+                    <td>VRM Rollers</td>
+                    <td><input type="number" value="96" class="calculator-input stock-input"></td>
+                </tr>
+                <tr>
+                    <td>Turn Tables</td>
+                    <td><input type="number" value="4" class="calculator-input stock-input"></td>
+                </tr>
+                <tr>
+                    <td>Bearing Housing</td>
+                    <td><input type="number" value="1" class="calculator-input stock-input"></td>
+                </tr>
+                <tr>
+                    <td>Classifier Antiware</td>
+                    <td><input type="number" value="3" class="calculator-input stock-input"></td>
+                </tr>
+            </table>
+            
+            <!-- Material Stock Box -->
+            <table class="cost-table stock-box">
+                <tr>
+                    <th colspan="2" class="cost-section-title" style="background-color: #6A1B9A;">MATERIAL STOCK (4 ITEMS)</th>
+                </tr>
+                <tr>
+                    <th>ITEM</th>
+                    <th>QTY</th>
+                </tr>
+                <tr>
+                    <td>Godown AMS Stock</td>
+                    <td><input type="number" class="calculator-input stock-input"></td>
+                </tr>
+                <tr>
+                    <td>Branding Bag Stock</td>
+                    <td><input type="number" class="calculator-input stock-input"></td>
+                </tr>
+                <tr>
+                    <td>Diesel Stock (Ltrs)</td>
+                    <td><input type="number" class="calculator-input stock-input"></td>
+                </tr>
+                <tr>
+                    <td>LDO Stock (Ltrs)</td>
+                    <td><input type="number" class="calculator-input stock-input"></td>
+                </tr>
+            </table>
+        </div>
     </div>
-</div>
+</body>
+</html>
 
 <!-- Fixed Length Land Scope Table - Full Width -->
 <div class="fixed-landscope-container">
     <div class="fixed-landscope-box">
-        <div class="fixed-landscope-title">LAND SCOPE:</div>
+        <div class="fixed-landscope-title">Remark:</div>
         <div class="fixed-landscope-lines">
-            <div class="fixed-line">1. _______________________________________________________</div>
-            <div class="fixed-line">2. _______________________________________________________</div>
-            <div class="fixed-line">3. _______________________________________________________</div>
-            <div class="fixed-line">4. _______________________________________________________</div>
-            <div class="fixed-line">5. _______________________________________________________</div>
+            <div class="fixed-line">1. _____________________________________________________________________________________________________________________________________________________________________</div>
+            <div class="fixed-line">2. _____________________________________________________________________________________________________________________________________________________________________</div>
+            <div class="fixed-line">3. _____________________________________________________________________________________________________________________________________________________________________</div>
+            <div class="fixed-line">4. _____________________________________________________________________________________________________________________________________________________________________</div>
+            <div class="fixed-line">5. _____________________________________________________________________________________________________________________________________________________________________</div>
         </div>
     </div>
 </div>
@@ -1248,7 +1345,7 @@
 }
 
 .fixed-landscope-box {
-    width: 1360px; /* Full width doubled from original */
+    width: 1160px; /* Full width doubled from original */
     border: 1px solid #000;
     padding: 10px;
     box-sizing: border-box;
@@ -1257,8 +1354,8 @@
 
 .fixed-landscope-title {
     font-weight: bold;
-    font-size: 16px;
-    margin-bottom: 8px;
+    font-size: 14px;
+    margin-bottom: 7px;
     text-decoration: underline;
 }
 
