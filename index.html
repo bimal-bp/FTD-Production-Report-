@@ -363,8 +363,6 @@
             box-sizing: border-box;
         }
         
-  
-        
         /* Remark Section Styles */
         .remark-container {
             width: 100%;
@@ -891,255 +889,108 @@
             </div>
         </div>
 
+        <!-- Operations Sections -->
+        <div class="operations-container">
+            <!-- Dryer Operations -->
+            <div class="operations-section">
+                <div class="section-title">DRYER OPERATIONS</div>
+                <table class="operations-table">
+                    <tr>
+                        <th></th>
+                        <th>DAY</th>
+                        <th>NIGHT</th>
+                        <th>TOTAL</th>
+                    </tr>
+                    <tr>
+                        <td>RUNNING Hrs</td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr>
+                        <td>PRODUCTION</td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr>
+                        <td>TPH</td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr>
+                        <td>LDO (Ltrs)</td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr>
+                        <td>JCB (Hrs)</td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr>
+                        <td>JCB Operator</td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                    </tr>
+                </table>
+            </div>
 
-        <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Operations and Cost Calculator</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 10px;
-            background-color: #f5f5f5;
-        }
-        
-        /* Operations Section Styles */
-        .operations-container {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        
-        .operations-section {
-            flex: 1;
-            background-color: white;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        
-        .section-title {
-            color: white;
-            padding: 8px;
-            text-align: center;
-            font-weight: bold;
-        }
-        
-        .operations-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        
-        .operations-table th, .operations-table td {
-            padding: 8px;
-            text-align: center;
-            border: 1px solid #ddd;
-            font-size: 12px;
-        }
-        
-        .operations-table th {
-            background-color: #f2f2f2;
-            font-weight: bold;
-        }
-        
-        .operations-table input {
-            width: 100%;
-            padding: 5px;
-            box-sizing: border-box;
-            border: 1px solid #ccc;
-            border-radius: 3px;
-            text-align: center;
-        }
-        
-        /* Dryer Operations specific color */
-        .operations-section:nth-child(1) .section-title {
-            background-color: #2E7D32; /* Dark green */
-        }
-        
-        /* VRM Operations specific color */
-        .operations-section:nth-child(2) .section-title {
-            background-color: #1565C0; /* Dark blue */
-        }
-        
-        /* Cost Calculator Styles */
-        .cost-container {
-            display: flex;
-            flex-direction: row;
-            gap: 10px;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-        
-        .cost-column {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        
-        .cost-table {
-            width: 100%;
-            border-collapse: collapse;
-            background-color: white;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            table-layout: fixed;
-            height: auto;
-        }
-        
-        .cost-section-title {
-            color: white;
-            padding: 8px;
-            text-align: center;
-            font-size: 14px;
-        }
-        
-        .cost-table th, .cost-table td {
-            padding: 8px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-            font-size: 12px;
-            height: 30px;
-        }
-        
-        .cost-table th {
-            background-color: #f2f2f2;
-            font-weight: bold;
-        }
-        
-        .calculator-input {
-            width: 100%;
-            padding: 5px 5px 5px 25px;
-            box-sizing: border-box;
-            border: 1px solid #ccc;
-            border-radius: 3px;
-            height: 30px;
-            font-size: 12px;
-        }
-        
-        .stock-box {
-            height: auto;
-        }
-        
-        .stock-input {
-            width: 60px;
-            padding-left: 5px;
-        }
-        
-        .input-with-symbol {
-            position: relative;
-        }
-        
-        .input-with-symbol:before {
-            content: "₹";
-            position: absolute;
-            left: 8px;
-            top: 8px;
-            color: #555;
-            z-index: 1;
-        }
-    </style>
-</head>
-<body>
-    <!-- Operations Sections -->
-    <div class="operations-container">
-        <!-- Dryer Operations -->
-        <div class="operations-section">
-            <div class="section-title">DRYER OPERATIONS</div>
-            <table class="operations-table">
-                <tr>
-                    <th></th>
-                    <th>DAY</th>
-                    <th>NIGHT</th>
-                    <th>TOTAL</th>
-                </tr>
-                <tr>
-                    <td>RUNNING Hrs</td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                </tr>
-                <tr>
-                    <td>PRODUCTION</td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                </tr>
-                <tr>
-                    <td>TPH</td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                </tr>
-                <tr>
-                    <td>LDO (Ltrs)</td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                </tr>
-                <tr>
-                    <td>JCB (Hrs)</td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                </tr>
-                <tr>
-                    <td>JCB Operator</td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                </tr>
-            </table>
+            <!-- VRM Operations -->
+            <div class="operations-section">
+                <div class="section-title">VRM OPERATIONS</div>
+                <table class="operations-table">
+                    <tr>
+                        <th></th>
+                        <th>DAY</th>
+                        <th>NIGHT</th>
+                        <th>TOTAL</th>
+                    </tr>
+                    <tr>
+                        <td>RUNNING Hrs</td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr>
+                        <td>PRODUCTION</td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr>
+                        <td>TPH</td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr>
+                        <td>EB (Units)</td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr>
+                        <td>NMR (Hrs)</td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr>
+                        <td>FLT Operator</td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                    </tr>
+                </table>
+            </div>
         </div>
-
-        <!-- VRM Operations -->
-        <div class="operations-section">
-            <div class="section-title">VRM OPERATIONS</div>
-            <table class="operations-table">
-                <tr>
-                    <th></th>
-                    <th>DAY</th>
-                    <th>NIGHT</th>
-                    <th>TOTAL</th>
-                </tr>
-                <tr>
-                    <td>RUNNING Hrs</td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                </tr>
-                <tr>
-                    <td>PRODUCTION</td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                </tr>
-                <tr>
-                    <td>TPH</td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                </tr>
-                <tr>
-                    <td>EB (Units)</td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                </tr>
-                <tr>
-                    <td>NMR (Hrs)</td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                </tr>
-                <tr>
-                    <td>FLT Operator</td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                </tr>
-            </table>
-        </div>
-    </div>
+</body>
+</html>
 
 <!DOCTYPE html>
 <html>
