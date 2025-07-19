@@ -853,11 +853,11 @@
             <div class="compact-section-title">FTD DETAILS</div>
             <table class="compact-section-table">
                 <tr>
-                    <th>FTD Dispatch</th>
+                    <th>Dispatch</th>
                     <td><input type="text" class="compact-input-field"></td>
                 </tr>
                 <tr>
-                    <th>FTD Received</th>
+                    <th>Received</th>
                     <td><input type="text" class="compact-input-field"></td>
                 </tr>
                 <tr>
@@ -929,7 +929,7 @@
             <div class="compact-section-title">MTD Details </div>
             <table class="compact-section-table">
                 <tr>
-                    <th> Ground Mixing</th>
+                    <th>Mixing</th>
                     <td><input type="number" class="compact-input-field"></td>
                 </tr>
                 <tr>
@@ -1271,16 +1271,16 @@
         
         .cost-container {
             display: flex;
-            gap: 20px;
+            gap: 30px;
             width: 100%;
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
         }
         
         .cost-column {
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 30px;
         }
         
         .cost-table {
@@ -1291,7 +1291,7 @@
         }
         
         .cost-table th, .cost-table td {
-            padding: 12px 15px;
+            padding: 15px 20px;
             text-align: left;
             border: 1px solid #ddd;
         }
@@ -1303,22 +1303,19 @@
         
         .cost-section-title {
             color: white;
-            font-size: 16px;
+            font-size: 18px;
             text-align: center;
-            padding: 12px;
+            padding: 15px;
+            font-weight: bold;
         }
         
         .calculator-input {
             width: 100%;
-            padding: 8px 10px 8px 25px;
+            padding: 12px 15px 12px 35px;
             border: 1px solid #ddd;
             border-radius: 4px;
             box-sizing: border-box;
-            font-size: 14px;
-        }
-        
-        .stock-box {
-            height: 100%;
+            font-size: 16px;
         }
         
         .input-with-symbol {
@@ -1331,123 +1328,45 @@
             top: 50%;
             transform: translateY(-50%);
             color: #666;
-        }
-        
-        .stock-input {
-            width: 100px;
-            padding: 8px 10px;
-        }
-        
-        @media print {
-            body {
-                padding: 0;
-                background-color: white;
-            }
-            
-            .cost-container {
-                max-width: 100%;
-                page-break-after: avoid;
-            }
-            
-            @page {
-                size: landscape;
-                margin: 1cm;
-            }
-        }
-    </style>
-</head>
-<body>
-<!DOCTYPE html>
-<html>
-<head>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-            background-color: #f5f5f5;
-        }
-        
-        .cost-container {
-            display: flex;
-            gap: 20px;
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        .cost-column {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-        
-        .cost-table {
-            width: 100%;
-            border-collapse: collapse;
-            background-color: white;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        
-        .cost-table th, .cost-table td {
-            padding: 12px 15px;
-            text-align: left;
-            border: 1px solid #ddd;
-        }
-        
-        .cost-table th {
-            background-color: #f2f2f2;
+            font-size: 16px;
             font-weight: bold;
         }
         
-        .cost-section-title {
-            color: white;
-            font-size: 16px;
-            text-align: center;
-            padding: 12px;
-        }
-        
-        .calculator-input {
+        .stock-input {
             width: 100%;
-            padding: 8px 10px 8px 25px;
+            padding: 12px 15px;
+            font-size: 16px;
             border: 1px solid #ddd;
             border-radius: 4px;
-            box-sizing: border-box;
-            font-size: 14px;
+            background-color: transparent;
+            border: none;
+            text-align: right;
         }
         
+        /* First column takes 60% width */
+        .main-cost-column {
+            flex: 6; /* 60% */
+        }
+        
+        /* Second column takes 40% width */
+        .stock-column {
+            flex: 4; /* 40% */
+        }
+        
+        /* Stock boxes take full height of their column */
         .stock-box {
             height: 100%;
         }
         
-        .input-with-symbol {
-            position: relative;
+        /* Item name column takes 60% of stock table width */
+        .item-col {
+            width: 60%;
         }
         
-        .currency-symbol {
-            position: absolute;
-            left: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #666;
-        }
-        
-        .stock-input {
-            width: 100px;
-            padding: 8px 10px;
-        }
-        
-        .calculate-btn {
-            background-color: #2E7D32;
-            color: white;
-            border: none;
-            padding: 12px 0;
-            font-size: 16px;
-            cursor: pointer;
-            border-radius: 4px;
-            width: 150%; /* Increased width by 50% */
-            margin-top: 10px;
-            font-weight: bold;
+        /* Quantity column takes 40% of stock table width */
+        .qty-col {
+            width: 40%;
+            text-align: right;
         }
         
         @media print {
@@ -1465,111 +1384,177 @@
                 size: landscape;
                 margin: 1cm;
             }
+            
+            .stock-input {
+                border: none;
+                -webkit-appearance: none;
+                -moz-appearance: textfield;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Cost Calculator -->
     <div class="cost-container">
-        <!-- Individual Costs (Wider Column - 60%) -->
-        <div class="cost-column" style="flex: 3;">
+        <!-- Main Costs Column (60% width) -->
+        <div class="cost-column main-cost-column">
             <table class="cost-table" id="individualCosts">
                 <tr>
                     <th colspan="2" class="cost-section-title" style="background-color: #2E7D32;">INDIVIDUAL COSTS</th>
                 </tr>
                 <tr>
-                    <td>MIXING COST</td>
-                    <td><div class="input-with-symbol"><span class="currency-symbol">₹</span><input type="number" id="mixing" class="calculator-input"></div></td>
+                    <td style="width: 40%;">MIXING COST</td>
+                    <td style="width: 60%;">
+                        <div class="input-with-symbol">
+                            <span class="currency-symbol">₹</span>
+                            <input type="number" id="mixing" class="calculator-input">
+                        </div>
+                    </td>
                 </tr>
                 <tr>
                     <td>NMR COST</td>
-                    <td><div class="input-with-symbol"><span class="currency-symbol">₹</span><input type="number" id="nmr" class="calculator-input"></div></td>
+                    <td>
+                        <div class="input-with-symbol">
+                            <span class="currency-symbol">₹</span>
+                            <input type="number" id="nmr" class="calculator-input">
+                        </div>
+                    </td>
                 </tr>
                 <tr>
                     <td>EB COST</td>
-                    <td><div class="input-with-symbol"><span class="currency-symbol">₹</span><input type="number" id="eb" class="calculator-input"></div></td>
+                    <td>
+                        <div class="input-with-symbol">
+                            <span class="currency-symbol">₹</span>
+                            <input type="number" id="eb" class="calculator-input">
+                        </div>
+                    </td>
                 </tr>
                 <tr>
                     <td>Forklift cost</td>
-                    <td><div class="input-with-symbol"><span class="currency-symbol">₹</span><input type="number" id="forklift" class="calculator-input"></div></td>
+                    <td>
+                        <div class="input-with-symbol">
+                            <span class="currency-symbol">₹</span>
+                            <input type="number" id="forklift" class="calculator-input">
+                        </div>
+                    </td>
                 </tr>
                 <tr>
                     <td>BAG COST</td>
-                    <td><div class="input-with-symbol"><span class="currency-symbol">₹</span><input type="number" id="bag" class="calculator-input"></div></td>
+                    <td>
+                        <div class="input-with-symbol">
+                            <span class="currency-symbol">₹</span>
+                            <input type="number" id="bag" class="calculator-input">
+                        </div>
+                    </td>
                 </tr>
                 <tr>
                     <td>LDO COST</td>
-                    <td><div class="input-with-symbol"><span class="currency-symbol">₹</span><input type="number" id="ldo" class="calculator-input"></div></td>
+                    <td>
+                        <div class="input-with-symbol">
+                            <span class="currency-symbol">₹</span>
+                            <input type="number" id="ldo" class="calculator-input">
+                        </div>
+                    </td>
                 </tr>
                 <tr>
                     <td>JCB operator</td>
-                    <td><div class="input-with-symbol"><span class="currency-symbol">₹</span><input type="number" id="jcbOperator" class="calculator-input"></div></td>
+                    <td>
+                        <div class="input-with-symbol">
+                            <span class="currency-symbol">₹</span>
+                            <input type="number" id="jcbOperator" class="calculator-input">
+                        </div>
+                    </td>
                 </tr>
                 <tr>
                     <td>JCB fuel cost</td>
-                    <td><div class="input-with-symbol"><span class="currency-symbol">₹</span><input type="number" id="jcbFuel" class="calculator-input"></div></td>
+                    <td>
+                        <div class="input-with-symbol">
+                            <span class="currency-symbol">₹</span>
+                            <input type="number" id="jcbFuel" class="calculator-input">
+                        </div>
+                    </td>
                 </tr>
                 <tr>
                     <td>Spare Part cost</td>
-                    <td><div class="input-with-symbol"><span class="currency-symbol">₹</span><input type="number" id="spare" class="calculator-input"></div></td>
+                    <td>
+                        <div class="input-with-symbol">
+                            <span class="currency-symbol">₹</span>
+                            <input type="number" id="spare" class="calculator-input">
+                        </div>
+                    </td>
                 </tr>
                 <tr>
                     <td>Maintenance Cost</td>
-                    <td><div class="input-with-symbol"><span class="currency-symbol">₹</span><input type="number" id="maintenance" class="calculator-input"></div></td>
+                    <td>
+                        <div class="input-with-symbol">
+                            <span class="currency-symbol">₹</span>
+                            <input type="number" id="maintenance" class="calculator-input">
+                        </div>
+                    </td>
                 </tr>
                 <tr>
                     <td>Vehicle Loading cost</td>
-                    <td><div class="input-with-symbol"><span class="currency-symbol">₹</span><input type="number" id="loading" class="calculator-input"></div></td>
+                    <td>
+                        <div class="input-with-symbol">
+                            <span class="currency-symbol">₹</span>
+                            <input type="number" id="loading" class="calculator-input">
+                        </div>
+                    </td>
                 </tr>
                 <tr>
                     <td>Vehicle Unloading Cost</td>
-                    <td><div class="input-with-symbol"><span class="currency-symbol">₹</span><input type="number" id="unloading" class="calculator-input"></div></td>
+                    <td>
+                        <div class="input-with-symbol">
+                            <span class="currency-symbol">₹</span>
+                            <input type="number" id="unloading" class="calculator-input">
+                        </div>
+                    </td>
                 </tr>
                 <tr>
                     <td>Misc. Cost</td>
-                    <td><div class="input-with-symbol"><span class="currency-symbol">₹</span><input type="number" id="unloading" class="calculator-input"></div></td>
+                    <td>
+                        <div class="input-with-symbol">
+                            <span class="currency-symbol">₹</span>
+                            <input type="number" id="misc" class="calculator-input">
+                        </div>
+                    </td>
                 </tr>
-
             </table>
         </div>
-    </div>
-</body>
-</html>
         
-        <!-- Stock Boxes (Narrower Column - 40%) -->
-        <div class="cost-column" style="flex: 2; gap: 20px;">
+        <!-- Stock Column (40% width) -->
+        <div class="cost-column stock-column">
             <!-- Spare Parts Stock Box -->
             <table class="cost-table stock-box">
                 <tr>
                     <th colspan="2" class="cost-section-title" style="background-color: #1565C0;">SPARE PARTS STOCK</th>
                 </tr>
                 <tr>
-                    <th>ITEM</th>
-                    <th>QTY</th>
+                    <th class="item-col">ITEM</th>
+                    <th class="qty-col">QTY</th>
                 </tr>
                 <tr>
-                    <td>VRM Rings</td>
-                    <td><input type="number" value="6" class="calculator-input stock-input"></td>
+                    <td class="item-col">VRM Rings</td>
+                    <td class="qty-col"><input type="number" class="stock-input"></td>
                 </tr>
                 <tr>
-                    <td>VRM Pins</td>
-                    <td><input type="number" value="64" class="calculator-input stock-input"></td>
+                    <td class="item-col">VRM Pins</td>
+                    <td class="qty-col"><input type="number" class="stock-input"></td>
                 </tr>
                 <tr>
-                    <td>VRM Rollers</td>
-                    <td><input type="number" value="96" class="calculator-input stock-input"></td>
+                    <td class="item-col">VRM Rollers</td>
+                    <td class="qty-col"><input type="number" class="stock-input"></td>
                 </tr>
                 <tr>
-                    <td>Turn Tables</td>
-                    <td><input type="number" value="4" class="calculator-input stock-input"></td>
+                    <td class="item-col">Turn Tables</td>
+                    <td class="qty-col"><input type="number" class="stock-input"></td>
                 </tr>
                 <tr>
-                    <td>Bearing Housing</td>
-                    <td><input type="number" value="1" class="calculator-input stock-input"></td>
+                    <td class="item-col">Bearing Housing</td>
+                    <td class="qty-col"><input type="number" class="stock-input"></td>
                 </tr>
                 <tr>
-                    <td>Classifier Antiware</td>
-                    <td><input type="number" value="3" class="calculator-input stock-input"></td>
+                    <td class="item-col">Classifier Antiware</td>
+                    <td class="qty-col"><input type="number" class="stock-input"></td>
                 </tr>
             </table>
             
@@ -1579,31 +1564,30 @@
                     <th colspan="2" class="cost-section-title" style="background-color: #6A1B9A;">MATERIAL STOCK</th>
                 </tr>
                 <tr>
-                    <th>ITEM</th>
-                    <th>QTY</th>
+                    <th class="item-col">ITEM</th>
+                    <th class="qty-col">QTY</th>
                 </tr>
                 <tr>
-                    <td>Godown AMS Stock</td>
-                    <td><input type="number" class="calculator-input stock-input"></td>
+                    <td class="item-col">Godown AMS Stock</td>
+                    <td class="qty-col"><input type="number" class="stock-input"></td>
                 </tr>
                 <tr>
-                    <td>Branding Bag Stock</td>
-                    <td><input type="number" class="calculator-input stock-input"></td>
+                    <td class="item-col">Branding Bag Stock</td>
+                    <td class="qty-col"><input type="number" class="stock-input"></td>
                 </tr>
                 <tr>
-                    <td>Diesel Stock (Ltrs)</td>
-                    <td><input type="number" class="calculator-input stock-input"></td>
+                    <td class="item-col">Diesel Stock (Ltrs)</td>
+                    <td class="qty-col"><input type="number" class="stock-input"></td>
                 </tr>
                 <tr>
-                    <td>LDO Stock (Ltrs)</td>
-                    <td><input type="number" class="calculator-input stock-input"></td>
+                    <td class="item-col">LDO Stock (Ltrs)</td>
+                    <td class="qty-col"><input type="number" class="stock-input"></td>
                 </tr>
             </table>
         </div>
     </div>
 </body>
 </html>
-
 <!-- Fixed Length Land Scope Table - Full Width -->
 <div class="fixed-landscope-container">
     <div class="fixed-landscope-box">
