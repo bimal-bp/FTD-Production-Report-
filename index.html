@@ -1280,7 +1280,7 @@
         .cost-column {
             display: flex;
             flex-direction: column;
-            gap: 30px;
+            gap: 20px; /* Reduced gap between tables */
         }
         
         .cost-table {
@@ -1291,7 +1291,7 @@
         }
         
         .cost-table th, .cost-table td {
-            padding: 15px 20px;
+            padding: 10px 15px; /* Reduced padding */
             text-align: left;
             border: 1px solid #ddd;
         }
@@ -1303,43 +1303,41 @@
         
         .cost-section-title {
             color: white;
-            font-size: 18px;
+            font-size: 16px; /* Slightly smaller font */
             text-align: center;
-            padding: 15px;
+            padding: 10px; /* Reduced padding */
             font-weight: bold;
         }
         
         .calculator-input {
-            width: 100%;
-            padding: 12px 15px 12px 35px;
+            width: 70%; /* Increased width by 30% */
+            padding: 8px 10px; /* Reduced padding */
             border: 1px solid #ddd;
             border-radius: 4px;
             box-sizing: border-box;
             font-size: 16px;
+            margin-left: 5px;
         }
         
         .input-with-symbol {
-            position: relative;
+            display: flex;
+            align-items: center;
         }
         
         .currency-symbol {
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
             color: #666;
             font-size: 16px;
             font-weight: bold;
+            margin-right: 5px;
         }
         
         .stock-input {
-            width: 100%;
-            padding: 12px 15px;
+            width: 70%; /* Increased width by 30% */
+            padding: 8px 10px; /* Reduced padding */
             font-size: 16px;
             border: 1px solid #ddd;
             border-radius: 4px;
             background-color: transparent;
-            border: none;
             text-align: right;
         }
         
@@ -1355,7 +1353,7 @@
         
         /* Stock boxes take full height of their column */
         .stock-box {
-            height: 100%;
+            height: auto; /* Changed from 100% to auto */
         }
         
         /* Item name column takes 60% of stock table width */
@@ -1580,6 +1578,7 @@
     </div>
 </body>
 </html>
+    
 <!-- Fixed Length Land Scope Table - Full Width -->
 <div class="fixed-landscope-container">
     <div class="fixed-landscope-box">
