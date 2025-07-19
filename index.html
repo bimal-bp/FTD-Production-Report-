@@ -883,7 +883,7 @@
                     <div class="compact-stock-header">OPENING</div>
                     <table class="compact-section-table">
                         <tr>
-                            <th>SGX Raw (RM)</th>
+                            <th>SGX Raw</th>
                             <td><input type="number" class="compact-input-field"></td>
                         </tr>
                         <tr>
@@ -904,7 +904,7 @@
                     <div class="compact-stock-header">CLOSING</div>
                     <table class="compact-section-table">
                         <tr>
-                            <th>SGX Raw (RM)</th>
+                            <th>SGX Raw</th>
                             <td><input type="number" class="compact-input-field"></td>
                         </tr>
                         <tr>
@@ -926,18 +926,18 @@
 
         <!-- Mixing Details (25% width) -->
         <div class="compact-section mixing-section-compact">
-            <div class="compact-section-title">MTD </div>
+            <div class="compact-section-title">MTD Details </div>
             <table class="compact-section-table">
                 <tr>
                     <th>MTD Mixing</th>
                     <td><input type="number" class="compact-input-field"></td>
                 </tr>
                 <tr>
-                    <th>MTD Dryer Prod</th>
+                    <th>MTD Dryer Production</th>
                     <td><input type="number" class="compact-input-field"></td>
                 </tr>
                 <tr>
-                    <th>MTD VRM Prod</th>
+                    <th>MTD VRM Production</th>
                     <td><input type="number" class="compact-input-field"></td>
                 </tr>
                 <tr>
@@ -960,8 +960,8 @@
                     <th style="width: 12.5%;">OPC</th>
                     <th style="width: 12.5%;">ACCLTR</th>
                     <th style="width: 12.5%;">GROUND MIXING</th>
-                    <th style="width: 12.5%;">VRM OUTPUT</th>
                     <th style="width: 12.5%;">DRYER OUTPUT</th>
+                    <th style="width: 12.5%;">VRM OUTPUT</th>
                 </tr>
             </thead>
             <tbody>
@@ -1007,7 +1007,7 @@
                 <div class="cost-summary-value"><input type="text" id="totalCostKG" placeholder="0.00"></div>
             </div>
         </div>
-DRYER OPERATIONS
+
 
         <!DOCTYPE html>
 <html lang="en">
@@ -1258,6 +1258,105 @@ DRYER OPERATIONS
         </div>
     </div>
 
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .cost-container {
+            display: flex;
+            gap: 20px;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .cost-column {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .cost-table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .cost-table th, .cost-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        
+        .cost-table th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        
+        .cost-section-title {
+            color: white;
+            font-size: 16px;
+            text-align: center;
+            padding: 12px;
+        }
+        
+        .calculator-input {
+            width: 100%;
+            padding: 8px 10px 8px 25px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+        
+        .stock-box {
+            height: 100%;
+        }
+        
+        .input-with-symbol {
+            position: relative;
+        }
+        
+        .currency-symbol {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+        }
+        
+        .stock-input {
+            width: 100px;
+            padding: 8px 10px;
+        }
+        
+        @media print {
+            body {
+                padding: 0;
+                background-color: white;
+            }
+            
+            .cost-container {
+                max-width: 100%;
+                page-break-after: avoid;
+            }
+            
+            @page {
+                size: landscape;
+                margin: 1cm;
+            }
+        }
+    </style>
+</head>
+<body>
     <!-- Cost Calculator -->
     <div class="cost-container">
         <!-- Individual Costs (Wider Column - 60%) -->
@@ -1272,61 +1371,65 @@ DRYER OPERATIONS
                 </tr>
                 <tr>
                     <td>MIXING COST</td>
-                    <td><div class="input-with-symbol"><input type="number" id="mixing" class="calculator-input"></div></td>
+                    <td><div class="input-with-symbol"><span class="currency-symbol">₹</span><input type="number" id="mixing" class="calculator-input"></div></td>
                 </tr>
                 <tr>
                     <td>NMR COST</td>
-                    <td><div class="input-with-symbol"><input type="number" id="nmr" class="calculator-input"></div></td>
+                    <td><div class="input-with-symbol"><span class="currency-symbol">₹</span><input type="number" id="nmr" class="calculator-input"></div></td>
                 </tr>
                 <tr>
                     <td>EB COST</td>
-                    <td><div class="input-with-symbol"><input type="number" id="eb" class="calculator-input"></div></td>
+                    <td><div class="input-with-symbol"><span class="currency-symbol">₹</span><input type="number" id="eb" class="calculator-input"></div></td>
                 </tr>
                 <tr>
                     <td>Forklift cost</td>
-                    <td><div class="input-with-symbol"><input type="number" id="forklift" class="calculator-input"></div></td>
+                    <td><div class="input-with-symbol"><span class="currency-symbol">₹</span><input type="number" id="forklift" class="calculator-input"></div></td>
                 </tr>
                 <tr>
                     <td>BAG COST</td>
-                    <td><div class="input-with-symbol"><input type="number" id="bag" class="calculator-input"></div></td>
+                    <td><div class="input-with-symbol"><span class="currency-symbol">₹</span><input type="number" id="bag" class="calculator-input"></div></td>
                 </tr>
                 <tr>
                     <td>LDO COST</td>
-                    <td><div class="input-with-symbol"><input type="number" id="ldo" class="calculator-input"></div></td>
+                    <td><div class="input-with-symbol"><span class="currency-symbol">₹</span><input type="number" id="ldo" class="calculator-input"></div></td>
                 </tr>
                 <tr>
                     <td>JCB operator</td>
-                    <td><div class="input-with-symbol"><input type="number" id="jcbOperator" class="calculator-input"></div></td>
+                    <td><div class="input-with-symbol"><span class="currency-symbol">₹</span><input type="number" id="jcbOperator" class="calculator-input"></div></td>
                 </tr>
                 <tr>
                     <td>JCB fuel cost</td>
-                    <td><div class="input-with-symbol"><input type="number" id="jcbFuel" class="calculator-input"></div></td>
+                    <td><div class="input-with-symbol"><span class="currency-symbol">₹</span><input type="number" id="jcbFuel" class="calculator-input"></div></td>
                 </tr>
                 <tr>
                     <td>Spare Part cost</td>
-                    <td><div class="input-with-symbol"><input type="number" id="spare" class="calculator-input"></div></td>
+                    <td><div class="input-with-symbol"><span class="currency-symbol">₹</span><input type="number" id="spare" class="calculator-input"></div></td>
                 </tr>
                 <tr>
-                    <td>Maintenance Cost & misc. cost</td>
-                    <td><div class="input-with-symbol"><input type="number" id="maintenance" class="calculator-input"></div></td>
+                    <td>Maintenance Cost</td>
+                    <td><div class="input-with-symbol"><span class="currency-symbol">₹</span><input type="number" id="maintenance" class="calculator-input"></div></td>
                 </tr>
                 <tr>
                     <td>Vehicle Loading cost</td>
-                    <td><div class="input-with-symbol"><input type="number" id="loading" class="calculator-input"></div></td>
+                    <td><div class="input-with-symbol"><span class="currency-symbol">₹</span><input type="number" id="loading" class="calculator-input"></div></td>
                 </tr>
                 <tr>
                     <td>Vehicle Unloading Cost</td>
-                    <td><div class="input-with-symbol"><input type="number" id="unloading" class="calculator-input"></div></td>
+                    <td><div class="input-with-symbol"><span class="currency-symbol">₹</span><input type="number" id="unloading" class="calculator-input"></div></td>
+                </tr>
+                <tr>
+                    <td>Mics. Cost</td>
+                    <td><div class="input-with-symbol"><span class="currency-symbol">₹</span><input type="number" id="loading" class="calculator-input"></div></td>
                 </tr>
             </table>
         </div>
         
         <!-- Stock Boxes (Narrower Column - 40%) -->
-        <div class="cost-column" style="flex: 2;">
+        <div class="cost-column" style="flex: 2; gap: 20px;">
             <!-- Spare Parts Stock Box -->
             <table class="cost-table stock-box">
                 <tr>
-                    <th colspan="2" class="cost-section-title" style="background-color: #1565C0;">SPARE PARTS STOCK (6 ITEMS)</th>
+                    <th colspan="2" class="cost-section-title" style="background-color: #1565C0;">SPARE PARTS STOCK</th>
                 </tr>
                 <tr>
                     <th>ITEM</th>
@@ -1357,15 +1460,11 @@ DRYER OPERATIONS
                     <td><input type="number" value="3" class="calculator-input stock-input"></td>
                 </tr>
             </table>
-        </div>
-    </div>
-</body>
-</html>
             
             <!-- Material Stock Box -->
             <table class="cost-table stock-box">
                 <tr>
-                    <th colspan="2" class="cost-section-title" style="background-color: #6A1B9A;">MATERIAL STOCK (4 ITEMS)</th>
+                    <th colspan="2" class="cost-section-title" style="background-color: #6A1B9A;">MATERIAL STOCK</th>
                 </tr>
                 <tr>
                     <th>ITEM</th>
