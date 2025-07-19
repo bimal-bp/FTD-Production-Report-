@@ -1046,12 +1046,13 @@
         
         .calculator-input {
             width: 95%;
-            padding: 8px 10px;
+            padding: 16px 20px; /* Increased padding to double the size */
             border: 1px solid #ddd;
             border-radius: 4px;
             box-sizing: border-box;
-            font-size: 16px;
+            font-size: 24px; /* Increased font size */
             margin-left: 5px;
+            height: 60px; /* Fixed height for consistency */
         }
         
         .input-with-symbol {
@@ -1061,9 +1062,9 @@
         
         .currency-symbol {
             color: #666;
-            font-size: 16px;
+            font-size: 24px; /* Increased to match input size */
             font-weight: bold;
-            margin-right: 5px;
+            margin-right: 10px; /* Increased margin */
         }
         
         .stock-input {
@@ -1107,7 +1108,7 @@
             cursor: pointer;
             margin-top: 20px;
             display: block;
-            width: 200px;
+            width: 300px; /* Increased width from 200px to 300px */
             margin-left: auto;
             margin-right: auto;
         }
@@ -1328,6 +1329,7 @@
         </div>
     </div>
     
+    <button id="playReview" class="review-btn">Review Costs</button>
     
     <script>
         document.getElementById('playReview').addEventListener('click', function() {
