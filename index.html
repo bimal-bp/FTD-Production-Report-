@@ -992,7 +992,6 @@
 </body>
 </html>
 
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -1045,30 +1044,30 @@
         }
         
         .calculator-input {
-            width: 95%;
-            padding: 16px 20px; /* Increased padding to double the size */
+            width: 150px; /* Increased width for 5-6 digit numbers */
+            padding: 8px 10px;
             border: 1px solid #ddd;
             border-radius: 4px;
             box-sizing: border-box;
-            font-size: 24px; /* Increased font size */
-            margin-left: 5px;
-            height: 60px; /* Fixed height for consistency */
+            font-size: 16px;
+            text-align: right;
         }
         
         .input-with-symbol {
             display: flex;
             align-items: center;
+            justify-content: flex-end;
         }
         
         .currency-symbol {
             color: #666;
-            font-size: 24px; /* Increased to match input size */
+            font-size: 16px;
             font-weight: bold;
-            margin-right: 10px; /* Increased margin */
+            margin-right: 5px;
         }
         
         .stock-input {
-            width: 95%;
+            width: 150px; /* Increased width for 5-6 digit numbers */
             padding: 8px 10px;
             font-size: 16px;
             border: 1px solid #ddd;
@@ -1091,6 +1090,7 @@
         
         .item-col {
             width: 60%;
+            text-align: left;
         }
         
         .qty-col {
@@ -1098,23 +1098,8 @@
             text-align: right;
         }
         
-        .review-btn {
-            background-color: #2E7D32;
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            font-size: 16px;
-            border-radius: 4px;
-            cursor: pointer;
-            margin-top: 20px;
-            display: block;
-            width: 300px; /* Increased width from 200px to 300px */
-            margin-left: auto;
-            margin-right: auto;
-        }
-        
-        .review-btn:hover {
-            background-color: #1B5E20;
+        .cost-table td {
+            vertical-align: middle;
         }
         
         @media print {
@@ -1138,10 +1123,6 @@
                 -webkit-appearance: none;
                 -moz-appearance: textfield;
             }
-            
-            .review-btn {
-                display: none;
-            }
         }
     </style>
 </head>
@@ -1154,8 +1135,8 @@
                     <th colspan="2" class="cost-section-title" style="background-color: #2E7D32;">INDIVIDUAL COSTS</th>
                 </tr>
                 <tr>
-                    <td style="width: 40%;">MIXING COST</td>
-                    <td style="width: 60%;">
+                    <td class="item-col">MIXING COST</td>
+                    <td class="qty-col">
                         <div class="input-with-symbol">
                             <span class="currency-symbol">₹</span>
                             <input type="number" id="mixing" class="calculator-input">
@@ -1163,8 +1144,8 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>NMR COST</td>
-                    <td>
+                    <td class="item-col">NMR COST</td>
+                    <td class="qty-col">
                         <div class="input-with-symbol">
                             <span class="currency-symbol">₹</span>
                             <input type="number" id="nmr" class="calculator-input">
@@ -1172,8 +1153,8 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>EB COST</td>
-                    <td>
+                    <td class="item-col">EB COST</td>
+                    <td class="qty-col">
                         <div class="input-with-symbol">
                             <span class="currency-symbol">₹</span>
                             <input type="number" id="eb" class="calculator-input">
@@ -1181,8 +1162,8 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>Forklift cost</td>
-                    <td>
+                    <td class="item-col">Forklift cost</td>
+                    <td class="qty-col">
                         <div class="input-with-symbol">
                             <span class="currency-symbol">₹</span>
                             <input type="number" id="forklift" class="calculator-input">
@@ -1190,8 +1171,8 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>BAG COST</td>
-                    <td>
+                    <td class="item-col">BAG COST</td>
+                    <td class="qty-col">
                         <div class="input-with-symbol">
                             <span class="currency-symbol">₹</span>
                             <input type="number" id="bag" class="calculator-input">
@@ -1199,8 +1180,8 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>LDO COST</td>
-                    <td>
+                    <td class="item-col">LDO COST</td>
+                    <td class="qty-col">
                         <div class="input-with-symbol">
                             <span class="currency-symbol">₹</span>
                             <input type="number" id="ldo" class="calculator-input">
@@ -1208,8 +1189,8 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>JCB operator</td>
-                    <td>
+                    <td class="item-col">JCB operator</td>
+                    <td class="qty-col">
                         <div class="input-with-symbol">
                             <span class="currency-symbol">₹</span>
                             <input type="number" id="jcbOperator" class="calculator-input">
@@ -1217,8 +1198,8 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>JCB fuel cost</td>
-                    <td>
+                    <td class="item-col">JCB fuel cost</td>
+                    <td class="qty-col">
                         <div class="input-with-symbol">
                             <span class="currency-symbol">₹</span>
                             <input type="number" id="jcbFuel" class="calculator-input">
@@ -1226,8 +1207,8 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>Spare Part cost</td>
-                    <td>
+                    <td class="item-col">Spare Part cost</td>
+                    <td class="qty-col">
                         <div class="input-with-symbol">
                             <span class="currency-symbol">₹</span>
                             <input type="number" id="spare" class="calculator-input">
@@ -1235,8 +1216,8 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>Maintenance Cost</td>
-                    <td>
+                    <td class="item-col">Maintenance Cost</td>
+                    <td class="qty-col">
                         <div class="input-with-symbol">
                             <span class="currency-symbol">₹</span>
                             <input type="number" id="maintenance" class="calculator-input">
@@ -1244,8 +1225,8 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>Vehicle Loading cost</td>
-                    <td>
+                    <td class="item-col">Vehicle Loading cost</td>
+                    <td class="qty-col">
                         <div class="input-with-symbol">
                             <span class="currency-symbol">₹</span>
                             <input type="number" id="loading" class="calculator-input">
@@ -1253,8 +1234,8 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>Vehicle Unloading Cost</td>
-                    <td>
+                    <td class="item-col">Vehicle Unloading Cost</td>
+                    <td class="qty-col">
                         <div class="input-with-symbol">
                             <span class="currency-symbol">₹</span>
                             <input type="number" id="unloading" class="calculator-input">
@@ -1262,8 +1243,8 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>Misc. Cost</td>
-                    <td>
+                    <td class="item-col">Misc. Cost</td>
+                    <td class="qty-col">
                         <div class="input-with-symbol">
                             <span class="currency-symbol">₹</span>
                             <input type="number" id="misc" class="calculator-input">
@@ -1328,99 +1309,6 @@
             </table>
         </div>
     </div>
-    
-    <button id="playReview" class="review-btn">Review Costs</button>
-    
-    <script>
-        document.getElementById('playReview').addEventListener('click', function() {
-            // Get all the input values
-            const mixing = document.getElementById('mixing').value || '0';
-            const nmr = document.getElementById('nmr').value || '0';
-            const eb = document.getElementById('eb').value || '0';
-            const forklift = document.getElementById('forklift').value || '0';
-            const bag = document.getElementById('bag').value || '0';
-            const ldo = document.getElementById('ldo').value || '0';
-            const jcbOperator = document.getElementById('jcbOperator').value || '0';
-            const jcbFuel = document.getElementById('jcbFuel').value || '0';
-            const spare = document.getElementById('spare').value || '0';
-            const maintenance = document.getElementById('maintenance').value || '0';
-            const loading = document.getElementById('loading').value || '0';
-            const unloading = document.getElementById('unloading').value || '0';
-            const misc = document.getElementById('misc').value || '0';
-            
-            // Get stock items
-            const stockInputs = document.querySelectorAll('.stock-input');
-            const stockItems = [];
-            
-            document.querySelectorAll('.cost-table.stock-box').forEach(table => {
-                const rows = table.querySelectorAll('tr:not(:first-child)');
-                rows.forEach((row, index) => {
-                    const itemName = row.querySelector('.item-col').textContent.trim();
-                    const quantity = stockInputs[index].value || '0';
-                    stockItems.push({itemName, quantity});
-                });
-            });
-            
-            // Prepare the review text
-            let reviewText = "Cost Review. ";
-            reviewText += `Mixing cost: ${mixing} rupees. `;
-            reviewText += `NMR cost: ${nmr} rupees. `;
-            reviewText += `EB cost: ${eb} rupees. `;
-            reviewText += `Forklift cost: ${forklift} rupees. `;
-            reviewText += `Bag cost: ${bag} rupees. `;
-            reviewText += `LDO cost: ${ldo} rupees. `;
-            reviewText += `JCB operator cost: ${jcbOperator} rupees. `;
-            reviewText += `JCB fuel cost: ${jcbFuel} rupees. `;
-            reviewText += `Spare part cost: ${spare} rupees. `;
-            reviewText += `Maintenance cost: ${maintenance} rupees. `;
-            reviewText += `Vehicle loading cost: ${loading} rupees. `;
-            reviewText += `Vehicle unloading cost: ${unloading} rupees. `;
-            reviewText += `Miscellaneous cost: ${misc} rupees. `;
-            
-            reviewText += "Stock items. ";
-            stockItems.forEach(item => {
-                reviewText += `${item.itemName}: ${item.quantity}. `;
-            });
-            
-            // Calculate and speak total cost
-            const totalCost = parseFloat(mixing) + parseFloat(nmr) + parseFloat(eb) + 
-                             parseFloat(forklift) + parseFloat(bag) + parseFloat(ldo) + 
-                             parseFloat(jcbOperator) + parseFloat(jcbFuel) + parseFloat(spare) + 
-                             parseFloat(maintenance) + parseFloat(loading) + parseFloat(unloading) + 
-                             parseFloat(misc);
-            
-            reviewText += `Total cost: ${totalCost.toFixed(2)} rupees.`;
-            
-            // Speak the review
-            speakText(reviewText);
-        });
-        
-        function speakText(text) {
-            if ('speechSynthesis' in window) {
-                const speech = new SpeechSynthesisUtterance();
-                speech.text = text;
-                speech.volume = 1;
-                speech.rate = 0.9;
-                speech.pitch = 1;
-                
-                // Try to find an English voice
-                const voices = window.speechSynthesis.getVoices();
-                const englishVoice = voices.find(voice => voice.lang.includes('en'));
-                if (englishVoice) {
-                    speech.voice = englishVoice;
-                }
-                
-                window.speechSynthesis.speak(speech);
-            } else {
-                alert("Text-to-speech is not supported in your browser.");
-            }
-        }
-        
-        // Load voices when the page loads
-        window.speechSynthesis.onvoiceschanged = function() {
-            // Voices are now loaded
-        };
-    </script>
 </body>
 </html>
 </body>
