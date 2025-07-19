@@ -929,19 +929,19 @@
             <div class="compact-section-title">MTD Details </div>
             <table class="compact-section-table">
                 <tr>
-                    <th>MTD Mixing</th>
+                    <th> Ground Mixing</th>
                     <td><input type="number" class="compact-input-field"></td>
                 </tr>
                 <tr>
-                    <th>MTD Dryer Production</th>
+                    <th>Dryer Production</th>
                     <td><input type="number" class="compact-input-field"></td>
                 </tr>
                 <tr>
-                    <th>MTD VRM Production</th>
+                    <th>VRM Production</th>
                     <td><input type="number" class="compact-input-field"></td>
                 </tr>
                 <tr>
-                    <th>MTD Dispatch</th>
+                    <th>Dispatch</th>
                     <td><input type="number" class="compact-input-field"></td>
                 </tr>
             </table>
@@ -1357,6 +1357,118 @@
     </style>
 </head>
 <body>
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .cost-container {
+            display: flex;
+            gap: 20px;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .cost-column {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .cost-table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .cost-table th, .cost-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        
+        .cost-table th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        
+        .cost-section-title {
+            color: white;
+            font-size: 16px;
+            text-align: center;
+            padding: 12px;
+        }
+        
+        .calculator-input {
+            width: 100%;
+            padding: 8px 10px 8px 25px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+        
+        .stock-box {
+            height: 100%;
+        }
+        
+        .input-with-symbol {
+            position: relative;
+        }
+        
+        .currency-symbol {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+        }
+        
+        .stock-input {
+            width: 100px;
+            padding: 8px 10px;
+        }
+        
+        .calculate-btn {
+            background-color: #2E7D32;
+            color: white;
+            border: none;
+            padding: 12px 0;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+            width: 150%; /* Increased width by 50% */
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        
+        @media print {
+            body {
+                padding: 0;
+                background-color: white;
+            }
+            
+            .cost-container {
+                max-width: 100%;
+                page-break-after: avoid;
+            }
+            
+            @page {
+                size: landscape;
+                margin: 1cm;
+            }
+        }
+    </style>
+</head>
+<body>
     <!-- Cost Calculator -->
     <div class="cost-container">
         <!-- Individual Costs (Wider Column - 60%) -->
@@ -1364,10 +1476,6 @@
             <table class="cost-table" id="individualCosts">
                 <tr>
                     <th colspan="2" class="cost-section-title" style="background-color: #2E7D32;">INDIVIDUAL COSTS</th>
-                </tr>
-                <tr>
-                    <th>COST ITEM</th>
-                    <th>AMOUNT</th>
                 </tr>
                 <tr>
                     <td>MIXING COST</td>
@@ -1418,11 +1526,15 @@
                     <td><div class="input-with-symbol"><span class="currency-symbol">₹</span><input type="number" id="unloading" class="calculator-input"></div></td>
                 </tr>
                 <tr>
-                    <td>Mics. Cost</td>
-                    <td><div class="input-with-symbol"><span class="currency-symbol">₹</span><input type="number" id="loading" class="calculator-input"></div></td>
+                    <td>Misc. Cost</td>
+                    <td><div class="input-with-symbol"><span class="currency-symbol">₹</span><input type="number" id="unloading" class="calculator-input"></div></td>
                 </tr>
+
             </table>
         </div>
+    </div>
+</body>
+</html>
         
         <!-- Stock Boxes (Narrower Column - 40%) -->
         <div class="cost-column" style="flex: 2; gap: 20px;">
