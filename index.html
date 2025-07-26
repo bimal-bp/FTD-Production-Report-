@@ -1000,7 +1000,136 @@
                 <div class="cost-summary-value"><input type="text" id="totalCostKG" placeholder="0.00"></div>
             </div>
         </div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Function to calculate TPH (Tonnes Per Hour)
+    function calculateTPH(productionInput, hoursInput, tphOutput) {
+        const production = parseFloat(productionInput.value) || 0;
+        const hours = parseFloat(hoursInput.value) || 0;
+        const tph = hours > 0 ? (production / hours).toFixed(2) : 0;
+        tphOutput.value = tph;
+    }
 
+    // Function to sum day and night values for total
+    function calculateTotal(dayInput, nightInput, totalOutput, isTPH = false) {
+        const dayValue = parseFloat(dayInput.value) || 0;
+        const nightValue = parseFloat(nightInput.value) || 0;
+        
+        if (isTPH) {
+            // For TPH, we need to calculate based on total production and total hours
+            const productionTotal = parseFloat(document.getElementById(dayInput.dataset.productionTotal).value) || 0;
+            const hoursTotal = parseFloat(document.getElementById(dayInput.dataset.hoursTotal).value) || 0;
+            totalOutput.value = hoursTotal > 0 ? (productionTotal / hoursTotal).toFixed(2) : 0;
+        } else {
+            // For other values, just sum day and night
+            totalOutput.value = (dayValue + nightValue).toFixed(2);
+        }
+    }
+
+    // Set up event listeners for Dryer Operations
+    const dryerDayProduction = document.querySelector('.operations-section:first-child input:nth-of-type(1)');
+    const dryerNightProduction = document.querySelector('.operations-section:first-child input:nth-of-type(2)');
+    const dryerDayHours = document.querySelector('.operations-section:first-child input:nth-of-type(4)');
+    const dryerNightHours = document.querySelector('.operations-section:first-child input:nth-of-type(5)');
+    const dryerDayTPH = document.querySelector('.operations-section:first-child input:nth-of-type(7)');
+    const dryerNightTPH = document.querySelector('.operations-section:first-child input:nth-of-type(8)');
+    const dryerTotalProduction = document.querySelector('.operations-section:first-child input:nth-of-type(3)');
+    const dryerTotalHours = document.querySelector('.operations-section:first-child input:nth-of-type(6)');
+    const dryerTotalTPH = document.querySelector('.operations-section:first-child input:nth-of-type(9)');
+
+    // Add data attributes to help with total TPH calculation
+    dryerDayHours.dataset.productionTotal = 'dryerTotalProduction';
+    dryerDayHours.dataset.hoursTotal = 'dryerTotalHours';
+    dryerNightHours.dataset.productionTotal = 'dryerTotalProduction';
+    dryerNightHours.dataset.hoursTotal = 'dryerTotalHours';
+
+    // Set up event listeners for VRM Operations
+    const vrmDayProduction = document.querySelector('.operations-section:nth-child(2) input:nth-of-type(1)');
+    const vrmNightProduction = document.querySelector('.operations-section:nth-child(2) input:nth-of-type(2)');
+    const vrmDayHours = document.querySelector('.operations-section:nth-child(2) input:nth-of-type(4)');
+    const vrmNightHours = document.querySelector('.operations-section:nth-child(2) input:nth-of-type(5)');
+    const vrmDayTPH = document.querySelector('.operations-section:nth-child(2) input:nth-of-type(7)');
+    const vrmNightTPH = document.querySelector('.operations-section:nth-child(2) input:nth-of-type(8)');
+    const vrmTotalProduction = document.querySelector('.operations-section:nth-child(2) input:nth-of-type(3)');
+    const vrmTotalHours = document.querySelector('.operations-section:nth-child(2) input:nth-of-type(6)');
+    const vrmTotalTPH = document.querySelector('.operations-section:nth-child(2) input:nth-of-type(9)');
+
+    // Add data attributes to help with total TPH calculation
+    vrmDayHours.dataset.productionTotal = 'vrmTotalProduction';
+    vrmDayHours.dataset.hoursTotal = 'vrmTotalHours';
+    vrmNightHours.dataset.productionTotal = 'vrmTotalProduction';
+    vrmNightHours.dataset.hoursTotal = 'vrmTotalHours';
+
+    // Dryer Operations calculations
+    dryerDayProduction.addEventListener('input', function() {
+        calculateTPH(dryerDayProduction, dryerDayHours, dryerDayTPH);
+        calculateTotal(dryerDayProduction, dryerNightProduction, dryerTotalProduction);
+    });
+
+    dryerNightProduction.addEventListener('input', function() {
+        calculateTPH(dryerNightProduction, dryerNightHours, dryerNightTPH);
+        calculateTotal(dryerDayProduction, dryerNightProduction, dryerTotalProduction);
+    });
+
+    dryerDayHours.addEventListener('input', function() {
+        calculateTPH(dryerDayProduction, dryerDayHours, dryerDayTPH);
+        calculateTotal(dryerDayHours, dryerNightHours, dryerTotalHours);
+        calculateTotal(dryerDayHours, dryerNightHours, dryerTotalTPH, true);
+    });
+
+    dryerNightHours.addEventListener('input', function() {
+        calculateTPH(dryerNightProduction, dryerNightHours, dryerNightTPH);
+        calculateTotal(dryerDayHours, dryerNightHours, dryerTotalHours);
+        calculateTotal(dryerDayHours, dryerNightHours, dryerTotalTPH, true);
+    });
+
+    // VRM Operations calculations
+    vrmDayProduction.addEventListener('input', function() {
+        calculateTPH(vrmDayProduction, vrmDayHours, vrmDayTPH);
+        calculateTotal(vrmDayProduction, vrmNightProduction, vrmTotalProduction);
+    });
+
+    vrmNightProduction.addEventListener('input', function() {
+        calculateTPH(vrmNightProduction, vrmNightHours, vrmNightTPH);
+        calculateTotal(vrmDayProduction, vrmNightProduction, vrmTotalProduction);
+    });
+
+    vrmDayHours.addEventListener('input', function() {
+        calculateTPH(vrmDayProduction, vrmDayHours, vrmDayTPH);
+        calculateTotal(vrmDayHours, vrmNightHours, vrmTotalHours);
+        calculateTotal(vrmDayHours, vrmNightHours, vrmTotalTPH, true);
+    });
+
+    vrmNightHours.addEventListener('input', function() {
+        calculateTPH(vrmNightProduction, vrmNightHours, vrmNightTPH);
+        calculateTotal(vrmDayHours, vrmNightHours, vrmTotalHours);
+        calculateTotal(vrmDayHours, vrmNightHours, vrmTotalTPH, true);
+    });
+
+    // Make the lines editable while preserving the numbering (your existing code)
+    const lines = document.querySelectorAll('.fixed-line');
+    lines.forEach(line => {
+        line.setAttribute('contenteditable', 'true');
+        
+        // Preserve the numbering pattern
+        line.addEventListener('focus', function() {
+            const currentText = this.innerText;
+            if (!currentText.match(/^\d+\.\s/)) {
+                const lineNum = this.textContent.match(/^\d+/)[0];
+                this.innerHTML = lineNum + '. ';
+            }
+        });
+        
+        line.addEventListener('blur', function() {
+            const currentText = this.innerText;
+            if (!currentText.match(/^\d+\.\s/)) {
+                const lineNum = this.textContent.match(/^\d+/)[0];
+                this.innerHTML = lineNum + '. ' + currentText.replace(/^\d+\.\s?/, '');
+            }
+        });
+    });
+});
+</script>
         <!-- Operations Sections -->
         <div class="operations-container">
             <!-- Dryer Operations -->
