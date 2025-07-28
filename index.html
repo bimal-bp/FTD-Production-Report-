@@ -1343,329 +1343,347 @@
     <!-- ... -->
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Set today's date as default
-        const today = new Date().toISOString().split('T')[0];
-        document.getElementById('report-date').value = today;
+  document.addEventListener('DOMContentLoaded', function() {
+    // Set today's date as default
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('report-date').value = today;
+    
+    // Function to round values to 2 decimal places
+    function roundValue(value) {
+        return Math.round(value * 100) / 100;
+    }
+    
+    // FTD Mixing calculation
+    const dayMixing = document.getElementById('dayMixing');
+    const nightMixing = document.getElementById('nightMixing');
+    const ftdMixing = document.getElementById('ftdMixing');
+    
+    function calculateFTDMixing() {
+        const day = parseFloat(dayMixing.value) || 0;
+        const night = parseFloat(nightMixing.value) || 0;
+        ftdMixing.value = roundValue(day + night);
+    }
+    
+    dayMixing.addEventListener('input', calculateFTDMixing);
+    nightMixing.addEventListener('input', calculateFTDMixing);
+    
+    // Dryer Operations calculations
+    const dryerDayHours = document.getElementById('dryerDayHours');
+    const dryerNightHours = document.getElementById('dryerNightHours');
+    const dryerTotalHours = document.getElementById('dryerTotalHours');
+    
+    const dryerDayProduction = document.getElementById('dryerDayProduction');
+    const dryerNightProduction = document.getElementById('dryerNightProduction');
+    const dryerTotalProduction = document.getElementById('dryerTotalProduction');
+    
+    const dryerDayTPH = document.getElementById('dryerDayTPH');
+    const dryerNightTPH = document.getElementById('dryerNightTPH');
+    const dryerTotalTPH = document.getElementById('dryerTotalTPH');
+    
+    const dryerDayLDO = document.getElementById('dryerDayLDO');
+    const dryerNightLDO = document.getElementById('dryerNightLDO');
+    const dryerTotalLDO = document.getElementById('dryerTotalLDO');
+    
+    const dryerDayJCB = document.getElementById('dryerDayJCB');
+    const dryerNightJCB = document.getElementById('dryerNightJCB');
+    const dryerTotalJCB = document.getElementById('dryerTotalJCB');
+    
+    const dryerDayOperator = document.getElementById('dryerDayOperator');
+    const dryerNightOperator = document.getElementById('dryerNightOperator');
+    const dryerTotalOperator = document.getElementById('dryerTotalOperator');
+    
+    // VRM Operations calculations
+    const vrmDayHours = document.getElementById('vrmDayHours');
+    const vrmNightHours = document.getElementById('vrmNightHours');
+    const vrmTotalHours = document.getElementById('vrmTotalHours');
+    
+    const vrmDayProduction = document.getElementById('vrmDayProduction');
+    const vrmNightProduction = document.getElementById('vrmNightProduction');
+    const vrmTotalProduction = document.getElementById('vrmTotalProduction');
+    
+    const vrmDayTPH = document.getElementById('vrmDayTPH');
+    const vrmNightTPH = document.getElementById('vrmNightTPH');
+    const vrmTotalTPH = document.getElementById('vrmTotalTPH');
+    
+    const vrmDayEB = document.getElementById('vrmDayEB');
+    const vrmNightEB = document.getElementById('vrmNightEB');
+    const vrmTotalEB = document.getElementById('vrmTotalEB');
+    
+    const vrmDayNMR = document.getElementById('vrmDayNMR');
+    const vrmNightNMR = document.getElementById('vrmNightNMR');
+    const vrmTotalNMR = document.getElementById('vrmTotalNMR');
+    
+    const vrmDayOperator = document.getElementById('vrmDayOperator');
+    const vrmNightOperator = document.getElementById('vrmNightOperator');
+    const vrmTotalOperator = document.getElementById('vrmTotalOperator');
+    
+    // Cost inputs
+    const mixingCost = document.getElementById('mixing');
+    const nmrCost = document.getElementById('nmr');
+    const ebCost = document.getElementById('eb');
+    const forkliftCost = document.getElementById('forklift');
+    const bagCost = document.getElementById('bag');
+    const ldoCost = document.getElementById('ldo');
+    const jcbOperatorCost = document.getElementById('jcbOperator');
+    const jcbFuelCost = document.getElementById('jcbFuel');
+    const spareCost = document.getElementById('spare');
+    const maintenanceCost = document.getElementById('maintenance');
+    const loadingCost = document.getElementById('loading');
+    const unloadingCost = document.getElementById('unloading');
+    const miscCost = document.getElementById('misc');
+    
+    // Cost outputs
+    const dryerCostMT = document.getElementById('dryerCost');
+    const vrmCostMT = document.getElementById('vrmCost');
+    const totalCostMT = document.getElementById('totalCostMT');
+    const totalCostKG = document.getElementById('totalCostKG');
+    
+    // Function to calculate TPH (Tonnes Per Hour)
+    function calculateTPH(productionInput, hoursInput, tphOutput) {
+        const production = parseFloat(productionInput.value) || 0;
+        const hours = parseFloat(hoursInput.value) || 0;
+        const tph = hours > 0 ? roundValue(production / hours) : 0;
+        tphOutput.value = tph;
+    }
+    
+    // Function to sum day and night values for total
+    function calculateTotal(dayInput, nightInput, totalOutput, isTPH = false) {
+        const dayValue = parseFloat(dayInput.value) || 0;
+        const nightValue = parseFloat(nightInput.value) || 0;
         
-        // Function to round values to 2 decimal places
-        function roundValue(value) {
-            return Math.round(value * 100) / 100;
+        if (isTPH) {
+            // For TPH, we need to calculate based on total production and total hours
+            const productionTotal = parseFloat(document.getElementById(dayInput.dataset.productionTotal).value) || 0;
+            const hoursTotal = parseFloat(document.getElementById(dayInput.dataset.hoursTotal).value) || 0;
+            totalOutput.value = hoursTotal > 0 ? roundValue(productionTotal / hoursTotal) : 0;
+        } else {
+            // For other values, just sum day and night
+            totalOutput.value = roundValue(dayValue + nightValue);
         }
+    }
+    
+    // Function to calculate all costs
+    function calculateCosts() {
+        // Get all cost values
+        const mixing = parseFloat(mixingCost.value) || 0;
+        const nmr = parseFloat(nmrCost.value) || 0;
+        const eb = parseFloat(ebCost.value) || 0;
+        const forklift = parseFloat(forkliftCost.value) || 0;
+        const bag = parseFloat(bagCost.value) || 0;
+        const ldo = parseFloat(ldoCost.value) || 0;
+        const jcbOperator = parseFloat(jcbOperatorCost.value) || 0;
+        const jcbFuel = parseFloat(jcbFuelCost.value) || 0;
+        const spare = parseFloat(spareCost.value) || 0;
+        const maintenance = parseFloat(maintenanceCost.value) || 0;
+        const loading = parseFloat(loadingCost.value) || 0;
+        const unloading = parseFloat(unloadingCost.value) || 0;
+        const misc = parseFloat(miscCost.value) || 0;
         
-        // FTD Mixing calculation
-        const dayMixing = document.getElementById('dayMixing');
-        const nightMixing = document.getElementById('nightMixing');
-        const ftdMixing = document.getElementById('ftdMixing');
+        // Calculate total costs
+        const totalCost = mixing + nmr + eb + forklift + bag + ldo + jcbOperator + jcbFuel + spare + maintenance + loading + unloading + misc;
         
-        function calculateFTDMixing() {
-            const day = parseFloat(dayMixing.value) || 0;
-            const night = parseFloat(nightMixing.value) || 0;
-            ftdMixing.value = roundValue(day + night);
+        // Get production values
+        const dryerProduction = parseFloat(dryerTotalProduction.value) || 0;
+        const vrmProduction = parseFloat(vrmTotalProduction.value) || 0;
+        const totalProduction = dryerProduction + vrmProduction;
+        
+        // Calculate costs per metric ton
+        const dryerCost = dryerProduction > 0 ? roundValue(totalCost / dryerProduction) : 0;
+        const vrmCost = vrmProduction > 0 ? roundValue(totalCost / vrmProduction) : 0;
+        const totalCostPerMT = totalProduction > 0 ? roundValue(totalCost / totalProduction) : 0;
+        const totalCostPerKG = totalProduction > 0 ? roundValue(totalCost / (totalProduction * 1000)) : 0;
+        
+        // Update cost fields
+        dryerCostMT.value = dryerCost;
+        vrmCostMT.value = vrmCost;
+        totalCostMT.value = totalCostPerMT;
+        totalCostKG.value = totalCostPerKG;
+    }
+    
+    // Add data attributes to help with total TPH calculation
+    dryerDayHours.dataset.productionTotal = 'dryerTotalProduction';
+    dryerDayHours.dataset.hoursTotal = 'dryerTotalHours';
+    dryerNightHours.dataset.productionTotal = 'dryerTotalProduction';
+    dryerNightHours.dataset.hoursTotal = 'dryerTotalHours';
+    
+    vrmDayHours.dataset.productionTotal = 'vrmTotalProduction';
+    vrmDayHours.dataset.hoursTotal = 'vrmTotalHours';
+    vrmNightHours.dataset.productionTotal = 'vrmTotalProduction';
+    vrmNightHours.dataset.hoursTotal = 'vrmTotalHours';
+    
+    // Dryer Operations event listeners
+    dryerDayHours.addEventListener('input', function() {
+        calculateTotal(dryerDayHours, dryerNightHours, dryerTotalHours);
+        calculateTPH(dryerDayProduction, dryerDayHours, dryerDayTPH);
+        calculateTotal(dryerDayHours, dryerNightHours, dryerTotalTPH, true);
+        calculateCosts();
+    });
+    
+    dryerNightHours.addEventListener('input', function() {
+        calculateTotal(dryerDayHours, dryerNightHours, dryerTotalHours);
+        calculateTPH(dryerNightProduction, dryerNightHours, dryerNightTPH);
+        calculateTotal(dryerDayHours, dryerNightHours, dryerTotalTPH, true);
+        calculateCosts();
+    });
+    
+    dryerDayProduction.addEventListener('input', function() {
+        dryerDayProduction.value = roundValue(parseFloat(dryerDayProduction.value) || 0);
+        calculateTotal(dryerDayProduction, dryerNightProduction, dryerTotalProduction);
+        calculateTPH(dryerDayProduction, dryerDayHours, dryerDayTPH);
+        calculateTotal(dryerDayHours, dryerNightHours, dryerTotalTPH, true);
+        calculateCosts();
+    });
+    
+    dryerNightProduction.addEventListener('input', function() {
+        dryerNightProduction.value = roundValue(parseFloat(dryerNightProduction.value) || 0);
+        calculateTotal(dryerDayProduction, dryerNightProduction, dryerTotalProduction);
+        calculateTPH(dryerNightProduction, dryerNightHours, dryerNightTPH);
+        calculateTotal(dryerDayHours, dryerNightHours, dryerTotalTPH, true);
+        calculateCosts();
+    });
+    
+    dryerDayLDO.addEventListener('input', function() {
+        dryerDayLDO.value = roundValue(parseFloat(dryerDayLDO.value) || 0);
+        calculateTotal(dryerDayLDO, dryerNightLDO, dryerTotalLDO);
+    });
+    
+    dryerNightLDO.addEventListener('input', function() {
+        dryerNightLDO.value = roundValue(parseFloat(dryerNightLDO.value) || 0);
+        calculateTotal(dryerDayLDO, dryerNightLDO, dryerTotalLDO);
+    });
+    
+    // Modified JCB hours input handling to allow decimal values
+    dryerDayJCB.addEventListener('input', function() {
+        const value = parseFloat(this.value);
+        if (!isNaN(value)) {
+            this.value = value;
+        } else {
+            this.value = '';
         }
-        
-        dayMixing.addEventListener('input', calculateFTDMixing);
-        nightMixing.addEventListener('input', calculateFTDMixing);
-        
-        // Dryer Operations calculations
-        const dryerDayHours = document.getElementById('dryerDayHours');
-        const dryerNightHours = document.getElementById('dryerNightHours');
-        const dryerTotalHours = document.getElementById('dryerTotalHours');
-        
-        const dryerDayProduction = document.getElementById('dryerDayProduction');
-        const dryerNightProduction = document.getElementById('dryerNightProduction');
-        const dryerTotalProduction = document.getElementById('dryerTotalProduction');
-        
-        const dryerDayTPH = document.getElementById('dryerDayTPH');
-        const dryerNightTPH = document.getElementById('dryerNightTPH');
-        const dryerTotalTPH = document.getElementById('dryerTotalTPH');
-        
-        const dryerDayLDO = document.getElementById('dryerDayLDO');
-        const dryerNightLDO = document.getElementById('dryerNightLDO');
-        const dryerTotalLDO = document.getElementById('dryerTotalLDO');
-        
-        const dryerDayJCB = document.getElementById('dryerDayJCB');
-        const dryerNightJCB = document.getElementById('dryerNightJCB');
-        const dryerTotalJCB = document.getElementById('dryerTotalJCB');
-        
-        const dryerDayOperator = document.getElementById('dryerDayOperator');
-        const dryerNightOperator = document.getElementById('dryerNightOperator');
-        const dryerTotalOperator = document.getElementById('dryerTotalOperator');
-        
-        // VRM Operations calculations
-        const vrmDayHours = document.getElementById('vrmDayHours');
-        const vrmNightHours = document.getElementById('vrmNightHours');
-        const vrmTotalHours = document.getElementById('vrmTotalHours');
-        
-        const vrmDayProduction = document.getElementById('vrmDayProduction');
-        const vrmNightProduction = document.getElementById('vrmNightProduction');
-        const vrmTotalProduction = document.getElementById('vrmTotalProduction');
-        
-        const vrmDayTPH = document.getElementById('vrmDayTPH');
-        const vrmNightTPH = document.getElementById('vrmNightTPH');
-        const vrmTotalTPH = document.getElementById('vrmTotalTPH');
-        
-        const vrmDayEB = document.getElementById('vrmDayEB');
-        const vrmNightEB = document.getElementById('vrmNightEB');
-        const vrmTotalEB = document.getElementById('vrmTotalEB');
-        
-        const vrmDayNMR = document.getElementById('vrmDayNMR');
-        const vrmNightNMR = document.getElementById('vrmNightNMR');
-        const vrmTotalNMR = document.getElementById('vrmTotalNMR');
-        
-        const vrmDayOperator = document.getElementById('vrmDayOperator');
-        const vrmNightOperator = document.getElementById('vrmNightOperator');
-        const vrmTotalOperator = document.getElementById('vrmTotalOperator');
-        
-        // Cost inputs
-        const mixingCost = document.getElementById('mixing');
-        const nmrCost = document.getElementById('nmr');
-        const ebCost = document.getElementById('eb');
-        const forkliftCost = document.getElementById('forklift');
-        const bagCost = document.getElementById('bag');
-        const ldoCost = document.getElementById('ldo');
-        const jcbOperatorCost = document.getElementById('jcbOperator');
-        const jcbFuelCost = document.getElementById('jcbFuel');
-        const spareCost = document.getElementById('spare');
-        const maintenanceCost = document.getElementById('maintenance');
-        const loadingCost = document.getElementById('loading');
-        const unloadingCost = document.getElementById('unloading');
-        const miscCost = document.getElementById('misc');
-        
-        // Cost outputs
-        const dryerCostMT = document.getElementById('dryerCost');
-        const vrmCostMT = document.getElementById('vrmCost');
-        const totalCostMT = document.getElementById('totalCostMT');
-        const totalCostKG = document.getElementById('totalCostKG');
-        
-        // Function to calculate TPH (Tonnes Per Hour)
-        function calculateTPH(productionInput, hoursInput, tphOutput) {
-            const production = parseFloat(productionInput.value) || 0;
-            const hours = parseFloat(hoursInput.value) || 0;
-            const tph = hours > 0 ? roundValue(production / hours) : 0;
-            tphOutput.value = tph;
+        calculateTotal(dryerDayJCB, dryerNightJCB, dryerTotalJCB);
+    });
+    
+    dryerNightJCB.addEventListener('input', function() {
+        const value = parseFloat(this.value);
+        if (!isNaN(value)) {
+            this.value = value;
+        } else {
+            this.value = '';
         }
-        
-        // Function to sum day and night values for total
-        function calculateTotal(dayInput, nightInput, totalOutput, isTPH = false) {
-            const dayValue = parseFloat(dayInput.value) || 0;
-            const nightValue = parseFloat(nightInput.value) || 0;
-            
-            if (isTPH) {
-                // For TPH, we need to calculate based on total production and total hours
-                const productionTotal = parseFloat(document.getElementById(dayInput.dataset.productionTotal).value) || 0;
-                const hoursTotal = parseFloat(document.getElementById(dayInput.dataset.hoursTotal).value) || 0;
-                totalOutput.value = hoursTotal > 0 ? roundValue(productionTotal / hoursTotal) : 0;
-            } else {
-                // For other values, just sum day and night
-                totalOutput.value = roundValue(dayValue + nightValue);
-            }
-        }
-        
-        // Function to calculate all costs
-        function calculateCosts() {
-            // Get all cost values
-            const mixing = parseFloat(mixingCost.value) || 0;
-            const nmr = parseFloat(nmrCost.value) || 0;
-            const eb = parseFloat(ebCost.value) || 0;
-            const forklift = parseFloat(forkliftCost.value) || 0;
-            const bag = parseFloat(bagCost.value) || 0;
-            const ldo = parseFloat(ldoCost.value) || 0;
-            const jcbOperator = parseFloat(jcbOperatorCost.value) || 0;
-            const jcbFuel = parseFloat(jcbFuelCost.value) || 0;
-            const spare = parseFloat(spareCost.value) || 0;
-            const maintenance = parseFloat(maintenanceCost.value) || 0;
-            const loading = parseFloat(loadingCost.value) || 0;
-            const unloading = parseFloat(unloadingCost.value) || 0;
-            const misc = parseFloat(miscCost.value) || 0;
-            
-            // Calculate total costs
-            const totalCost = mixing + nmr + eb + forklift + bag + ldo + jcbOperator + jcbFuel + spare + maintenance + loading + unloading + misc;
-            
-            // Get production values
-            const dryerProduction = parseFloat(dryerTotalProduction.value) || 0;
-            const vrmProduction = parseFloat(vrmTotalProduction.value) || 0;
-            const totalProduction = dryerProduction + vrmProduction;
-            
-            // Calculate costs per metric ton
-            const dryerCost = dryerProduction > 0 ? roundValue(totalCost / dryerProduction) : 0;
-            const vrmCost = vrmProduction > 0 ? roundValue(totalCost / vrmProduction) : 0;
-            const totalCostPerMT = totalProduction > 0 ? roundValue(totalCost / totalProduction) : 0;
-            const totalCostPerKG = totalProduction > 0 ? roundValue(totalCost / (totalProduction * 1000)) : 0;
-            
-            // Update cost fields
-            dryerCostMT.value = dryerCost;
-            vrmCostMT.value = vrmCost;
-            totalCostMT.value = totalCostPerMT;
-            totalCostKG.value = totalCostPerKG;
-        }
-        
-        // Add data attributes to help with total TPH calculation
-        dryerDayHours.dataset.productionTotal = 'dryerTotalProduction';
-        dryerDayHours.dataset.hoursTotal = 'dryerTotalHours';
-        dryerNightHours.dataset.productionTotal = 'dryerTotalProduction';
-        dryerNightHours.dataset.hoursTotal = 'dryerTotalHours';
-        
-        vrmDayHours.dataset.productionTotal = 'vrmTotalProduction';
-        vrmDayHours.dataset.hoursTotal = 'vrmTotalHours';
-        vrmNightHours.dataset.productionTotal = 'vrmTotalProduction';
-        vrmNightHours.dataset.hoursTotal = 'vrmTotalHours';
-        
-        // Dryer Operations event listeners
-        dryerDayHours.addEventListener('input', function() {
-            calculateTotal(dryerDayHours, dryerNightHours, dryerTotalHours);
-            calculateTPH(dryerDayProduction, dryerDayHours, dryerDayTPH);
-            calculateTotal(dryerDayHours, dryerNightHours, dryerTotalTPH, true);
+        calculateTotal(dryerDayJCB, dryerNightJCB, dryerTotalJCB);
+    });
+    
+    // Improved operator name handling
+    dryerDayOperator.addEventListener('input', function() {
+        const dayOp = dryerDayOperator.value.trim();
+        const nightOp = dryerNightOperator.value.trim();
+        dryerTotalOperator.value = dayOp + (dayOp && nightOp ? ' / ' : '') + nightOp;
+    });
+    
+    dryerNightOperator.addEventListener('input', function() {
+        const dayOp = dryerDayOperator.value.trim();
+        const nightOp = dryerNightOperator.value.trim();
+        dryerTotalOperator.value = dayOp + (dayOp && nightOp ? ' / ' : '') + nightOp;
+    });
+    
+    // VRM Operations event listeners
+    vrmDayHours.addEventListener('input', function() {
+        calculateTotal(vrmDayHours, vrmNightHours, vrmTotalHours);
+        calculateTPH(vrmDayProduction, vrmDayHours, vrmDayTPH);
+        calculateTotal(vrmDayHours, vrmNightHours, vrmTotalTPH, true);
+        calculateCosts();
+    });
+    
+    vrmNightHours.addEventListener('input', function() {
+        calculateTotal(vrmDayHours, vrmNightHours, vrmTotalHours);
+        calculateTPH(vrmNightProduction, vrmNightHours, vrmNightTPH);
+        calculateTotal(vrmDayHours, vrmNightHours, vrmTotalTPH, true);
+        calculateCosts();
+    });
+    
+    vrmDayProduction.addEventListener('input', function() {
+        vrmDayProduction.value = roundValue(parseFloat(vrmDayProduction.value) || 0);
+        calculateTotal(vrmDayProduction, vrmNightProduction, vrmTotalProduction);
+        calculateTPH(vrmDayProduction, vrmDayHours, vrmDayTPH);
+        calculateTotal(vrmDayHours, vrmNightHours, vrmTotalTPH, true);
+        calculateCosts();
+    });
+    
+    vrmNightProduction.addEventListener('input', function() {
+        vrmNightProduction.value = roundValue(parseFloat(vrmNightProduction.value) || 0);
+        calculateTotal(vrmDayProduction, vrmNightProduction, vrmTotalProduction);
+        calculateTPH(vrmNightProduction, vrmNightHours, vrmNightTPH);
+        calculateTotal(vrmDayHours, vrmNightHours, vrmTotalTPH, true);
+        calculateCosts();
+    });
+    
+    vrmDayEB.addEventListener('input', function() {
+        vrmDayEB.value = roundValue(parseFloat(vrmDayEB.value) || 0);
+        calculateTotal(vrmDayEB, vrmNightEB, vrmTotalEB);
+    });
+    
+    vrmNightEB.addEventListener('input', function() {
+        vrmNightEB.value = roundValue(parseFloat(vrmNightEB.value) || 0);
+        calculateTotal(vrmDayEB, vrmNightEB, vrmTotalEB);
+    });
+    
+    vrmDayNMR.addEventListener('input', function() {
+        vrmDayNMR.value = roundValue(parseFloat(vrmDayNMR.value) || 0);
+        calculateTotal(vrmDayNMR, vrmNightNMR, vrmTotalNMR);
+    });
+    
+    vrmNightNMR.addEventListener('input', function() {
+        vrmNightNMR.value = roundValue(parseFloat(vrmNightNMR.value) || 0);
+        calculateTotal(vrmDayNMR, vrmNightNMR, vrmTotalNMR);
+    });
+    
+    // Improved VRM operator name handling
+    vrmDayOperator.addEventListener('input', function() {
+        const dayOp = vrmDayOperator.value.trim();
+        const nightOp = vrmNightOperator.value.trim();
+        vrmTotalOperator.value = dayOp + (dayOp && nightOp ? ' / ' : '') + nightOp;
+    });
+    
+    vrmNightOperator.addEventListener('input', function() {
+        const dayOp = vrmDayOperator.value.trim();
+        const nightOp = vrmNightOperator.value.trim();
+        vrmTotalOperator.value = dayOp + (dayOp && nightOp ? ' / ' : '') + nightOp;
+    });
+    
+    // Cost inputs event listeners
+    const costInputs = [
+        mixingCost, nmrCost, ebCost, forkliftCost, bagCost, ldoCost, 
+        jcbOperatorCost, jcbFuelCost, spareCost, maintenanceCost, 
+        loadingCost, unloadingCost, miscCost
+    ];
+    
+    costInputs.forEach(input => {
+        input.addEventListener('input', function() {
+            this.value = roundValue(parseFloat(this.value) || 0);
             calculateCosts();
-        });
-        
-        dryerNightHours.addEventListener('input', function() {
-            calculateTotal(dryerDayHours, dryerNightHours, dryerTotalHours);
-            calculateTPH(dryerNightProduction, dryerNightHours, dryerNightTPH);
-            calculateTotal(dryerDayHours, dryerNightHours, dryerTotalTPH, true);
-            calculateCosts();
-        });
-        
-        dryerDayProduction.addEventListener('input', function() {
-            dryerDayProduction.value = roundValue(parseFloat(dryerDayProduction.value) || 0);
-            calculateTotal(dryerDayProduction, dryerNightProduction, dryerTotalProduction);
-            calculateTPH(dryerDayProduction, dryerDayHours, dryerDayTPH);
-            calculateTotal(dryerDayHours, dryerNightHours, dryerTotalTPH, true);
-            calculateCosts();
-        });
-        
-        dryerNightProduction.addEventListener('input', function() {
-            dryerNightProduction.value = roundValue(parseFloat(dryerNightProduction.value) || 0);
-            calculateTotal(dryerDayProduction, dryerNightProduction, dryerTotalProduction);
-            calculateTPH(dryerNightProduction, dryerNightHours, dryerNightTPH);
-            calculateTotal(dryerDayHours, dryerNightHours, dryerTotalTPH, true);
-            calculateCosts();
-        });
-        
-        dryerDayLDO.addEventListener('input', function() {
-            dryerDayLDO.value = roundValue(parseFloat(dryerDayLDO.value) || 0);
-            calculateTotal(dryerDayLDO, dryerNightLDO, dryerTotalLDO);
-        });
-        
-        dryerNightLDO.addEventListener('input', function() {
-            dryerNightLDO.value = roundValue(parseFloat(dryerNightLDO.value) || 0);
-            calculateTotal(dryerDayLDO, dryerNightLDO, dryerTotalLDO);
-        });
-        
-        dryerDayJCB.addEventListener('input', function() {
-            dryerDayJCB.value = parseFloat(dryerDayJCB.value) || 0;
-            calculateTotal(dryerDayJCB, dryerNightJCB, dryerTotalJCB);
-        });
-        
-        dryerNightJCB.addEventListener('input', function() {
-            dryerNightJCB.value = parseFloat(dryerNightJCB.value) || 0;
-            calculateTotal(dryerDayJCB, dryerNightJCB, dryerTotalJCB);
-        });
-        
-        dryerDayOperator.addEventListener('input', function() {
-            dryerTotalOperator.value = `${dryerDayOperator.value || ''} ${dryerNightOperator.value || ''}`.trim();
-        });
-        
-        dryerNightOperator.addEventListener('input', function() {
-            dryerTotalOperator.value = `${dryerDayOperator.value || ''} ${dryerNightOperator.value || ''}`.trim();
-        });
-        
-        // VRM Operations event listeners
-        vrmDayHours.addEventListener('input', function() {
-            calculateTotal(vrmDayHours, vrmNightHours, vrmTotalHours);
-            calculateTPH(vrmDayProduction, vrmDayHours, vrmDayTPH);
-            calculateTotal(vrmDayHours, vrmNightHours, vrmTotalTPH, true);
-            calculateCosts();
-        });
-        
-        vrmNightHours.addEventListener('input', function() {
-            calculateTotal(vrmDayHours, vrmNightHours, vrmTotalHours);
-            calculateTPH(vrmNightProduction, vrmNightHours, vrmNightTPH);
-            calculateTotal(vrmDayHours, vrmNightHours, vrmTotalTPH, true);
-            calculateCosts();
-        });
-        
-        vrmDayProduction.addEventListener('input', function() {
-            vrmDayProduction.value = roundValue(parseFloat(vrmDayProduction.value) || 0);
-            calculateTotal(vrmDayProduction, vrmNightProduction, vrmTotalProduction);
-            calculateTPH(vrmDayProduction, vrmDayHours, vrmDayTPH);
-            calculateTotal(vrmDayHours, vrmNightHours, vrmTotalTPH, true);
-            calculateCosts();
-        });
-        
-        vrmNightProduction.addEventListener('input', function() {
-            vrmNightProduction.value = roundValue(parseFloat(vrmNightProduction.value) || 0);
-            calculateTotal(vrmDayProduction, vrmNightProduction, vrmTotalProduction);
-            calculateTPH(vrmNightProduction, vrmNightHours, vrmNightTPH);
-            calculateTotal(vrmDayHours, vrmNightHours, vrmTotalTPH, true);
-            calculateCosts();
-        });
-        
-        vrmDayEB.addEventListener('input', function() {
-            vrmDayEB.value = roundValue(parseFloat(vrmDayEB.value) || 0);
-            calculateTotal(vrmDayEB, vrmNightEB, vrmTotalEB);
-        });
-        
-        vrmNightEB.addEventListener('input', function() {
-            vrmNightEB.value = roundValue(parseFloat(vrmNightEB.value) || 0);
-            calculateTotal(vrmDayEB, vrmNightEB, vrmTotalEB);
-        });
-        
-        vrmDayNMR.addEventListener('input', function() {
-            vrmDayNMR.value = roundValue(parseFloat(vrmDayNMR.value) || 0);
-            calculateTotal(vrmDayNMR, vrmNightNMR, vrmTotalNMR);
-        });
-        
-        vrmNightNMR.addEventListener('input', function() {
-            vrmNightNMR.value = roundValue(parseFloat(vrmNightNMR.value) || 0);
-            calculateTotal(vrmDayNMR, vrmNightNMR, vrmTotalNMR);
-        });
-        
-        vrmDayOperator.addEventListener('input', function() {
-            vrmTotalOperator.value = `${vrmDayOperator.value || ''} ${vrmNightOperator.value || ''}`.trim();
-        });
-        
-        vrmNightOperator.addEventListener('input', function() {
-            vrmTotalOperator.value = `${vrmDayOperator.value || ''} ${vrmNightOperator.value || ''}`.trim();
-        });
-        
-        // Cost inputs event listeners
-        const costInputs = [
-            mixingCost, nmrCost, ebCost, forkliftCost, bagCost, ldoCost, 
-            jcbOperatorCost, jcbFuelCost, spareCost, maintenanceCost, 
-            loadingCost, unloadingCost, miscCost
-        ];
-        
-        costInputs.forEach(input => {
-            input.addEventListener('input', function() {
-                this.value = roundValue(parseFloat(this.value) || 0);
-                calculateCosts();
-            });
-        });
-        
-        // Make the lines editable while preserving the numbering
-        const lines = document.querySelectorAll('.fixed-line');
-        lines.forEach(line => {
-            line.setAttribute('contenteditable', 'true');
-            
-            // Preserve the numbering pattern
-            line.addEventListener('focus', function() {
-                const currentText = this.innerText;
-                if (!currentText.match(/^\d+\.\s/)) {
-                    const lineNum = this.textContent.match(/^\d+/)[0];
-                    this.innerHTML = lineNum + '. ';
-                }
-            });
-            
-            line.addEventListener('blur', function() {
-                const currentText = this.innerText;
-                if (!currentText.match(/^\d+\.\s/)) {
-                    const lineNum = this.textContent.match(/^\d+/)[0];
-                    this.innerHTML = lineNum + '. ' + currentText.replace(/^\d+\.\s?/, '');
-                }
-            });
         });
     });
-</script>
-</body>
-</html>
+    
+    // Make the lines editable while preserving the numbering
+    const lines = document.querySelectorAll('.fixed-line');
+    lines.forEach(line => {
+        line.setAttribute('contenteditable', 'true');
+        
+        // Preserve the numbering pattern
+        line.addEventListener('focus', function() {
+            const currentText = this.innerText;
+            if (!currentText.match(/^\d+\.\s/)) {
+                const lineNum = this.textContent.match(/^\d+/)[0];
+                this.innerHTML = lineNum + '. ';
+            }
+        });
+        
+        line.addEventListener('blur', function() {
+            const currentText = this.innerText;
+            if (!currentText.match(/^\d+\.\s/)) {
+                const lineNum = this.textContent.match(/^\d+/)[0];
+                this.innerHTML = lineNum + '. ' + currentText.replace(/^\d+\.\s?/, '');
+            }
+        });
+    });
+});
