@@ -1327,12 +1327,7 @@
             </div>
         </div>
     </div>
-
-    <div class="no-print">
-        <button class="submit-btn" onclick="window.print()">PRINT REPORT</button>
-    </div>
-
-    <script>
+<script>
     document.addEventListener('DOMContentLoaded', function() {
         // Set today's date as default
         const today = new Date().toISOString().split('T')[0];
@@ -1406,6 +1401,24 @@
         const vrmDayOperator = document.getElementById('vrmDayOperator');
         const vrmNightOperator = document.getElementById('vrmNightOperator');
         const vrmTotalOperator = document.getElementById('vrmTotalOperator');
+        
+        // JCB Operations calculations
+        const jcbDayHours = document.getElementById('jcbDayHours');
+        const jcbNightHours = document.getElementById('jcbNightHours');
+        const jcbTotalHours = document.getElementById('jcbTotalHours');
+        
+        const jcbDayOperator = document.getElementById('jcbDayOperator');
+        const jcbNightOperator = document.getElementById('jcbNightOperator');
+        const jcbTotalOperator = document.getElementById('jcbTotalOperator');
+        
+        // FLT Operations calculations
+        const fltDayHours = document.getElementById('fltDayHours');
+        const fltNightHours = document.getElementById('fltNightHours');
+        const fltTotalHours = document.getElementById('fltTotalHours');
+        
+        const fltDayOperator = document.getElementById('fltDayOperator');
+        const fltNightOperator = document.getElementById('fltNightOperator');
+        const fltTotalOperator = document.getElementById('fltTotalOperator');
         
         // Function to calculate TPH (Tonnes Per Hour)
         function calculateTPH(productionInput, hoursInput, tphOutput) {
@@ -1484,14 +1497,14 @@
         });
         
         dryerDayJCB.addEventListener('input', function() {
-            // Round the JCB input
-            dryerDayJCB.value = roundValue(parseFloat(dryerDayJCB.value) || 0);
+            // Allow decimal values for JCB hours
+            dryerDayJCB.value = parseFloat(dryerDayJCB.value) || 0;
             calculateTotal(dryerDayJCB, dryerNightJCB, dryerTotalJCB);
         });
         
         dryerNightJCB.addEventListener('input', function() {
-            // Round the JCB input
-            dryerNightJCB.value = roundValue(parseFloat(dryerNightJCB.value) || 0);
+            // Allow decimal values for JCB hours
+            dryerNightJCB.value = parseFloat(dryerNightJCB.value) || 0;
             calculateTotal(dryerDayJCB, dryerNightJCB, dryerTotalJCB);
         });
         
@@ -1526,7 +1539,7 @@
         
         vrmNightProduction.addEventListener('input', function() {
             // Round the production input
-            vrmNightProduction.value = roundValue(parseFloat(vrmNightProduction.value) || 0);
+            vrmNightProduction.value = roundValue(parseFloat(vrmNightProduction.value) || 0;
             calculateTotal(vrmDayProduction, vrmNightProduction, vrmTotalProduction);
             calculateTPH(vrmNightProduction, vrmNightHours, vrmNightTPH);
             calculateTotal(vrmDayHours, vrmNightHours, vrmTotalTPH, true);
@@ -1546,7 +1559,7 @@
         
         vrmDayNMR.addEventListener('input', function() {
             // Round the NMR input
-            vrmDayNMR.value = roundValue(parseFloat(vrmDayNMR.value) || 0);
+            vrmDayNMR.value = roundValue(parseFloat(vrmDayNMR.value) || 0;
             calculateTotal(vrmDayNMR, vrmNightNMR, vrmTotalNMR);
         });
         
@@ -1562,6 +1575,48 @@
         
         vrmNightOperator.addEventListener('input', function() {
             vrmTotalOperator.value = `${vrmDayOperator.value || ''} ${vrmNightOperator.value || ''}`.trim();
+        });
+        
+        // JCB Operations event listeners
+        jcbDayHours.addEventListener('input', function() {
+            // Allow decimal values for JCB hours
+            jcbDayHours.value = parseFloat(jcbDayHours.value) || 0;
+            calculateTotal(jcbDayHours, jcbNightHours, jcbTotalHours);
+        });
+        
+        jcbNightHours.addEventListener('input', function() {
+            // Allow decimal values for JCB hours
+            jcbNightHours.value = parseFloat(jcbNightHours.value) || 0;
+            calculateTotal(jcbDayHours, jcbNightHours, jcbTotalHours);
+        });
+        
+        jcbDayOperator.addEventListener('input', function() {
+            jcbTotalOperator.value = `${jcbDayOperator.value || ''} ${jcbNightOperator.value || ''}`.trim();
+        });
+        
+        jcbNightOperator.addEventListener('input', function() {
+            jcbTotalOperator.value = `${jcbDayOperator.value || ''} ${jcbNightOperator.value || ''}`.trim();
+        });
+        
+        // FLT Operations event listeners
+        fltDayHours.addEventListener('input', function() {
+            // Allow decimal values for FLT hours
+            fltDayHours.value = parseFloat(fltDayHours.value) || 0;
+            calculateTotal(fltDayHours, fltNightHours, fltTotalHours);
+        });
+        
+        fltNightHours.addEventListener('input', function() {
+            // Allow decimal values for FLT hours
+            fltNightHours.value = parseFloat(fltNightHours.value) || 0;
+            calculateTotal(fltDayHours, fltNightHours, fltTotalHours);
+        });
+        
+        fltDayOperator.addEventListener('input', function() {
+            fltTotalOperator.value = `${fltDayOperator.value || ''} ${fltNightOperator.value || ''}`.trim();
+        });
+        
+        fltNightOperator.addEventListener('input', function() {
+            fltTotalOperator.value = `${fltDayOperator.value || ''} ${fltNightOperator.value || ''}`.trim();
         });
         
         // Make the lines editable while preserving the numbering
@@ -1587,6 +1642,4 @@
             });
         });
     });
-    </script>
-</body>
-</html>
+</script>
