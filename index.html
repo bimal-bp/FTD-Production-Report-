@@ -151,10 +151,10 @@
             border-radius: 3px;
         }
         .opening-stock {
-            background-color: #e6f7ff; /* Light blue for opening stock */
+            background-color: #e6f7ff;
         }
         .closing-stock {
-            background-color: #e6ffe6; /* Light green for closing stock */
+            background-color: #e6ffe6;
         }
 
         /* Production Dashboard Styles */
@@ -182,6 +182,14 @@
             margin: -18px -18px 15px -18px;
             font-size: 18px;
             border-radius: 5px 5px 0 0;
+        }
+        
+        .dryer-title {
+            background-color: #87CEEB;
+        }
+        
+        .vrm-title {
+            background-color: #90EE90;
         }
         
         .dashboard table {
@@ -480,6 +488,18 @@
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
             }
+            
+            .dryer-title {
+                background-color: #87CEEB !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            
+            .vrm-title {
+                background-color: #90EE90 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
         }
         
         /* Top sections container */
@@ -492,7 +512,7 @@
         
         /* Cost calculator header */
         .cost-header {
-            display: none; /* Hide the cost calculator header */
+            display: none;
         }
         
         /* New styles for additional boxes */
@@ -739,7 +759,7 @@
         .cost-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 17px; /* Increased font size */
+            font-size: 17px;
         }
 
         .cost-table th, .cost-table td {
@@ -753,7 +773,7 @@
         }
 
         .cost-section-title {
-            font-size: 18px; /* Slightly larger font */
+            font-size: 18px;
             text-align: center;
             padding: 12px;
         }
@@ -773,7 +793,7 @@
 
         .currency-symbol {
             margin-right: 5px;
-            font-size: 17px; /* Increased font size */
+            font-size: 17px;
         }
 
         .calculator-input, .stock-input {
@@ -781,7 +801,7 @@
             padding: 8px;
             border: 1px solid #ccc;
             border-radius: 4px;
-            font-size: 16px; /* Slightly larger font */
+            font-size: 16px;
         }
 
         /* Stock Column Container */
@@ -808,7 +828,7 @@
 
         .fixed-landscope-title {
             font-weight: bold;
-            font-size: 16px; /* Increased font size */
+            font-size: 16px;
             margin-bottom: 7px;
             text-decoration: underline;
         }
@@ -824,7 +844,7 @@
             border-bottom: 1px solid #eee;
             white-space: nowrap;
             overflow: hidden;
-            font-size: 15px; /* Increased font size */
+            font-size: 15px;
         }
 
         .fixed-line:last-child {
@@ -1013,7 +1033,7 @@
         <div class="operations-container">
             <!-- Dryer Operations -->
             <div class="operations-section">
-                <div class="section-title">DRYER OPERATIONS</div>
+                <div class="section-title dryer-title">DRYER OPERATIONS</div>
                 <table class="operations-table">
                     <tr>
                         <th></th>
@@ -1062,7 +1082,7 @@
 
             <!-- VRM Operations -->
             <div class="operations-section">
-                <div class="section-title">VRM OPERATIONS</div>
+                <div class="section-title vrm-title">VRM OPERATIONS</div>
                 <table class="operations-table">
                     <tr>
                         <th></th>
@@ -1318,6 +1338,11 @@
         const today = new Date().toISOString().split('T')[0];
         document.getElementById('report-date').value = today;
         
+        // Function to round values to 2 decimal places
+        function roundValue(value) {
+            return Math.round(value * 100) / 100;
+        }
+        
         // FTD Mixing calculation
         const dayMixing = document.getElementById('dayMixing');
         const nightMixing = document.getElementById('nightMixing');
@@ -1326,7 +1351,7 @@
         function calculateFTDMixing() {
             const day = parseFloat(dayMixing.value) || 0;
             const night = parseFloat(nightMixing.value) || 0;
-            ftdMixing.value = (day + night).toFixed(2);
+            ftdMixing.value = roundValue(day + night);
         }
         
         dayMixing.addEventListener('input', calculateFTDMixing);
@@ -1386,7 +1411,7 @@
         function calculateTPH(productionInput, hoursInput, tphOutput) {
             const production = parseFloat(productionInput.value) || 0;
             const hours = parseFloat(hoursInput.value) || 0;
-            const tph = hours > 0 ? (production / hours).toFixed(2) : 0;
+            const tph = hours > 0 ? roundValue(production / hours) : 0;
             tphOutput.value = tph;
         }
         
@@ -1399,10 +1424,10 @@
                 // For TPH, we need to calculate based on total production and total hours
                 const productionTotal = parseFloat(document.getElementById(dayInput.dataset.productionTotal).value) || 0;
                 const hoursTotal = parseFloat(document.getElementById(dayInput.dataset.hoursTotal).value) || 0;
-                totalOutput.value = hoursTotal > 0 ? (productionTotal / hoursTotal).toFixed(2) : 0;
+                totalOutput.value = hoursTotal > 0 ? roundValue(productionTotal / hoursTotal) : 0;
             } else {
                 // For other values, just sum day and night
-                totalOutput.value = (dayValue + nightValue).toFixed(2);
+                totalOutput.value = roundValue(dayValue + nightValue);
             }
         }
         
@@ -1431,30 +1456,42 @@
         });
         
         dryerDayProduction.addEventListener('input', function() {
+            // Round the production input
+            dryerDayProduction.value = roundValue(parseFloat(dryerDayProduction.value) || 0);
             calculateTotal(dryerDayProduction, dryerNightProduction, dryerTotalProduction);
             calculateTPH(dryerDayProduction, dryerDayHours, dryerDayTPH);
             calculateTotal(dryerDayHours, dryerNightHours, dryerTotalTPH, true);
         });
         
         dryerNightProduction.addEventListener('input', function() {
+            // Round the production input
+            dryerNightProduction.value = roundValue(parseFloat(dryerNightProduction.value) || 0);
             calculateTotal(dryerDayProduction, dryerNightProduction, dryerTotalProduction);
             calculateTPH(dryerNightProduction, dryerNightHours, dryerNightTPH);
             calculateTotal(dryerDayHours, dryerNightHours, dryerTotalTPH, true);
         });
         
         dryerDayLDO.addEventListener('input', function() {
+            // Round the LDO input
+            dryerDayLDO.value = roundValue(parseFloat(dryerDayLDO.value) || 0);
             calculateTotal(dryerDayLDO, dryerNightLDO, dryerTotalLDO);
         });
         
         dryerNightLDO.addEventListener('input', function() {
+            // Round the LDO input
+            dryerNightLDO.value = roundValue(parseFloat(dryerNightLDO.value) || 0);
             calculateTotal(dryerDayLDO, dryerNightLDO, dryerTotalLDO);
         });
         
         dryerDayJCB.addEventListener('input', function() {
+            // Round the JCB input
+            dryerDayJCB.value = roundValue(parseFloat(dryerDayJCB.value) || 0);
             calculateTotal(dryerDayJCB, dryerNightJCB, dryerTotalJCB);
         });
         
         dryerNightJCB.addEventListener('input', function() {
+            // Round the JCB input
+            dryerNightJCB.value = roundValue(parseFloat(dryerNightJCB.value) || 0);
             calculateTotal(dryerDayJCB, dryerNightJCB, dryerTotalJCB);
         });
         
@@ -1480,30 +1517,42 @@
         });
         
         vrmDayProduction.addEventListener('input', function() {
+            // Round the production input
+            vrmDayProduction.value = roundValue(parseFloat(vrmDayProduction.value) || 0);
             calculateTotal(vrmDayProduction, vrmNightProduction, vrmTotalProduction);
             calculateTPH(vrmDayProduction, vrmDayHours, vrmDayTPH);
             calculateTotal(vrmDayHours, vrmNightHours, vrmTotalTPH, true);
         });
         
         vrmNightProduction.addEventListener('input', function() {
+            // Round the production input
+            vrmNightProduction.value = roundValue(parseFloat(vrmNightProduction.value) || 0);
             calculateTotal(vrmDayProduction, vrmNightProduction, vrmTotalProduction);
             calculateTPH(vrmNightProduction, vrmNightHours, vrmNightTPH);
             calculateTotal(vrmDayHours, vrmNightHours, vrmTotalTPH, true);
         });
         
         vrmDayEB.addEventListener('input', function() {
+            // Round the EB input
+            vrmDayEB.value = roundValue(parseFloat(vrmDayEB.value) || 0);
             calculateTotal(vrmDayEB, vrmNightEB, vrmTotalEB);
         });
         
         vrmNightEB.addEventListener('input', function() {
+            // Round the EB input
+            vrmNightEB.value = roundValue(parseFloat(vrmNightEB.value) || 0);
             calculateTotal(vrmDayEB, vrmNightEB, vrmTotalEB);
         });
         
         vrmDayNMR.addEventListener('input', function() {
+            // Round the NMR input
+            vrmDayNMR.value = roundValue(parseFloat(vrmDayNMR.value) || 0);
             calculateTotal(vrmDayNMR, vrmNightNMR, vrmTotalNMR);
         });
         
         vrmNightNMR.addEventListener('input', function() {
+            // Round the NMR input
+            vrmNightNMR.value = roundValue(parseFloat(vrmNightNMR.value) || 0);
             calculateTotal(vrmDayNMR, vrmNightNMR, vrmTotalNMR);
         });
         
