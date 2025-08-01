@@ -870,6 +870,11 @@
         .operator-total {
             font-weight: bold;
         }
+        
+        /* Hidden fields for calculations */
+        .hidden-field {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -1028,19 +1033,19 @@
         <div class="cost-summary-container">
             <div class="cost-summary-box">
                 <div class="cost-summary-title">DRYER COST/MT</div>
-                <div class="cost-summary-value"><input type="text" id="dryerCost" placeholder="0.00"></div>
+                <div class="cost-summary-value"><input type="text" id="dryerCost" placeholder="0.00" readonly></div>
             </div>
             <div class="cost-summary-box">
                 <div class="cost-summary-title">VRM COST/MT</div>
-                <div class="cost-summary-value"><input type="text" id="vrmCost" placeholder="0.00"></div>
+                <div class="cost-summary-value"><input type="text" id="vrmCost" placeholder="0.00" readonly></div>
             </div>
             <div class="cost-summary-box">
                 <div class="cost-summary-title">TOTAL COST/MT</div>
-                <div class="cost-summary-value"><input type="text" id="totalCostMT" placeholder="0.00"></div>
+                <div class="cost-summary-value"><input type="text" id="totalCostMT" placeholder="0.00" readonly></div>
             </div>
             <div class="cost-summary-box">
                 <div class="cost-summary-title">TOTAL COST/KG</div>
-                <div class="cost-summary-value"><input type="text" id="totalCostKG" placeholder="0.00"></div>
+                <div class="cost-summary-value"><input type="text" id="totalCostKG" placeholder="0.00" readonly></div>
             </div>
         </div>
 
@@ -1092,12 +1097,9 @@
                         <td><input type="text" id="dryerNightOperator"></td>
                         <td><input type="text" id="dryerTotalOperator" class="operator-total" readonly></td>
                     </tr>
-                    <tr>
-                        <td>Total Operators</td>
-                        <td colspan="2"></td>
-                        <td><input type="number" id="totalJcbOperators" class="auto-calculate" readonly></td>
-                    </tr>
                 </table>
+                <!-- Hidden field for operator count -->
+                <input type="hidden" id="totalJcbOperators" class="hidden-field" value="0">
             </div>
 
             <!-- VRM Operations -->
@@ -1146,12 +1148,9 @@
                         <td><input type="text" id="vrmNightOperator"></td>
                         <td><input type="text" id="vrmTotalOperator" class="operator-total" readonly></td>
                     </tr>
-                    <tr>
-                        <td>Total Operators</td>
-                        <td colspan="2"></td>
-                        <td><input type="number" id="totalFltOperators" class="auto-calculate" readonly></td>
-                    </tr>
                 </table>
+                <!-- Hidden field for operator count -->
+                <input type="hidden" id="totalFltOperators" class="hidden-field" value="0">
             </div>
         </div>
     </div>
@@ -1162,6 +1161,7 @@
         <div class="cost-column main-cost-column">
             <table class="cost-table" id="individualCosts">
                 <tr>
+                    <th colspan="2" class="cost-section-title" style="background-color: #FF8F00;">COST CALCULATOR</th>
                 </tr>
                 <tr>
                     <td class="item-col">MIXING COST</td>
@@ -1617,7 +1617,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     dryerNightLDO.addEventListener('input', function() {
-        this.value = roundValue(parseFloat(this.value) || 0;
+        this.value = roundValue(parseFloat(this.value) || 0);
         calculateTotal(dryerDayLDO, dryerNightLDO, dryerTotalLDO);
         calculateCosts();
     });
@@ -1668,7 +1668,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     vrmDayProduction.addEventListener('input', function() {
-        this.value = roundValue(parseFloat(this.value) || 0;
+        this.value = roundValue(parseFloat(this.value) || 0);
         calculateTotal(vrmDayProduction, vrmNightProduction, vrmTotalProduction);
         calculateTPH(vrmDayProduction, vrmDayHours, vrmDayTPH);
         calculateTotalTPH(vrmTotalProduction, vrmTotalHours, vrmTotalTPH);
@@ -1676,7 +1676,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     vrmNightProduction.addEventListener('input', function() {
-        this.value = roundValue(parseFloat(this.value) || 0;
+        this.value = roundValue(parseFloat(this.value) || 0);
         calculateTotal(vrmDayProduction, vrmNightProduction, vrmTotalProduction);
         calculateTPH(vrmNightProduction, vrmNightHours, vrmNightTPH);
         calculateTotalTPH(vrmTotalProduction, vrmTotalHours, vrmTotalTPH);
@@ -1752,6 +1752,10 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+    
+    // Initialize all calculations
+    calculateFTDMixing();
+    calculateCosts();
 });
 </script>
 </body>
