@@ -811,15 +811,15 @@
             gap: 15px;
         }
 
-        /* Fixed Length Land Scope Table */
+        /* Fixed Length Land Scope Table - Increased width by 30% */
         .fixed-landscope-container {
             margin-top: 20px;
-            width: 100%;
+            width: 130%; /* Increased width by 30% */
             overflow-x: auto;
         }
 
         .fixed-landscope-box {
-            width: 1160px;
+            width: 100%;
             border: 1px solid #000;
             padding: 10px;
             box-sizing: border-box;
@@ -1093,9 +1093,9 @@
                     </tr>
                     <tr>
                         <td>JCB Operator</td>
-                        <td><input type="text" id="dryerDayOperator"></td>
-                        <td><input type="text" id="dryerNightOperator"></td>
-                        <td><input type="text" id="dryerTotalOperator" class="operator-total" readonly></td>
+                        <td><input type="number" step="0.01" id="dryerDayOperator" class="jcb-hours-input"></td>
+                        <td><input type="number" step="0.01" id="dryerNightOperator" class="jcb-hours-input"></td>
+                        <td><input type="number" step="0.01" id="dryerTotalOperator" class="auto-calculate operator-total" readonly></td>
                     </tr>
                 </table>
                 <!-- Hidden field for operator count -->
@@ -1144,9 +1144,9 @@
                     </tr>
                     <tr>
                         <td>FLT Operator</td>
-                        <td><input type="text" id="vrmDayOperator"></td>
-                        <td><input type="text" id="vrmNightOperator"></td>
-                        <td><input type="text" id="vrmTotalOperator" class="operator-total" readonly></td>
+                        <td><input type="number" step="0.01" id="vrmDayOperator" class="jcb-hours-input"></td>
+                        <td><input type="number" step="0.01" id="vrmNightOperator" class="jcb-hours-input"></td>
+                        <td><input type="number" step="0.01" id="vrmTotalOperator" class="auto-calculate operator-total" readonly></td>
                     </tr>
                 </table>
                 <!-- Hidden field for operator count -->
@@ -1339,7 +1339,7 @@
         </div>
     </div>
 
-    <!-- Fixed Length Land Scope Table - Full Width -->
+    <!-- Fixed Length Land Scope Table - Full Width (30% wider) -->
     <div class="fixed-landscope-container">
         <div class="fixed-landscope-box">
             <div class="fixed-landscope-title">Remark:</div>
@@ -1478,34 +1478,13 @@ document.addEventListener('DOMContentLoaded', function() {
         totalTPHOutput.value = tph;
     }
     
-    // Function to update operator total (sum of operators)
-    function updateOperatorTotal(dayOperator, nightOperator, totalOperator, totalOperatorsField) {
-        const dayOp = dayOperator.value.trim();
-        const nightOp = nightOperator.value.trim();
-        
-        // Count operators (1 if either is present, 2 if both are present and different)
-        let operatorCount = 0;
-        if (dayOp) operatorCount++;
-        if (nightOp && nightOp !== dayOp) operatorCount++;
-        
-        // Update total operators field
-        totalOperatorsField.value = operatorCount;
-        
-        // Update display of total operator names
-        if (dayOp && nightOp && dayOp !== nightOp) {
-            totalOperator.value = `${dayOp} / ${nightOp}`;
-        } else if (dayOp && nightOp && dayOp === nightOp) {
-            totalOperator.value = dayOp;
-        } else if (dayOp && !nightOp) {
-            totalOperator.value = dayOp;
-        } else if (!dayOp && nightOp) {
-            totalOperator.value = nightOp;
-        } else {
-            totalOperator.value = '';
-        }
-        
-        // Return the count for cost calculations
-        return operatorCount;
+    // Function to update operator totals (sum of hours)
+    function updateOperatorTotal(dayOperator, nightOperator, totalOperator) {
+        const dayValue = parseFloat(dayOperator.value) || 0;
+        const nightValue = parseFloat(nightOperator.value) || 0;
+        const total = roundValue(dayValue + nightValue);
+        totalOperator.value = total;
+        return total;
     }
 
     // Function to calculate JCB total hours with decimal support
@@ -1529,9 +1508,9 @@ document.addEventListener('DOMContentLoaded', function() {
         const totalLDO = parseFloat(dryerTotalLDO.value) || 0;
         const totalJCBHours = calculateJCBTotal() || 0;
         
-        // Get operator counts
-        const totalJcbOps = updateOperatorTotal(dryerDayOperator, dryerNightOperator, dryerTotalOperator, totalJcbOperators);
-        const totalFltOps = updateOperatorTotal(vrmDayOperator, vrmNightOperator, vrmTotalOperator, totalFltOperators);
+        // Get operator hours
+        const totalJcbOps = updateOperatorTotal(dryerDayOperator, dryerNightOperator, dryerTotalOperator);
+        const totalFltOps = updateOperatorTotal(vrmDayOperator, vrmNightOperator, vrmTotalOperator);
         
         // Apply formulas with corrected values
         nmrCost.value = roundValue(totalNMR * 700);       // NMR cost = NMR * 700
@@ -1601,7 +1580,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     dryerNightProduction.addEventListener('input', function() {
-        this.value = roundValue(parseFloat(this.value) || 0;
+        this.value = roundValue(parseFloat(this.value) || 0);
         calculateTotal(dryerDayProduction, dryerNightProduction, dryerTotalProduction);
         calculateTPH(dryerNightProduction, dryerNightHours, dryerNightTPH);
         calculateTotalTPH(dryerTotalProduction, dryerTotalHours, dryerTotalTPH);
@@ -1639,10 +1618,20 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     dryerDayOperator.addEventListener('input', function() {
+        // Validate input - only allow numbers and decimals
+        if (this.value && !/^\d*\.?\d*$/.test(this.value)) {
+            this.value = this.value.slice(0, -1);
+            return;
+        }
         calculateCosts(); // Now handled within calculateCosts()
     });
     
     dryerNightOperator.addEventListener('input', function() {
+        // Validate input - only allow numbers and decimals
+        if (this.value && !/^\d*\.?\d*$/.test(this.value)) {
+            this.value = this.value.slice(0, -1);
+            return;
+        }
         calculateCosts(); // Now handled within calculateCosts()
     });
     
@@ -1662,7 +1651,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     vrmDayProduction.addEventListener('input', function() {
-        this.value = roundValue(parseFloat(this.value) || 0;
+        this.value = roundValue(parseFloat(this.value) || 0);
         calculateTotal(vrmDayProduction, vrmNightProduction, vrmTotalProduction);
         calculateTPH(vrmDayProduction, vrmDayHours, vrmDayTPH);
         calculateTotalTPH(vrmTotalProduction, vrmTotalHours, vrmTotalTPH);
@@ -1670,7 +1659,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     vrmNightProduction.addEventListener('input', function() {
-        this.value = roundValue(parseFloat(this.value) || 0;
+        this.value = roundValue(parseFloat(this.value) || 0);
         calculateTotal(vrmDayProduction, vrmNightProduction, vrmTotalProduction);
         calculateTPH(vrmNightProduction, vrmNightHours, vrmNightTPH);
         calculateTotalTPH(vrmTotalProduction, vrmTotalHours, vrmTotalTPH);
@@ -1678,34 +1667,44 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     vrmDayEB.addEventListener('input', function() {
-        this.value = roundValue(parseFloat(this.value) || 0;
+        this.value = roundValue(parseFloat(this.value) || 0);
         calculateTotal(vrmDayEB, vrmNightEB, vrmTotalEB);
         calculateCosts();
     });
     
     vrmNightEB.addEventListener('input', function() {
-        this.value = roundValue(parseFloat(this.value) || 0;
+        this.value = roundValue(parseFloat(this.value) || 0);
         calculateTotal(vrmDayEB, vrmNightEB, vrmTotalEB);
         calculateCosts();
     });
     
     vrmDayNMR.addEventListener('input', function() {
-        this.value = roundValue(parseFloat(this.value) || 0;
+        this.value = roundValue(parseFloat(this.value) || 0);
         calculateTotal(vrmDayNMR, vrmNightNMR, vrmTotalNMR);
         calculateCosts();
     });
     
     vrmNightNMR.addEventListener('input', function() {
-        this.value = roundValue(parseFloat(this.value) || 0;
+        this.value = roundValue(parseFloat(this.value) || 0);
         calculateTotal(vrmDayNMR, vrmNightNMR, vrmTotalNMR);
         calculateCosts();
     });
     
     vrmDayOperator.addEventListener('input', function() {
+        // Validate input - only allow numbers and decimals
+        if (this.value && !/^\d*\.?\d*$/.test(this.value)) {
+            this.value = this.value.slice(0, -1);
+            return;
+        }
         calculateCosts(); // Now handled within calculateCosts()
     });
     
     vrmNightOperator.addEventListener('input', function() {
+        // Validate input - only allow numbers and decimals
+        if (this.value && !/^\d*\.?\d*$/.test(this.value)) {
+            this.value = this.value.slice(0, -1);
+            return;
+        }
         calculateCosts(); // Now handled within calculateCosts()
     });
     
@@ -1749,3 +1748,6 @@ document.addEventListener('DOMContentLoaded', function() {
     calculateFTDMixing();
     calculateCosts();
 });
+</script>
+</body>
+</html>
