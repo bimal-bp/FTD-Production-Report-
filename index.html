@@ -1483,7 +1483,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const dayOp = dayOperator.value.trim();
         const nightOp = nightOperator.value.trim();
         
-        // Count operators
+        // Count operators (1 if either is present, 2 if both are present and different)
         let operatorCount = 0;
         if (dayOp) operatorCount++;
         if (nightOp && nightOp !== dayOp) operatorCount++;
@@ -1491,26 +1491,21 @@ document.addEventListener('DOMContentLoaded', function() {
         // Update total operators field
         totalOperatorsField.value = operatorCount;
         
-        // If both operators are present and different
+        // Update display of total operator names
         if (dayOp && nightOp && dayOp !== nightOp) {
             totalOperator.value = `${dayOp} / ${nightOp}`;
-        } 
-        // If both operators are present but same
-        else if (dayOp && nightOp && dayOp === nightOp) {
+        } else if (dayOp && nightOp && dayOp === nightOp) {
             totalOperator.value = dayOp;
-        }
-        // If only day operator is present
-        else if (dayOp && !nightOp) {
+        } else if (dayOp && !nightOp) {
             totalOperator.value = dayOp;
-        }
-        // If only night operator is present
-        else if (!dayOp && nightOp) {
+        } else if (!dayOp && nightOp) {
             totalOperator.value = nightOp;
-        }
-        // If no operators
-        else {
+        } else {
             totalOperator.value = '';
         }
+        
+        // Return the count for cost calculations
+        return operatorCount;
     }
 
     // Function to calculate JCB total hours with decimal support
@@ -1523,6 +1518,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Update the total field
         dryerTotalJCB.value = isNaN(total) ? '' : total.toFixed(2);
+        return total;
     }
     
     // Function to calculate all costs with formulas
@@ -1531,14 +1527,16 @@ document.addEventListener('DOMContentLoaded', function() {
         const totalNMR = parseFloat(vrmTotalNMR.value) || 0;
         const totalEB = parseFloat(vrmTotalEB.value) || 0;
         const totalLDO = parseFloat(dryerTotalLDO.value) || 0;
-        const totalJCBHours = parseFloat(dryerTotalJCB.value) || 0;
-        const totalJcbOps = parseFloat(totalJcbOperators.value) || 0;
-        const totalFltOps = parseFloat(totalFltOperators.value) || 0;
+        const totalJCBHours = calculateJCBTotal() || 0;
         
-        // Apply formulas
-        nmrCost.value = roundValue(totalNMR * 700); // NMR cost = NMR * 700
-        ebCost.value = roundValue(totalEB * 12.5);  // EB cost = EB * 12.5
-        ldoCost.value = roundValue(totalLDO * 62.5); // LDO cost = LDO * 62.5
+        // Get operator counts
+        const totalJcbOps = updateOperatorTotal(dryerDayOperator, dryerNightOperator, dryerTotalOperator, totalJcbOperators);
+        const totalFltOps = updateOperatorTotal(vrmDayOperator, vrmNightOperator, vrmTotalOperator, totalFltOperators);
+        
+        // Apply formulas with corrected values
+        nmrCost.value = roundValue(totalNMR * 700);       // NMR cost = NMR * 700
+        ebCost.value = roundValue(totalEB * 12.28);       // EB cost = EB * 12.28 (corrected)
+        ldoCost.value = roundValue(totalLDO * 62.5);      // LDO cost = LDO * 62.5 (corrected)
         jcbOperatorCost.value = roundValue(totalJcbOps * 950); // JCB operator cost = operators * 950
         jcbFuelCost.value = roundValue(totalJCBHours * 96.4 * 5); // JCB fuel cost = hours * 96.4 * 5
         forkliftCost.value = roundValue(totalFltOps * 2115); // Forklift cost = operators * 2115
@@ -1603,7 +1601,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     dryerNightProduction.addEventListener('input', function() {
-        this.value = roundValue(parseFloat(this.value) || 0);
+        this.value = roundValue(parseFloat(this.value) || 0;
         calculateTotal(dryerDayProduction, dryerNightProduction, dryerTotalProduction);
         calculateTPH(dryerNightProduction, dryerNightHours, dryerNightTPH);
         calculateTotalTPH(dryerTotalProduction, dryerTotalHours, dryerTotalTPH);
@@ -1628,8 +1626,7 @@ document.addEventListener('DOMContentLoaded', function() {
             this.value = this.value.slice(0, -1);
             return;
         }
-        calculateJCBTotal();
-        calculateCosts();
+        calculateCosts(); // Now handled within calculateCosts()
     });
     
     dryerNightJCB.addEventListener('input', function() {
@@ -1638,18 +1635,15 @@ document.addEventListener('DOMContentLoaded', function() {
             this.value = this.value.slice(0, -1);
             return;
         }
-        calculateJCBTotal();
-        calculateCosts();
+        calculateCosts(); // Now handled within calculateCosts()
     });
     
     dryerDayOperator.addEventListener('input', function() {
-        updateOperatorTotal(dryerDayOperator, dryerNightOperator, dryerTotalOperator, totalJcbOperators);
-        calculateCosts();
+        calculateCosts(); // Now handled within calculateCosts()
     });
     
     dryerNightOperator.addEventListener('input', function() {
-        updateOperatorTotal(dryerDayOperator, dryerNightOperator, dryerTotalOperator, totalJcbOperators);
-        calculateCosts();
+        calculateCosts(); // Now handled within calculateCosts()
     });
     
     // VRM Operations event listeners
@@ -1668,7 +1662,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     vrmDayProduction.addEventListener('input', function() {
-        this.value = roundValue(parseFloat(this.value) || 0);
+        this.value = roundValue(parseFloat(this.value) || 0;
         calculateTotal(vrmDayProduction, vrmNightProduction, vrmTotalProduction);
         calculateTPH(vrmDayProduction, vrmDayHours, vrmDayTPH);
         calculateTotalTPH(vrmTotalProduction, vrmTotalHours, vrmTotalTPH);
@@ -1676,7 +1670,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     vrmNightProduction.addEventListener('input', function() {
-        this.value = roundValue(parseFloat(this.value) || 0);
+        this.value = roundValue(parseFloat(this.value) || 0;
         calculateTotal(vrmDayProduction, vrmNightProduction, vrmTotalProduction);
         calculateTPH(vrmNightProduction, vrmNightHours, vrmNightTPH);
         calculateTotalTPH(vrmTotalProduction, vrmTotalHours, vrmTotalTPH);
@@ -1684,37 +1678,35 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     vrmDayEB.addEventListener('input', function() {
-        this.value = roundValue(parseFloat(this.value) || 0);
+        this.value = roundValue(parseFloat(this.value) || 0;
         calculateTotal(vrmDayEB, vrmNightEB, vrmTotalEB);
         calculateCosts();
     });
     
     vrmNightEB.addEventListener('input', function() {
-        this.value = roundValue(parseFloat(this.value) || 0);
+        this.value = roundValue(parseFloat(this.value) || 0;
         calculateTotal(vrmDayEB, vrmNightEB, vrmTotalEB);
         calculateCosts();
     });
     
     vrmDayNMR.addEventListener('input', function() {
-        this.value = roundValue(parseFloat(this.value) || 0);
+        this.value = roundValue(parseFloat(this.value) || 0;
         calculateTotal(vrmDayNMR, vrmNightNMR, vrmTotalNMR);
         calculateCosts();
     });
     
     vrmNightNMR.addEventListener('input', function() {
-        this.value = roundValue(parseFloat(this.value) || 0);
+        this.value = roundValue(parseFloat(this.value) || 0;
         calculateTotal(vrmDayNMR, vrmNightNMR, vrmTotalNMR);
         calculateCosts();
     });
     
     vrmDayOperator.addEventListener('input', function() {
-        updateOperatorTotal(vrmDayOperator, vrmNightOperator, vrmTotalOperator, totalFltOperators);
-        calculateCosts();
+        calculateCosts(); // Now handled within calculateCosts()
     });
     
     vrmNightOperator.addEventListener('input', function() {
-        updateOperatorTotal(vrmDayOperator, vrmNightOperator, vrmTotalOperator, totalFltOperators);
-        calculateCosts();
+        calculateCosts(); // Now handled within calculateCosts()
     });
     
     // Cost inputs event listeners
@@ -1757,6 +1749,3 @@ document.addEventListener('DOMContentLoaded', function() {
     calculateFTDMixing();
     calculateCosts();
 });
-</script>
-</body>
-</html>
