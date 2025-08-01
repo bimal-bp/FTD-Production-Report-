@@ -855,6 +855,16 @@
         .auto-calculate {
             background-color: #f0f0f0;
         }
+        
+        /* JCB hours input style */
+        .jcb-hours-input {
+            width: 85px;
+            padding: 8px;
+            text-align: center;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 15px;
+        }
     </style>
 </head>
 <body>
@@ -1067,9 +1077,9 @@
                     </tr>
                     <tr>
                         <td>JCB (Hrs)</td>
-                        <td><input type="number" id="dryerDayJCB"></td>
-                        <td><input type="number" id="dryerNightJCB"></td>
-                        <td><input type="number" id="dryerTotalJCB" class="auto-calculate" readonly></td>
+                        <td><input type="number" step="0.01" id="dryerDayJCB" class="jcb-hours-input"></td>
+                        <td><input type="number" step="0.01" id="dryerNightJCB" class="jcb-hours-input"></td>
+                        <td><input type="number" step="0.01" id="dryerTotalJCB" class="auto-calculate" readonly></td>
                     </tr>
                     <tr>
                         <td>JCB Operator</td>
@@ -1327,20 +1337,10 @@
             </div>
         </div>
     </div>
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SGX Minerals - Production & Cost Management</title>
-    <style>
-        /* (All your existing CSS styles remain exactly the same) */
-        /* ... */
-    </style>
-</head>
-<body>
-    <!-- (All your existing HTML structure remains exactly the same) -->
-    <!-- ... -->
+
+    <div class="no-print">
+        <button class="submit-btn">Submit Report</button>
+    </div>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -1461,6 +1461,45 @@ document.addEventListener('DOMContentLoaded', function() {
         totalTPHOutput.value = tph;
     }
     
+    // Function to update operator total (concatenate day and night operators)
+    function updateOperatorTotal(dayOperator, nightOperator, totalOperator) {
+        const dayOp = dayOperator.value.trim();
+        const nightOp = nightOperator.value.trim();
+        
+        // If both operators are present and different
+        if (dayOp && nightOp && dayOp !== nightOp) {
+            totalOperator.value = `${dayOp} / ${nightOp}`;
+        } 
+        // If both operators are present but same
+        else if (dayOp && nightOp && dayOp === nightOp) {
+            totalOperator.value = dayOp;
+        }
+        // If only day operator is present
+        else if (dayOp && !nightOp) {
+            totalOperator.value = dayOp;
+        }
+        // If only night operator is present
+        else if (!dayOp && nightOp) {
+            totalOperator.value = nightOp;
+        }
+        // If no operators
+        else {
+            totalOperator.value = '';
+        }
+    }
+
+    // Function to calculate JCB total hours with decimal support
+    function calculateJCBTotal() {
+        const dayValue = dryerDayJCB.value ? parseFloat(dryerDayJCB.value) : 0;
+        const nightValue = dryerNightJCB.value ? parseFloat(dryerNightJCB.value) : 0;
+        
+        // Calculate total and round to 2 decimal places
+        const total = Math.round((dayValue + nightValue) * 100) / 100;
+        
+        // Update the total field
+        dryerTotalJCB.value = isNaN(total) ? '' : total.toFixed(2);
+    }
+    
     // Function to calculate all costs
     function calculateCosts() {
         // Get all cost values
@@ -1541,25 +1580,29 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     dryerDayJCB.addEventListener('input', function() {
-        this.value = roundValue(parseFloat(this.value) || 0);
-        calculateTotal(dryerDayJCB, dryerNightJCB, dryerTotalJCB);
+        // Validate input - only allow numbers and decimals
+        if (this.value && !/^\d*\.?\d*$/.test(this.value)) {
+            this.value = this.value.slice(0, -1);
+            return;
+        }
+        calculateJCBTotal();
     });
     
     dryerNightJCB.addEventListener('input', function() {
-        this.value = roundValue(parseFloat(this.value) || 0);
-        calculateTotal(dryerDayJCB, dryerNightJCB, dryerTotalJCB);
+        // Validate input - only allow numbers and decimals
+        if (this.value && !/^\d*\.?\d*$/.test(this.value)) {
+            this.value = this.value.slice(0, -1);
+            return;
+        }
+        calculateJCBTotal();
     });
     
     dryerDayOperator.addEventListener('input', function() {
-        const dayOp = dryerDayOperator.value.trim();
-        const nightOp = dryerNightOperator.value.trim();
-        dryerTotalOperator.value = dayOp + (dayOp && nightOp ? ' / ' : '') + nightOp;
+        updateOperatorTotal(dryerDayOperator, dryerNightOperator, dryerTotalOperator);
     });
     
     dryerNightOperator.addEventListener('input', function() {
-        const dayOp = dryerDayOperator.value.trim();
-        const nightOp = dryerNightOperator.value.trim();
-        dryerTotalOperator.value = dayOp + (dayOp && nightOp ? ' / ' : '') + nightOp;
+        updateOperatorTotal(dryerDayOperator, dryerNightOperator, dryerTotalOperator);
     });
     
     // VRM Operations event listeners
@@ -1614,15 +1657,11 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     vrmDayOperator.addEventListener('input', function() {
-        const dayOp = vrmDayOperator.value.trim();
-        const nightOp = vrmNightOperator.value.trim();
-        vrmTotalOperator.value = dayOp + (dayOp && nightOp ? ' / ' : '') + nightOp;
+        updateOperatorTotal(vrmDayOperator, vrmNightOperator, vrmTotalOperator);
     });
     
     vrmNightOperator.addEventListener('input', function() {
-        const dayOp = vrmDayOperator.value.trim();
-        const nightOp = vrmNightOperator.value.trim();
-        vrmTotalOperator.value = dayOp + (dayOp && nightOp ? ' / ' : '') + nightOp;
+        updateOperatorTotal(vrmDayOperator, vrmNightOperator, vrmTotalOperator);
     });
     
     // Cost inputs event listeners
@@ -1663,3 +1702,5 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
+</body>
+</html>
