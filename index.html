@@ -865,6 +865,11 @@
             border-radius: 4px;
             font-size: 15px;
         }
+        
+        /* Operator total style */
+        .operator-total {
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -1085,7 +1090,12 @@
                         <td>JCB Operator</td>
                         <td><input type="text" id="dryerDayOperator"></td>
                         <td><input type="text" id="dryerNightOperator"></td>
-                        <td><input type="text" id="dryerTotalOperator" readonly></td>
+                        <td><input type="text" id="dryerTotalOperator" class="operator-total" readonly></td>
+                    </tr>
+                    <tr>
+                        <td>Total Operators</td>
+                        <td colspan="2"></td>
+                        <td><input type="number" id="totalJcbOperators" class="auto-calculate" readonly></td>
                     </tr>
                 </table>
             </div>
@@ -1134,7 +1144,12 @@
                         <td>FLT Operator</td>
                         <td><input type="text" id="vrmDayOperator"></td>
                         <td><input type="text" id="vrmNightOperator"></td>
-                        <td><input type="text" id="vrmTotalOperator" readonly></td>
+                        <td><input type="text" id="vrmTotalOperator" class="operator-total" readonly></td>
+                    </tr>
+                    <tr>
+                        <td>Total Operators</td>
+                        <td colspan="2"></td>
+                        <td><input type="number" id="totalFltOperators" class="auto-calculate" readonly></td>
                     </tr>
                 </table>
             </div>
@@ -1162,7 +1177,7 @@
                     <td class="qty-col">
                         <div class="input-with-symbol">
                             <span class="currency-symbol">₹</span>
-                            <input type="number" id="nmr" class="calculator-input">
+                            <input type="number" id="nmr" class="calculator-input auto-calculate" readonly>
                         </div>
                     </td>
                 </tr>
@@ -1171,7 +1186,7 @@
                     <td class="qty-col">
                         <div class="input-with-symbol">
                             <span class="currency-symbol">₹</span>
-                            <input type="number" id="eb" class="calculator-input">
+                            <input type="number" id="eb" class="calculator-input auto-calculate" readonly>
                         </div>
                     </td>
                 </tr>
@@ -1180,7 +1195,7 @@
                     <td class="qty-col">
                         <div class="input-with-symbol">
                             <span class="currency-symbol">₹</span>
-                            <input type="number" id="forklift" class="calculator-input">
+                            <input type="number" id="forklift" class="calculator-input auto-calculate" readonly>
                         </div>
                     </td>
                 </tr>
@@ -1198,7 +1213,7 @@
                     <td class="qty-col">
                         <div class="input-with-symbol">
                             <span class="currency-symbol">₹</span>
-                            <input type="number" id="ldo" class="calculator-input">
+                            <input type="number" id="ldo" class="calculator-input auto-calculate" readonly>
                         </div>
                     </td>
                 </tr>
@@ -1207,7 +1222,7 @@
                     <td class="qty-col">
                         <div class="input-with-symbol">
                             <span class="currency-symbol">₹</span>
-                            <input type="number" id="jcbOperator" class="calculator-input">
+                            <input type="number" id="jcbOperator" class="calculator-input auto-calculate" readonly>
                         </div>
                     </td>
                 </tr>
@@ -1216,7 +1231,7 @@
                     <td class="qty-col">
                         <div class="input-with-symbol">
                             <span class="currency-symbol">₹</span>
-                            <input type="number" id="jcbFuel" class="calculator-input">
+                            <input type="number" id="jcbFuel" class="calculator-input auto-calculate" readonly>
                         </div>
                     </td>
                 </tr>
@@ -1391,6 +1406,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const dryerDayOperator = document.getElementById('dryerDayOperator');
     const dryerNightOperator = document.getElementById('dryerNightOperator');
     const dryerTotalOperator = document.getElementById('dryerTotalOperator');
+    const totalJcbOperators = document.getElementById('totalJcbOperators');
     
     // VRM Operations calculations
     const vrmDayHours = document.getElementById('vrmDayHours');
@@ -1416,6 +1432,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const vrmDayOperator = document.getElementById('vrmDayOperator');
     const vrmNightOperator = document.getElementById('vrmNightOperator');
     const vrmTotalOperator = document.getElementById('vrmTotalOperator');
+    const totalFltOperators = document.getElementById('totalFltOperators');
     
     // Cost inputs
     const mixingCost = document.getElementById('mixing');
@@ -1461,10 +1478,18 @@ document.addEventListener('DOMContentLoaded', function() {
         totalTPHOutput.value = tph;
     }
     
-    // Function to update operator total (concatenate day and night operators)
-    function updateOperatorTotal(dayOperator, nightOperator, totalOperator) {
+    // Function to update operator total (sum of operators)
+    function updateOperatorTotal(dayOperator, nightOperator, totalOperator, totalOperatorsField) {
         const dayOp = dayOperator.value.trim();
         const nightOp = nightOperator.value.trim();
+        
+        // Count operators
+        let operatorCount = 0;
+        if (dayOp) operatorCount++;
+        if (nightOp && nightOp !== dayOp) operatorCount++;
+        
+        // Update total operators field
+        totalOperatorsField.value = operatorCount;
         
         // If both operators are present and different
         if (dayOp && nightOp && dayOp !== nightOp) {
@@ -1500,8 +1525,24 @@ document.addEventListener('DOMContentLoaded', function() {
         dryerTotalJCB.value = isNaN(total) ? '' : total.toFixed(2);
     }
     
-    // Function to calculate all costs
+    // Function to calculate all costs with formulas
     function calculateCosts() {
+        // Calculate formula-based costs first
+        const totalNMR = parseFloat(vrmTotalNMR.value) || 0;
+        const totalEB = parseFloat(vrmTotalEB.value) || 0;
+        const totalLDO = parseFloat(dryerTotalLDO.value) || 0;
+        const totalJCBHours = parseFloat(dryerTotalJCB.value) || 0;
+        const totalJcbOps = parseFloat(totalJcbOperators.value) || 0;
+        const totalFltOps = parseFloat(totalFltOperators.value) || 0;
+        
+        // Apply formulas
+        nmrCost.value = roundValue(totalNMR * 700); // NMR cost = NMR * 700
+        ebCost.value = roundValue(totalEB * 12.5);  // EB cost = EB * 12.5
+        ldoCost.value = roundValue(totalLDO * 62.5); // LDO cost = LDO * 62.5
+        jcbOperatorCost.value = roundValue(totalJcbOps * 950); // JCB operator cost = operators * 950
+        jcbFuelCost.value = roundValue(totalJCBHours * 96.4 * 5); // JCB fuel cost = hours * 96.4 * 5
+        forkliftCost.value = roundValue(totalFltOps * 2115); // Forklift cost = operators * 2115
+        
         // Get all cost values
         const mixing = parseFloat(mixingCost.value) || 0;
         const nmr = parseFloat(nmrCost.value) || 0;
@@ -1572,11 +1613,13 @@ document.addEventListener('DOMContentLoaded', function() {
     dryerDayLDO.addEventListener('input', function() {
         this.value = roundValue(parseFloat(this.value) || 0);
         calculateTotal(dryerDayLDO, dryerNightLDO, dryerTotalLDO);
+        calculateCosts();
     });
     
     dryerNightLDO.addEventListener('input', function() {
-        this.value = roundValue(parseFloat(this.value) || 0);
+        this.value = roundValue(parseFloat(this.value) || 0;
         calculateTotal(dryerDayLDO, dryerNightLDO, dryerTotalLDO);
+        calculateCosts();
     });
     
     dryerDayJCB.addEventListener('input', function() {
@@ -1586,6 +1629,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         calculateJCBTotal();
+        calculateCosts();
     });
     
     dryerNightJCB.addEventListener('input', function() {
@@ -1595,14 +1639,17 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         calculateJCBTotal();
+        calculateCosts();
     });
     
     dryerDayOperator.addEventListener('input', function() {
-        updateOperatorTotal(dryerDayOperator, dryerNightOperator, dryerTotalOperator);
+        updateOperatorTotal(dryerDayOperator, dryerNightOperator, dryerTotalOperator, totalJcbOperators);
+        calculateCosts();
     });
     
     dryerNightOperator.addEventListener('input', function() {
-        updateOperatorTotal(dryerDayOperator, dryerNightOperator, dryerTotalOperator);
+        updateOperatorTotal(dryerDayOperator, dryerNightOperator, dryerTotalOperator, totalJcbOperators);
+        calculateCosts();
     });
     
     // VRM Operations event listeners
@@ -1621,7 +1668,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     vrmDayProduction.addEventListener('input', function() {
-        this.value = roundValue(parseFloat(this.value) || 0);
+        this.value = roundValue(parseFloat(this.value) || 0;
         calculateTotal(vrmDayProduction, vrmNightProduction, vrmTotalProduction);
         calculateTPH(vrmDayProduction, vrmDayHours, vrmDayTPH);
         calculateTotalTPH(vrmTotalProduction, vrmTotalHours, vrmTotalTPH);
@@ -1629,7 +1676,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     vrmNightProduction.addEventListener('input', function() {
-        this.value = roundValue(parseFloat(this.value) || 0);
+        this.value = roundValue(parseFloat(this.value) || 0;
         calculateTotal(vrmDayProduction, vrmNightProduction, vrmTotalProduction);
         calculateTPH(vrmNightProduction, vrmNightHours, vrmNightTPH);
         calculateTotalTPH(vrmTotalProduction, vrmTotalHours, vrmTotalTPH);
@@ -1639,35 +1686,40 @@ document.addEventListener('DOMContentLoaded', function() {
     vrmDayEB.addEventListener('input', function() {
         this.value = roundValue(parseFloat(this.value) || 0);
         calculateTotal(vrmDayEB, vrmNightEB, vrmTotalEB);
+        calculateCosts();
     });
     
     vrmNightEB.addEventListener('input', function() {
         this.value = roundValue(parseFloat(this.value) || 0);
         calculateTotal(vrmDayEB, vrmNightEB, vrmTotalEB);
+        calculateCosts();
     });
     
     vrmDayNMR.addEventListener('input', function() {
         this.value = roundValue(parseFloat(this.value) || 0);
         calculateTotal(vrmDayNMR, vrmNightNMR, vrmTotalNMR);
+        calculateCosts();
     });
     
     vrmNightNMR.addEventListener('input', function() {
         this.value = roundValue(parseFloat(this.value) || 0);
         calculateTotal(vrmDayNMR, vrmNightNMR, vrmTotalNMR);
+        calculateCosts();
     });
     
     vrmDayOperator.addEventListener('input', function() {
-        updateOperatorTotal(vrmDayOperator, vrmNightOperator, vrmTotalOperator);
+        updateOperatorTotal(vrmDayOperator, vrmNightOperator, vrmTotalOperator, totalFltOperators);
+        calculateCosts();
     });
     
     vrmNightOperator.addEventListener('input', function() {
-        updateOperatorTotal(vrmDayOperator, vrmNightOperator, vrmTotalOperator);
+        updateOperatorTotal(vrmDayOperator, vrmNightOperator, vrmTotalOperator, totalFltOperators);
+        calculateCosts();
     });
     
     // Cost inputs event listeners
     const costInputs = [
-        mixingCost, nmrCost, ebCost, forkliftCost, bagCost, ldoCost, 
-        jcbOperatorCost, jcbFuelCost, spareCost, maintenanceCost, 
+        mixingCost, bagCost, spareCost, maintenanceCost, 
         loadingCost, unloadingCost, miscCost
     ];
     
