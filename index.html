@@ -143,7 +143,7 @@
             flex: 1;
         }
         .compact-stock-header {
-            background-color: orange;
+            background-color: black;
             color: white;
             padding: 5px;
             text-align: center;
@@ -811,11 +811,10 @@
             gap: 15px;
         }
 
-        /* Fixed Length Land Scope Table - Increased width by 30% */
+        /* Fixed Length Land Scope Table - Full Width */
         .fixed-landscope-container {
             margin-top: 20px;
-            width: 130%; /* Increased width by 30% */
-            overflow-x: auto;
+            width: 100%;
         }
 
         .fixed-landscope-box {
@@ -1339,7 +1338,7 @@
         </div>
     </div>
 
-    <!-- Fixed Length Land Scope Table - Full Width (30% wider) -->
+    <!-- Fixed Length Land Scope Table - Full Width -->
     <div class="fixed-landscope-container">
         <div class="fixed-landscope-box">
             <div class="fixed-landscope-title">Remark:</div>
@@ -1354,7 +1353,6 @@
     </div>
 
     <div class="no-print">
-        <button class="submit-btn">Submit Report</button>
     </div>
 
 <script>
@@ -1535,17 +1533,15 @@ document.addEventListener('DOMContentLoaded', function() {
         const unloading = parseFloat(unloadingCost.value) || 0;
         const misc = parseFloat(miscCost.value) || 0;
         
-        // Calculate total costs
-        const totalCost = mixing + nmr + eb + forklift + bag + ldo + jcbOperator + jcbFuel + spare + maintenance + loading + unloading + misc;
-        
-        // Get production values
+        // Calculate production values
         const dryerProduction = parseFloat(dryerTotalProduction.value) || 0;
         const vrmProduction = parseFloat(vrmTotalProduction.value) || 0;
         const totalProduction = dryerProduction + vrmProduction;
         
         // Calculate costs per metric ton
-        const dryerCost = dryerProduction > 0 ? roundValue(totalCost / dryerProduction) : 0;
-        const vrmCost = vrmProduction > 0 ? roundValue(totalCost / vrmProduction) : 0;
+        const dryerCost = dryerProduction > 0 ? roundValue((mixing + ldo + jcbOperator + jcbFuel) / dryerProduction) : 0;
+        const vrmCost = vrmProduction > 0 ? roundValue((nmr + eb + forklift + bag + spare + maintenance + misc) / vrmProduction) : 0;
+        const totalCost = mixing + nmr + eb + forklift + bag + ldo + jcbOperator + jcbFuel + spare + maintenance + loading + unloading + misc;
         const totalCostPerMT = totalProduction > 0 ? roundValue(totalCost / totalProduction) : 0;
         const totalCostPerKG = totalProduction > 0 ? roundValue(totalCost / (totalProduction * 1000)) : 0;
         
