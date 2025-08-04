@@ -1203,7 +1203,7 @@
                     <td class="qty-col">
                         <div class="input-with-symbol">
                             <span class="currency-symbol">₹</span>
-                            <input type="number" id="bag" class="calculator-input">
+                            <input type="number" id="bag" class="calculator-input auto-calculate" readonly>
                         </div>
                     </td>
                 </tr>
@@ -1504,6 +1504,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const totalEB = parseFloat(vrmTotalEB.value) || 0;
         const totalLDO = parseFloat(dryerTotalLDO.value) || 0;
         const totalJCBHours = calculateJCBTotal() || 0;
+        const vrmProduction = parseFloat(vrmTotalProduction.value) || 0;
         
         // Get operator hours
         const totalJcbOps = updateOperatorTotal(dryerDayOperator, dryerNightOperator, dryerTotalOperator);
@@ -1511,11 +1512,12 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Apply formulas with corrected values
         nmrCost.value = roundValue(totalNMR * 700);       // NMR cost = NMR * 700
-        ebCost.value = roundValue(totalEB * 12.28);       // EB cost = EB * 12.28 (corrected)
-        ldoCost.value = roundValue(totalLDO * 62.5);      // LDO cost = LDO * 62.5 (corrected)
+        ebCost.value = roundValue(totalEB * 12.28);       // EB cost = EB * 12.28
+        ldoCost.value = roundValue(totalLDO * 62.5);      // LDO cost = LDO * 62.5
         jcbOperatorCost.value = roundValue(totalJcbOps * 950); // JCB operator cost = operators * 950
         jcbFuelCost.value = roundValue(totalJCBHours * 96.4 * 5); // JCB fuel cost = hours * 96.4 * 5
         forkliftCost.value = roundValue(totalFltOps * 2115); // Forklift cost = operators * 2115
+        bagCost.value = roundValue(vrmProduction * 13.5); // Bag cost = VRM production * 13.5
         
         // Get all cost values
         const mixing = parseFloat(mixingCost.value) || 0;
@@ -1534,15 +1536,18 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Calculate production values
         const dryerProduction = parseFloat(dryerTotalProduction.value) || 0;
-        const vrmProduction = parseFloat(vrmTotalProduction.value) || 0;
         const totalProduction = dryerProduction + vrmProduction;
         
         // Calculate costs per metric ton
-        const dryerCost = dryerProduction > 0 ? roundValue((mixing + ldo + jcbOperator + jcbFuel) / dryerProduction) : 0;
-        const vrmCost = vrmProduction > 0 ? roundValue((nmr + eb + forklift + bag + spare + maintenance + misc) / vrmProduction) : 0;
-        const totalCost = mixing + nmr + eb + forklift + bag + ldo + jcbOperator + jcbFuel + spare + maintenance + loading + unloading + misc;
-        const totalCostPerMT = totalProduction > 0 ? roundValue(totalCost / totalProduction) : 0;
-        const totalCostPerKG = totalProduction > 0 ? roundValue(totalCost / (totalProduction * 1000)) : 0;
+        const dryerCostComponents = mixing + ldo + jcbFuel + jcbOperator;
+        const dryerCost = dryerProduction > 0 ? roundValue(dryerCostComponents / dryerProduction) : dryerCostComponents;
+        
+        const vrmCostComponents = nmr + eb + forklift + bag + spare + maintenance + misc;
+        const vrmCost = vrmProduction > 0 ? roundValue(vrmCostComponents / vrmProduction) : vrmCostComponents;
+        
+        const totalCost = dryerCostComponents + vrmCostComponents + loading + unloading;
+        const totalCostPerMT = totalProduction > 0 ? roundValue(totalCost / totalProduction) : totalCost;
+        const totalCostPerKG = totalProduction > 0 ? roundValue(totalCost / (totalProduction * 1000)) : totalCost;
         
         // Update cost fields
         dryerCostMT.value = dryerCost;
@@ -1705,7 +1710,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Cost inputs event listeners
     const costInputs = [
-        mixingCost, bagCost, spareCost, maintenanceCost, 
+        mixingCost, spareCost, maintenanceCost, 
         loadingCost, unloadingCost, miscCost
     ];
     
