@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>October Transport Billing System</title>
+    <title>Transport Billing System</title>
     <style>
         * {
             box-sizing: border-box;
@@ -11,14 +11,14 @@
             padding: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-    
+   
         body {
             background-color: #f5f7fa;
             color: #333;
             line-height: 1.6;
             padding: 20px;
         }
-    
+   
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -26,11 +26,11 @@
             display: flex;
             gap: 20px;
         }
-    
+   
         .main-content {
             flex: 1;
         }
-    
+   
         .dashboard-sidebar {
             width: 300px;
             background-color: white;
@@ -39,7 +39,7 @@
             padding: 20px;
             height: fit-content;
         }
-    
+   
         header {
             text-align: center;
             margin-bottom: 30px;
@@ -49,12 +49,12 @@
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
-    
+   
         h1 {
             font-size: 2.5rem;
             margin-bottom: 10px;
         }
-    
+   
         .search-section {
             background-color: white;
             padding: 25px;
@@ -62,27 +62,27 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             margin-bottom: 30px;
         }
-    
+   
         .search-form {
             display: flex;
             flex-wrap: wrap;
             gap: 15px;
             align-items: center;
         }
-    
+   
         .form-group {
             flex: 1;
             min-width: 300px;
             position: relative;
         }
-    
+   
         label {
             display: block;
             margin-bottom: 8px;
             font-weight: 600;
             color: #2c3e50;
         }
-    
+   
         select, input {
             width: 100%;
             padding: 12px 15px;
@@ -91,13 +91,13 @@
             font-size: 16px;
             transition: border-color 0.3s;
         }
-    
+   
         select:focus, input:focus {
             outline: none;
             border-color: #1e88e5;
             box-shadow: 0 0 0 3px rgba(30, 136, 229, 0.2);
         }
-    
+   
         button {
             background-color: #1e88e5;
             color: white;
@@ -110,38 +110,38 @@
             transition: background-color 0.3s;
             margin-top: 25px;
         }
-    
+   
         button:hover {
             background-color: #1565c0;
         }
-    
+   
         .btn-secondary {
             background-color: #4caf50;
             margin-left: 10px;
         }
-    
+   
         .btn-secondary:hover {
             background-color: #388e3c;
         }
-    
+   
         .btn-print {
             background-color: #ff9800;
             margin-left: 10px;
         }
-    
+   
         .btn-print:hover {
             background-color: #f57c00;
         }
-    
+   
         .btn-download {
             background-color: #9c27b0;
             margin-left: 10px;
         }
-    
+   
         .btn-download:hover {
             background-color: #7b1fa2;
         }
-    
+   
         .results-section {
             background-color: white;
             border-radius: 10px;
@@ -149,7 +149,7 @@
             overflow: hidden;
             display: none;
         }
-    
+   
         .results-header {
             background-color: #1e88e5;
             color: white;
@@ -160,37 +160,37 @@
             justify-content: space-between;
             align-items: center;
         }
-    
+   
         .results-content {
             padding: 25px;
         }
-    
+   
         .result-item {
             margin-bottom: 20px;
             padding-bottom: 20px;
             border-bottom: 1px solid #eee;
         }
-    
+   
         .result-item:last-child {
             border-bottom: none;
             margin-bottom: 0;
             padding-bottom: 0;
         }
-    
+   
         .result-title {
             font-weight: 600;
             color: #1e88e5;
             margin-bottom: 8px;
             font-size: 1.1rem;
         }
-    
+   
         .no-results {
             text-align: center;
             padding: 30px;
             color: #7f8c8d;
             font-style: italic;
         }
-    
+   
         .add-vendor-section {
             background-color: white;
             padding: 25px;
@@ -199,30 +199,30 @@
             margin-top: 30px;
             display: none;
         }
-    
+   
         .form-row {
             display: flex;
             flex-wrap: wrap;
             gap: 20px;
             margin-bottom: 20px;
         }
-    
+   
         .form-field {
             flex: 1;
             min-width: 250px;
         }
-    
+   
         .vehicle-numbers-container {
             margin-top: 15px;
         }
-    
+   
         .vehicle-number-input {
             display: flex;
             gap: 10px;
             margin-bottom: 10px;
             align-items: center;
         }
-    
+   
         .remove-vehicle {
             background-color: #f44336;
             color: white;
@@ -231,7 +231,7 @@
             border-radius: 4px;
             cursor: pointer;
         }
-    
+   
         .add-vehicle {
             background-color: #9e9e9e;
             color: white;
@@ -241,7 +241,7 @@
             cursor: pointer;
             margin-top: 10px;
         }
-    
+   
         .suggestions-container {
             position: absolute;
             top: 100%;
@@ -257,56 +257,55 @@
             display: none;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
-    
+   
         .suggestion-item {
             padding: 10px 15px;
             cursor: pointer;
             border-bottom: 1px solid #eee;
         }
-    
+   
         .suggestion-item:hover {
             background-color: #f5f5f5;
         }
-    
+   
         .suggestion-item:last-child {
             border-bottom: none;
         }
-    
+   
         .highlight {
             background-color: #e3f2fd;
             font-weight: bold;
         }
-    
+   
         .transport-details {
             margin-top: 30px;
         }
-    
+   
         .transport-table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 15px;
         }
-    
+   
         .transport-table th, .transport-table td {
             padding: 12px 15px;
             text-align: left;
             border-bottom: 1px solid #ddd;
         }
-    
+   
         .transport-table th {
             background-color: #f8f9fa;
             font-weight: 600;
             color: #2c3e50;
         }
-    
+   
         .transport-table tr:hover {
             background-color: #f5f5f5;
         }
-
         .transport-table tr.verified {
             background-color: #dff0d8 !important;
         }
-    
+   
         .summary-box {
             background-color: #e8f5e9;
             border: 2px solid #4caf50;
@@ -318,32 +317,32 @@
             align-items: center;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-    
+   
         .summary-item {
             text-align: center;
             flex: 1;
         }
-    
+   
         .summary-label {
             font-size: 14px;
             color: #2e7d32;
             margin-bottom: 5px;
             font-weight: 600;
         }
-    
+   
         .summary-value {
             font-size: 24px;
             color: #1b5e20;
             font-weight: 700;
         }
-    
+   
         .summary-divider {
             width: 2px;
             height: 50px;
             background-color: #4caf50;
             margin: 0 20px;
         }
-    
+   
         .summary {
             margin-top: 20px;
             padding: 15px;
@@ -351,13 +350,13 @@
             border-radius: 6px;
             font-weight: 600;
         }
-    
+   
         .loading {
             text-align: center;
             padding: 20px;
             color: #1e88e5;
         }
-    
+   
         .warning {
             background-color: #fff3cd;
             color: #856404;
@@ -366,7 +365,7 @@
             margin-bottom: 20px;
             border: 1px solid #ffeaa7;
         }
-    
+   
         .saved-results-section {
             background-color: white;
             border-radius: 10px;
@@ -374,20 +373,20 @@
             margin-top: 30px;
             padding: 25px;
         }
-    
+   
         .saved-results-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
         }
-    
+   
         .saved-results-title {
             font-size: 1.5rem;
             font-weight: 600;
             color: #2c3e50;
         }
-    
+   
         .saved-results-list {
             max-height: 400px;
             overflow-y: auto;
@@ -395,7 +394,7 @@
             border-radius: 6px;
             padding: 15px;
         }
-    
+   
         .saved-result-item {
             padding: 15px;
             border-bottom: 1px solid #eee;
@@ -403,20 +402,20 @@
             justify-content: space-between;
             align-items: center;
         }
-    
+   
         .saved-result-item:last-child {
             border-bottom: none;
         }
-    
+   
         .saved-result-info {
             flex: 1;
         }
-    
+   
         .saved-result-actions {
             display: flex;
             gap: 10px;
         }
-    
+   
         .btn-remove {
             background-color: #f44336;
             color: white;
@@ -426,7 +425,7 @@
             cursor: pointer;
             font-size: 14px;
         }
-    
+   
         .btn-view {
             background-color: #2196f3;
             color: white;
@@ -436,14 +435,14 @@
             cursor: pointer;
             font-size: 14px;
         }
-    
+   
         .vendor-group {
             margin-bottom: 30px;
             border: 1px solid #e0e0e0;
             border-radius: 8px;
             overflow: hidden;
         }
-    
+   
         .vendor-header {
             background-color: #e3f2fd;
             padding: 15px 20px;
@@ -453,19 +452,19 @@
             align-items: center;
             cursor: pointer;
         }
-    
+   
         .vendor-vehicles {
             padding: 0 20px;
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.3s ease-out;
         }
-    
+   
         .vendor-vehicles.expanded {
             max-height: 500px;
             padding: 15px 20px;
         }
-    
+   
         .vehicle-option {
             padding: 10px 15px;
             margin: 5px 0;
@@ -474,30 +473,30 @@
             cursor: pointer;
             transition: background-color 0.2s;
         }
-    
+   
         .vehicle-option:hover {
             background-color: #f5f5f5;
         }
-    
+   
         .vehicle-option.selected {
             background-color: #e3f2fd;
             border-color: #1e88e5;
         }
-    
+   
         .amount-edit {
             display: flex;
             align-items: center;
             gap: 10px;
             margin-top: 10px;
         }
-    
+   
         .amount-input {
             width: 150px;
             padding: 8px 12px;
             border: 1px solid #ddd;
             border-radius: 4px;
         }
-    
+   
         .btn-update {
             background-color: #4caf50;
             color: white;
@@ -507,14 +506,14 @@
             cursor: pointer;
             font-size: 14px;
         }
-    
+   
         .vehicle-details {
             margin-top: 20px;
             padding: 15px;
             background-color: #f9f9f9;
             border-radius: 6px;
         }
-    
+   
         .dashboard-title {
             font-size: 1.3rem;
             font-weight: 700;
@@ -524,11 +523,11 @@
             padding-bottom: 10px;
             border-bottom: 2px solid #e0e0e0;
         }
-    
+   
         .dashboard-section {
             margin-bottom: 25px;
         }
-    
+   
         .dashboard-section-title {
             font-size: 1.1rem;
             font-weight: 600;
@@ -537,7 +536,7 @@
             padding-bottom: 8px;
             border-bottom: 1px solid #e0e0e0;
         }
-    
+   
         .dashboard-summary-box {
             background-color: #f8f9fa;
             border-radius: 8px;
@@ -545,37 +544,37 @@
             margin-bottom: 15px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
-    
+   
         .dashboard-summary-item {
             display: flex;
             justify-content: space-between;
             margin-bottom: 10px;
         }
-    
+   
         .dashboard-summary-item:last-child {
             margin-bottom: 0;
         }
-    
+   
         .dashboard-label {
             font-weight: 500;
             color: #555;
         }
-    
+   
         .dashboard-value {
             font-weight: 600;
             color: #1e88e5;
         }
-    
+   
         .dashboard-highlight {
             font-weight: 700;
             color: #1565c0;
             font-size: 1.1rem;
         }
-    
+   
         .product-breakdown {
             margin-top: 15px;
         }
-    
+   
         .product-item {
             display: flex;
             justify-content: space-between;
@@ -584,21 +583,21 @@
             background-color: #f5f5f5;
             border-radius: 4px;
         }
-    
+   
         .product-name {
             font-weight: 500;
         }
-    
+   
         .product-qty {
             font-weight: 600;
             color: #2e7d32;
         }
-    
+   
         .product-amount {
             font-weight: 600;
             color: #d32f2f;
         }
-    
+   
         .dashboard-refresh {
             background-color: #1e88e5;
             color: white;
@@ -612,18 +611,18 @@
             margin-top: 10px;
             transition: background-color 0.3s;
         }
-    
+   
         .dashboard-refresh:hover {
             background-color: #1565c0;
         }
-    
+   
         .dashboard-loading {
             text-align: center;
             padding: 10px;
             color: #1e88e5;
             font-style: italic;
         }
-    
+   
         .vendor-total-summary {
             background-color: #e8f5e9;
             border: 2px solid #4caf50;
@@ -632,7 +631,7 @@
             margin: 20px 0;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-    
+   
         .vendor-total-title {
             font-size: 1.2rem;
             font-weight: 700;
@@ -640,104 +639,104 @@
             margin-bottom: 15px;
             text-align: center;
         }
-    
+   
         .vendor-total-details {
             display: flex;
             justify-content: space-around;
             flex-wrap: wrap;
             gap: 15px;
         }
-    
+   
         .vendor-total-item {
             text-align: center;
             flex: 1;
             min-width: 150px;
         }
-    
+   
         .vendor-total-label {
             font-size: 14px;
             color: #2e7d32;
             margin-bottom: 5px;
             font-weight: 600;
         }
-    
+   
         .vendor-total-value {
             font-size: 20px;
             color: #1b5e20;
             font-weight: 700;
         }
-    
+   
         @media (max-width: 768px) {
             .container {
                 flex-direction: column;
             }
-        
+       
             .dashboard-sidebar {
                 width: 100%;
                 order: -1;
                 margin-bottom: 20px;
             }
-        
+       
             .form-group, .form-field {
                 min-width: 100%;
             }
-        
+       
             h1 {
                 font-size: 2rem;
             }
-        
+       
             .form-row {
                 flex-direction: column;
                 gap: 15px;
             }
-        
+       
             .transport-table {
                 display: block;
                 overflow-x: auto;
             }
-        
+       
             .saved-result-item {
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 10px;
             }
-        
+       
             .saved-result-actions {
                 width: 100%;
                 justify-content: flex-end;
             }
-        
+       
             .amount-edit {
                 flex-direction: column;
                 align-items: flex-start;
             }
-        
+       
             .amount-input {
                 width: 100%;
             }
-        
+       
             .summary-box {
                 flex-direction: column;
                 gap: 15px;
             }
-        
+       
             .summary-divider {
                 width: 100%;
                 height: 2px;
                 margin: 10px 0;
             }
-        
+       
             .vendor-total-details {
                 flex-direction: column;
                 gap: 10px;
             }
         }
-    
+   
         @media print {
             .search-section, .add-vendor-section, .btn-print, .saved-results-section, .dashboard-sidebar {
                 display: none;
             }
-        
+       
             .results-section {
                 display: block !important;
                 box-shadow: none;
@@ -751,7 +750,7 @@
             <header>
                 <h1>SGX - Transport Billing System</h1>
             </header>
-        
+       
             <section class="search-section">
                 <div class="search-form">
                     <div class="form-group">
@@ -765,13 +764,13 @@
                         <div class="suggestions-container" id="dcSuggestionsContainer"></div>
                     </div>
                 </div>
-            
+           
                 <button type="button" onclick="searchVehicle()">Search Vehicle</button>
                 <button type="button" onclick="searchDC()">Search Delivery Challan No</button>
                 <button type="button" class="btn-secondary" onclick="toggleAddVendorForm()">Add New Vendor</button>
                 <button type="button" class="btn-download" onclick="downloadSavedResults()">Download Excel</button>
             </section>
-        
+       
             <section class="results-section" id="resultsSection">
                 <div class="results-header">
                     <span>Vehicle Details</span>
@@ -784,7 +783,7 @@
                     <!-- Results will be displayed here -->
                 </div>
             </section>
-        
+       
             <section class="add-vendor-section" id="addVendorSection">
                 <div class="results-header">Add New Vendor</div>
                 <div class="results-content">
@@ -799,7 +798,7 @@
                                 <input type="text" id="accountNo" required>
                             </div>
                         </div>
-                    
+                   
                         <div class="form-row">
                             <div class="form-field">
                                 <label for="bankName">Bank Name & Branch:</label>
@@ -810,14 +809,14 @@
                                 <input type="text" id="beneficiary" required>
                             </div>
                         </div>
-                    
+                   
                         <div class="form-row">
                             <div class="form-field">
                                 <label for="pan">PAN Number:</label>
                                 <input type="text" id="pan" required>
                             </div>
                         </div>
-                    
+                   
                         <div class="form-row">
                             <div class="form-field">
                                 <label>Vehicle Numbers:</label>
@@ -830,7 +829,7 @@
                                 <button type="button" class="add-vehicle" onclick="addVehicleField()">Add Another Vehicle</button>
                             </div>
                         </div>
-                    
+                   
                         <div class="form-row">
                             <button type="button" onclick="addNewVendor()">Save Vendor</button>
                             <button type="button" class="btn-secondary" onclick="toggleAddVendorForm()">Cancel</button>
@@ -838,7 +837,7 @@
                     </form>
                 </div>
             </section>
-        
+       
             <section class="saved-results-section" id="savedResultsSection">
                 <div class="saved-results-header">
                     <div class="saved-results-title">Saved Results</div>
@@ -852,10 +851,10 @@
                 </div>
             </section>
         </div>
-    
+   
         <div class="dashboard-sidebar">
             <div class="dashboard-title">Monthly Dashboard</div>
-        
+       
             <div class="dashboard-section">
                 <div class="dashboard-section-title">Overall Summary</div>
                 <div class="dashboard-summary-box">
@@ -863,7 +862,7 @@
                         <span class="dashboard-label">Total Vehicles:</span>
                         <span class="dashboard-value" id="totalVehicles">0</span>
                     </div>
-            
+           
                     <div class="dashboard-summary-item">
                         <span class="dashboard-label">Total Quantity:</span>
                         <span class="dashboard-value" id="totalQuantity">0.00</span>
@@ -874,7 +873,7 @@
                     </div>
                 </div>
             </div>
-        
+       
             <div class="dashboard-section">
                 <div class="dashboard-section-title">Product Breakdown</div>
                 <div class="dashboard-summary-box">
@@ -883,7 +882,7 @@
                     </div>
                 </div>
             </div>
-        
+       
             <button type="button" class="dashboard-refresh" onclick="updateDashboard()">Refresh Dashboard</button>
         </div>
     </div>
@@ -947,24 +946,24 @@
             const resultsContent = document.getElementById('resultsContent');
             resultsContent.innerHTML = '<div class="loading">Loading transport data...</div>';
             try {
-                // CORRECTED URL - Using raw.githubusercontent.com format
-                const githubUrl = 'https://raw.githubusercontent.com/bimal-bp/E-TRANSPORT-BILLING/main/Agg Sales Report-Dec-25.xlsx';
-               
+                // CORRECTED URL - Using raw.githubusercontent.com format with %20 for spaces
+                const githubUrl = 'https://raw.githubusercontent.com/bimal-bp/E-TRANSPORT-BILLING/main/Agg%20Sales%20Report-Dec-25.xlsx';
+              
                 console.log('Fetching data from:', githubUrl);
-               
+              
                 const resp = await fetch(githubUrl);
-               
+              
                 if (!resp.ok) {
                     // Try alternative URL pattern if first one fails
-                    const altUrl = 'https://github.com/bimal-bp/E-TRANSPORT-BILLING/raw/main/Agg Sales Report-Dec-25.xlsx';
+                    const altUrl = 'https://github.com/bimal-bp/E-TRANSPORT-BILLING/raw/main/Agg%20Sales%20Report-Dec-25.xlsx';
                     console.log('Trying alternative URL:', altUrl);
-                   
+                  
                     const altResp = await fetch(altUrl);
-                   
+                  
                     if (!altResp.ok) {
                         throw new Error(`Failed to fetch Excel file. Status: ${resp.status} - ${resp.statusText}`);
                     }
-                   
+                  
                     const altArrayBuffer = await altResp.arrayBuffer();
                     const workbook = XLSX.read(altArrayBuffer, {type: 'array'});
                     const sheet = workbook.Sheets[workbook.SheetNames[0]];
@@ -973,30 +972,30 @@
                 } else {
                     const arrayBuffer = await resp.arrayBuffer();
                     const workbook = XLSX.read(arrayBuffer, {type: 'array'});
-                   
+                  
                     // Log sheet names for debugging
                     console.log('Available sheets:', workbook.SheetNames);
-                   
+                  
                     const sheet = workbook.Sheets[workbook.SheetNames[0]];
                     const json = XLSX.utils.sheet_to_json(sheet, {header: 1, raw: false, dateNF: 'yyyy-mm-dd'});
-                   
+                  
                     // Log first few rows for debugging
                     console.log('First 3 rows of data:', json.slice(0, 3));
-                   
+                  
                     processTransportData(json);
                 }
-               
+              
                 resultsContent.innerHTML = '<div class="loading" style="color: #4caf50;">✓ Transport data loaded successfully! Search for a vehicle above.</div>';
-               
+              
                 // Clear message after 3 seconds
                 setTimeout(() => {
                     if (resultsContent.innerHTML.includes('successfully')) {
                         resultsContent.innerHTML = '';
                     }
                 }, 3000);
-               
+              
                 updateDashboard();
-               
+              
             } catch (e) {
                 console.error('Error loading transport data:', e);
                 resultsContent.innerHTML = `
@@ -1004,7 +1003,7 @@
                         <strong>Error loading transport data:</strong> ${e.message}<br><br>
                         <strong>Troubleshooting steps:</strong>
                         <ol>
-                            <li>Make sure the Excel file exists at: <a href="https://github.com/bimal-bp/E-TRANSPORT-BILLING/blob/main/Agg Sales Report-Dec-25.xlsx" target="_blank">GitHub Link</a></li>
+                            <li>Make sure the Excel file exists at: <a href="https://github.com/bimal-bp/E-TRANSPORT-BILLING/blob/main/Agg%20Sales%20Report-Dec-25.xlsx" target="_blank">GitHub Link</a></li>
                             <li>Ensure the repository is public</li>
                             <li>Check the file name is exactly: "Agg Sales Report-Dec-25.xlsx"</li>
                             <li>Try refreshing the page</li>
@@ -1022,10 +1021,10 @@
                 transportData = [];
                 return;
             }
-           
+          
             const headers = json[0].map(h => (h ?? '').toString().trim());
             console.log('Excel headers:', headers);
-           
+          
             transportData = json.slice(1)
                 .filter(row => row && row.length > 0)
                 .map(row => {
@@ -1038,9 +1037,9 @@
                     return obj;
                 })
                 .filter(obj => Object.keys(obj).length > 0);
-           
+          
             console.log(`Processed ${transportData.length} transport records`);
-           
+          
             // Log sample data for debugging
             if (transportData.length > 0) {
                 console.log('Sample transport record:', transportData[0]);
@@ -1054,7 +1053,7 @@
                 document.getElementById('totalVehicles').textContent = '0';
                 document.getElementById('totalQuantity').textContent = '0.00';
                 document.getElementById('totalAmount').textContent = '₹0.00';
-               
+              
                 document.getElementById('productBreakdown').innerHTML = '<div class="no-results">No data available</div>';
                 return;
             }
@@ -1079,12 +1078,12 @@
             document.getElementById('totalAmount').textContent = `₹${totalAmount.toFixed(2)}`;
             const pb = document.getElementById('productBreakdown');
             pb.innerHTML = '';
-           
+          
             if (Object.keys(productBreakdown).length === 0) {
                 pb.innerHTML = '<div class="no-results">No product data found</div>';
                 return;
             }
-           
+          
             Object.entries(productBreakdown)
                 .sort((a,b) => b[1].qty - a[1].qty)
                 .forEach(([p,d]) => {
@@ -1133,7 +1132,7 @@
                         const items = cont.querySelectorAll('.suggestion-item');
                         const currentIndex = Array.from(items).indexOf(active);
                         const prevIndex = (currentIndex - 1 + items.length) % items.length;
-                       
+                      
                         cont.querySelectorAll('.suggestion-item').forEach(i => i.classList.remove('active'));
                         items[prevIndex].classList.add('active');
                     }
@@ -1185,7 +1184,7 @@
                         const items = cont.querySelectorAll('.suggestion-item');
                         const currentIndex = Array.from(items).indexOf(active);
                         const prevIndex = (currentIndex - 1 + items.length) % items.length;
-                       
+                      
                         cont.querySelectorAll('.suggestion-item').forEach(i => i.classList.remove('active'));
                         items[prevIndex].classList.add('active');
                     }
@@ -1203,20 +1202,20 @@
         }
         function getMatchingVehicles(term) {
             const set = new Set();
-           
+          
             // Search in vendor data
             vehicleData.forEach(v => {
                 v.vehicleNumbers.forEach(n => {
                     if (n && n.toUpperCase().includes(term)) set.add(n);
                 });
             });
-           
+          
             // Search in transport data
             transportData.forEach(r => {
                 const v = (r['VEHICLE NO'] || r['Vehicle Number'] || '').toString().trim().toUpperCase();
                 if (v && v.includes(term)) set.add(v);
             });
-           
+          
             return Array.from(set)
                 .sort((a,b) => {
                     // Sort by exact match first, then by position of match
@@ -1229,13 +1228,13 @@
         }
         function getMatchingDCs(term) {
             const set = new Set();
-           
+          
             // Search in transport data for DC NO
             transportData.forEach(r => {
                 const dc = (r['DC NO'] || '').toString().trim().toUpperCase();
                 if (dc && dc.includes(term)) set.add(dc);
             });
-           
+          
             return Array.from(set)
                 .sort((a,b) => {
                     const aExact = a === term;
@@ -1247,12 +1246,12 @@
         }
         function displaySuggestions(matches, term, cont, input) {
             cont.innerHTML='';
-           
+          
             if (!matches.length) {
                 cont.style.display='none';
                 return;
             }
-           
+          
             matches.forEach(m => {
                 const el = document.createElement('div');
                 el.className='suggestion-item';
@@ -1308,35 +1307,51 @@
             displayResults(vendorMatches, term, transportRecords);
         }
         // -------------------------------------------------
-        // MAIN SEARCH FOR DC
+        // MAIN SEARCH FOR DC - MODIFIED TO HANDLE MULTIPLE DC NUMBERS
         // -------------------------------------------------
         function searchDC() {
-            const term = document.getElementById('dcSearch').value.trim().toUpperCase();
-            if (!term) {
-                alert('Please enter a Delivery Challan No');
+            const inputValue = document.getElementById('dcSearch').value.trim().toUpperCase();
+            if (!inputValue) {
+                alert('Please enter at least one Delivery Challan No');
                 return;
             }
-            // Find transport records by DC NO
-            const transportRecords = transportData.filter(r => {
-                const dcNo = (r['DC NO'] || r['Delivery Challan No'] || '').toString().trim().toUpperCase();
-                return dcNo === term;
+            // Split by space or comma for multiple DCs
+            const terms = inputValue.split(/\s*[\s,]\s*/).filter(t => t);
+            let allTransportRecords = [];
+            let allVehicles = new Set();
+            terms.forEach(term => {
+                const records = transportData.filter(r => {
+                    const dcNo = (r['DC NO'] || r['Delivery Challan No'] || '').toString().trim().toUpperCase();
+                    return dcNo === term;
+                });
+                allTransportRecords.push(...records);
+                records.forEach(r => {
+                    const vehicleNo = (r['VEHICLE NO'] || r['Vehicle Number'] || '').toString().trim().toUpperCase();
+                    if (vehicleNo) allVehicles.add(vehicleNo);
+                });
             });
-            if (!transportRecords.length) {
+            if (!allTransportRecords.length) {
                 displayNoResults();
                 return;
             }
-            // Assume all records for same vehicle, take first
-            const vehicleNo = (transportRecords[0]['VEHICLE NO'] || transportRecords[0]['Vehicle Number'] || '').toString().trim().toUpperCase();
+            // Group records by vehicle
+            const recordsByVehicle = {};
+            allTransportRecords.forEach(r => {
+                const vehicleNo = (r['VEHICLE NO'] || r['Vehicle Number'] || '').toString().trim().toUpperCase();
+                if (!recordsByVehicle[vehicleNo]) recordsByVehicle[vehicleNo] = [];
+                recordsByVehicle[vehicleNo].push(r);
+            });
+            // Find vendors for all vehicles
             const vendorMatches = vehicleData.filter(v =>
-                v.vehicleNumbers.some(n => n.toUpperCase() === vehicleNo)
+                v.vehicleNumbers.some(n => allVehicles.has(n.toUpperCase()))
             );
             // Store full context
             window.currentSearch = {
                 type: 'dc',
-                searchValue: term,
-                vehicleNumber: vehicleNo,
+                searchValue: terms.join(', '),
+                vehicleNumber: Array.from(allVehicles).join(', '),
                 vendorDetails: vendorMatches,
-                transportRecords: transportRecords,
+                transportRecords: allTransportRecords,
                 allVendorVehicles: [],
                 vendorTotals: {totalVehicles:0, totalRecords:0, totalQuantity:0, totalAmount:0},
                 manualAmount: null
@@ -1345,14 +1360,19 @@
             const allVeh = new Set();
             vendorMatches.forEach(v => v.vehicleNumbers.forEach(n => allVeh.add(n)));
             window.currentSearch.allVendorVehicles = Array.from(allVeh);
-            displayResults(vendorMatches, vehicleNo, transportRecords);
+            // Display results, but since multiple, display grouped by vehicle
+            displayResults(vendorMatches, terms.join(', '), allTransportRecords);
+            // Display transport for each vehicle
+            Object.entries(recordsByVehicle).forEach(([veh, recs]) => {
+                displayTransportDetails(veh, recs);
+            });
             // If no vendor, show option to add
             if (!vendorMatches.length) {
                 const cont = document.getElementById('resultsContent');
                 const btn = document.createElement('button');
                 btn.className = 'btn-secondary';
-                btn.textContent = 'Add Vendor for this Vehicle';
-                btn.onclick = () => addVendorForVehicle(vehicleNo);
+                btn.textContent = 'Add Vendor for these Vehicles';
+                btn.onclick = () => addVendorForVehicle(Array.from(allVehicles).join(', '));
                 cont.appendChild(btn);
             }
         }
@@ -1370,7 +1390,16 @@
             if (vendorMatches.length === 0) {
                 if (transportRecords.length) {
                     cont.innerHTML = '<div class="warning"><strong>Note:</strong> Vendor details not found in database, but transport records exist.</div>';
-                    displayTransportDetails(searchValue, transportRecords);
+                    // Display transport details grouped
+                    const recordsByVeh = {};
+                    transportRecords.forEach(r => {
+                        const veh = (r['VEHICLE NO'] || r['Vehicle Number'] || '').toString().trim().toUpperCase();
+                        if (!recordsByVeh[veh]) recordsByVeh[veh] = [];
+                        recordsByVeh[veh].push(r);
+                    });
+                    Object.entries(recordsByVeh).forEach(([veh, recs]) => {
+                        displayTransportDetails(veh, recs);
+                    });
                 } else {
                     cont.innerHTML = '<div class="no-results">No vendor or transport data found for this vehicle number.</div>';
                 }
@@ -1398,7 +1427,7 @@
             Object.values(groups).forEach((g, idx) => {
                 const vg = document.createElement('div');
                 vg.className='vendor-group';
-               
+              
                 const hdr = document.createElement('div');
                 hdr.className='vendor-header';
                 hdr.innerHTML = `
@@ -1415,7 +1444,7 @@
                 const vehDiv = document.createElement('div');
                 vehDiv.id = `veh${idx}`;
                 vehDiv.className='vendor-vehicles';
-               
+              
                 g.vehicles.forEach(vn => {
                     const opt = document.createElement('div');
                     opt.className='vehicle-option';
@@ -1501,11 +1530,11 @@
         }
         function displayTransportDetails(vehicleNumber, records) {
             if (!records.length) return;
-           
+          
             const div = document.createElement('div');
             div.className='transport-details';
             const safe = vehicleNumber.replace(/\s+/g,'_').replace(/[^a-zA-Z0-9_]/g, '');
-           
+          
             div.innerHTML = `
                 <div class="result-title">Transport Details for Vehicle: ${vehicleNumber}</div>
                 <table class="transport-table">
@@ -1545,11 +1574,11 @@
                     <input type="number" id="manual_${safe}" class="amount-input" placeholder="Enter manual amount">
                     <button type="button" class="btn-update" onclick="updateTotalAmount('${vehicleNumber}')">Update Amount</button>
                 </div>`;
-           
+          
             document.getElementById('resultsContent').appendChild(div);
             const tbody = document.getElementById(`tbody_${safe}`);
             let qty = 0, amt = 0;
-           
+          
             records.forEach(r => {
                 const tr = document.createElement('tr');
                 tr.onclick = () => toggleVerify(tr);
@@ -1564,7 +1593,7 @@
                     <td>${r['Transport Rate'] || r['Rate'] || '0.00'}</td>
                     <td>${r['Transport Amount'] || r['Amount'] || '0.00'}</td>`;
                 tbody.appendChild(tr);
-               
+              
                 qty += parseFloat(r['NET WT'] || r['Quantity'] || 0) || 0;
                 amt += parseFloat(r['Transport Amount'] || r['Amount'] || 0) || 0;
             });
@@ -1579,15 +1608,15 @@
         function updateTotalAmount(vehicleNumber) {
             const safe = vehicleNumber.replace(/\s+/g,'_').replace(/[^a-zA-Z0-9_]/g, '');
             const val = parseFloat(document.getElementById(`manual_${safe}`).value);
-           
+          
             if (isNaN(val) || val < 0) {
                 alert('Please enter a valid positive amount');
                 return;
             }
-           
+          
             document.getElementById(`amt_${safe}`).textContent = val.toFixed(2);
             window.currentSearch.manualAmount = val;
-           
+          
             // Update vendor totals if this is the searched vehicle
             if (vehicleNumber === window.currentSearch.vehicleNumber || window.currentSearch.type === 'dc') {
                 window.currentSearch.vendorTotals.totalAmount = val;
@@ -1606,7 +1635,7 @@
             const key = vendor ? `${vendor.partyName}|${vendor.pan}` : window.currentSearch.searchValue;
             const allRecs = [];
             let totQty = 0, totAmt = 0, totRec = 0;
-           
+          
             allVeh.forEach(vn => {
                 const recs = transportData.filter(r => {
                     const vehicleNo = (r['VEHICLE NO'] || r['Vehicle Number'] || '').toString().trim().toUpperCase();
@@ -1672,7 +1701,7 @@
                 savedResults = [];
             }
         }
-       
+      
         function saveSavedResults() {
             localStorage.setItem('transportSavedResults', JSON.stringify(savedResults));
         }
@@ -1682,7 +1711,7 @@
                 list.innerHTML='<div class="no-results">No saved results yet. Search for a vehicle and click "Save to List".</div>';
                 return;
             }
-           
+          
             list.innerHTML='';
             savedResults.forEach((r,i) => {
                 const v = r.vendorDetails[0] || null;
@@ -1711,7 +1740,7 @@
         function viewSavedResult(idx) {
             const r = savedResults[idx];
             if (!r) return;
-           
+          
             if (r.type === 'vehicle') {
                 document.getElementById('vehicleSearch').value = r.searchValue;
                 searchVehicle();
@@ -1732,7 +1761,7 @@
                 alert('No saved results to clear.');
                 return;
             }
-           
+          
             if (confirm('Are you sure you want to clear ALL saved results? This action cannot be undone.')) {
                 savedResults = [];
                 saveSavedResults();
@@ -1758,7 +1787,7 @@
                 const summaryData = [
                     ['Vendor Name', 'PAN', 'Account No', 'Bank Name', 'Beneficiary', 'Total Vehicles', 'Total Records', 'Total Quantity', 'Total Amount', 'Saved Time']
                 ];
-               
+              
                 savedResults.forEach(r => {
                     const v = r.vendorDetails[0] || {};
                     const t = r.vendorTotals;
@@ -1775,7 +1804,7 @@
                         r.searchTime || new Date().toLocaleString()
                     ]);
                 });
-               
+              
                 const summarySheet = XLSX.utils.aoa_to_sheet(summaryData);
                 XLSX.utils.book_append_sheet(wb, summarySheet, 'Summary');
                 // Detailed sheets for each vendor
@@ -1784,11 +1813,11 @@
                     const sheetName = (v.partyName || `Vendor_${i+1}`)
                         .replace(/[^\w\s]/g, '')
                         .substring(0, 31);
-                   
+                  
                     const detailData = [
                         ['Date', 'Customer', 'Delivery Challan No', 'Weighment Slip No', 'Vehicle', 'Material', 'Net Weight', 'Rate', 'Amount']
                     ];
-                   
+                  
                     r.allVendorTransportRecords.forEach(rec => {
                         detailData.push([
                             formatDateForDisplay(rec['Accounting Date'] || rec['Date']),
@@ -1802,7 +1831,7 @@
                             rec['Transport Amount'] || rec['Amount'] || ''
                         ]);
                     });
-                   
+                  
                     const detailSheet = XLSX.utils.aoa_to_sheet(detailData);
                     XLSX.utils.book_append_sheet(wb, detailSheet, sheetName);
                 });
@@ -1810,9 +1839,9 @@
                 const today = new Date();
                 const dateStr = today.toISOString().split('T')[0];
                 const filename = `Transport_Billing_Report_${dateStr}.xlsx`;
-               
+              
                 XLSX.writeFile(wb, filename);
-               
+              
             } catch (error) {
                 console.error('Error generating Excel:', error);
                 alert('Error generating Excel file: ' + error.message);
@@ -1827,7 +1856,7 @@
         function toggleAddVendorForm() {
             const sec = document.getElementById('addVendorSection');
             const res = document.getElementById('resultsSection');
-           
+          
             if (sec.style.display === 'block') {
                 sec.style.display = 'none';
                 document.getElementById('vendorForm').reset();
@@ -1862,28 +1891,28 @@
             const bank = document.getElementById('bankName').value.trim();
             const ben = document.getElementById('beneficiary').value.trim();
             const pan = document.getElementById('pan').value.trim().toUpperCase();
-           
+          
             const inputs = document.querySelectorAll('.vehicleNumber');
             const veh = Array.from(inputs)
                 .map(i => i.value.trim().toUpperCase())
                 .filter(v => v);
-           
+          
             if (!party || !acc || !bank || !ben || !pan || veh.length === 0) {
                 alert('Please fill all required fields and add at least one vehicle number.');
                 return;
             }
-           
+          
             // Check if PAN is valid format
             if (!/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/.test(pan)) {
                 alert('Please enter a valid PAN number (format: ABCDE1234F)');
                 return;
             }
-           
+          
             // Check if vendor already exists
             const existingVendor = vehicleData.find(v =>
                 v.partyName === party || v.pan === pan
             );
-           
+          
             if (existingVendor) {
                 if (confirm('A vendor with this name or PAN already exists. Add anyway?')) {
                     vehicleData.push({
@@ -1907,7 +1936,7 @@
                     vehicleNumbers: veh
                 });
             }
-           
+          
             alert('Vendor added successfully!');
             document.getElementById('vendorForm').reset();
             toggleAddVendorForm();
@@ -1921,11 +1950,11 @@
         // -------------------------------------------------
         function convertExcelDate(v) {
             if (!v) return '';
-           
+          
             if (typeof v === 'string' && v.includes('-')) {
                 return v;
             }
-           
+          
             if (typeof v === 'number') {
                 // Excel date serial number (days since 1900-01-00)
                 const excelEpoch = new Date(1900, 0, 1);
@@ -1933,21 +1962,21 @@
                 const date = new Date(excelEpoch.getTime() + days * 86400000);
                 return date.toISOString().split('T')[0];
             }
-           
+          
             return v;
         }
         function formatDateForDisplay(v) {
             if (!v) return '';
-           
+          
             if (typeof v === 'string' && v.includes('-')) {
                 const d = new Date(v);
                 return !isNaN(d.getTime()) ? d.toLocaleDateString('en-IN') : v;
             }
-           
+          
             if (v instanceof Date) {
                 return v.toLocaleDateString('en-IN');
             }
-           
+          
             return v;
         }
         // -------------------------------------------------
