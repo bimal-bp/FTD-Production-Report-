@@ -760,14 +760,14 @@
                         <div class="suggestions-container" id="suggestionsContainer"></div>
                     </div>
                     <div class="form-group">
-                        <label for="dcSearch">Search DC Number:</label>
-                        <input type="text" id="dcSearch" placeholder="Enter DC number" autocomplete="off">
+                        <label for="dcSearch">Search Delivery Challan No:</label>
+                        <input type="text" id="dcSearch" placeholder="Enter Delivery Challan No" autocomplete="off">
                         <div class="suggestions-container" id="dcSuggestionsContainer"></div>
                     </div>
                 </div>
             
                 <button type="button" onclick="searchVehicle()">Search Vehicle</button>
-                <button type="button" onclick="searchDC()">Search DC</button>
+                <button type="button" onclick="searchDC()">Search Delivery Challan No</button>
                 <button type="button" class="btn-secondary" onclick="toggleAddVendorForm()">Add New Vendor</button>
                 <button type="button" class="btn-download" onclick="downloadSavedResults()">Download Excel</button>
             </section>
@@ -1313,12 +1313,12 @@
         function searchDC() {
             const term = document.getElementById('dcSearch').value.trim().toUpperCase();
             if (!term) {
-                alert('Please enter a DC number');
+                alert('Please enter a Delivery Challan No');
                 return;
             }
             // Find transport records by DC NO
             const transportRecords = transportData.filter(r => {
-                const dcNo = (r['DC NO'] || '').toString().trim().toUpperCase();
+                const dcNo = (r['DC NO'] || r['Delivery Challan No'] || '').toString().trim().toUpperCase();
                 return dcNo === term;
             });
             if (!transportRecords.length) {
@@ -1513,8 +1513,8 @@
                         <tr>
                             <th>Date</th>
                             <th>Customer</th>
-                            <th>DC NO</th>
-                            <th>Weight Slip NO</th>
+                            <th>Delivery Challan No</th>
+                            <th>Weighment Slip No</th>
                             <th>Vehicle</th>
                             <th>Material</th>
                             <th>Net Wt</th>
@@ -1556,8 +1556,8 @@
                 tr.innerHTML = `
                     <td>${formatDateForDisplay(r['Accounting Date'] || r['Date'])}</td>
                     <td>${r['NAME OF THE CUSTOMER'] || r['Customer Name'] || ''}</td>
-                    <td>${r['DC NO'] || ''}</td>
-                    <td>${r['WEIGHT SLIP NO'] || ''}</td>
+                    <td>${r['DC NO'] || r['Delivery Challan No'] || ''}</td>
+                    <td>${r['WEIGHMENT SLIP NO'] || r['Weighment Slip No'] || r['Weight Slip NO'] || ''}</td>
                     <td>${r['VEHICLE NO'] || r['Vehicle Number'] || ''}</td>
                     <td>${r['Material'] || r['Product'] || r['ITEM'] || ''}</td>
                     <td>${r['NET WT'] || r['Quantity'] || '0.00'}</td>
@@ -1786,15 +1786,15 @@
                         .substring(0, 31);
                    
                     const detailData = [
-                        ['Date', 'Customer', 'DC NO', 'Weight Slip NO', 'Vehicle', 'Material', 'Net Weight', 'Rate', 'Amount']
+                        ['Date', 'Customer', 'Delivery Challan No', 'Weighment Slip No', 'Vehicle', 'Material', 'Net Weight', 'Rate', 'Amount']
                     ];
                    
                     r.allVendorTransportRecords.forEach(rec => {
                         detailData.push([
                             formatDateForDisplay(rec['Accounting Date'] || rec['Date']),
                             rec['NAME OF THE CUSTOMER'] || rec['Customer Name'] || '',
-                            rec['DC NO'] || '',
-                            rec['WEIGHT SLIP NO'] || '',
+                            rec['DC NO'] || rec['Delivery Challan No'] || '',
+                            rec['WEIGHMENT SLIP NO'] || rec['Weighment Slip No'] || rec['Weight Slip NO'] || '',
                             rec['VEHICLE NO'] || rec['Vehicle Number'] || '',
                             rec['Material'] || rec['Product'] || rec['ITEM'] || '',
                             rec['NET WT'] || rec['Quantity'] || '',
