@@ -3,43 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Transport Billing System</title>
+    <title>SGX - Transport Billing System</title>
     <style>
+        /* All existing CSS styles remain the same */
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-  
+     
         body {
             background-color: #f5f7fa;
             color: #333;
             line-height: 1.6;
             padding: 20px;
         }
-  
+     
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 20px;
             display: flex;
             gap: 20px;
         }
-  
+     
         .main-content {
             flex: 1;
+            min-width: 0;
         }
-  
+     
         .dashboard-sidebar {
-            width: 300px;
+            width: 350px;
             background-color: white;
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             padding: 20px;
             height: fit-content;
         }
-  
+     
         header {
             text-align: center;
             margin-bottom: 30px;
@@ -49,40 +51,64 @@
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
-  
+     
         h1 {
             font-size: 2.5rem;
             margin-bottom: 10px;
         }
-  
+     
+        .search-tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 20px;
+            background-color: white;
+            border-radius: 10px 10px 0 0;
+            overflow: hidden;
+        }
+     
+        .search-tab {
+            padding: 15px 30px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #666;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+        }
+     
+        .search-tab.active {
+            color: #1e88e5;
+            border-bottom: 3px solid #1e88e5;
+            background-color: #f5f7fa;
+        }
+     
         .search-section {
             background-color: white;
             padding: 25px;
-            border-radius: 10px;
+            border-radius: 0 10px 10px 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             margin-bottom: 30px;
         }
-  
+     
         .search-form {
             display: flex;
             flex-wrap: wrap;
             gap: 15px;
             align-items: center;
         }
-  
+     
         .form-group {
             flex: 1;
             min-width: 300px;
             position: relative;
         }
-  
+     
         label {
             display: block;
             margin-bottom: 8px;
             font-weight: 600;
             color: #2c3e50;
         }
-  
+     
         select, input {
             width: 100%;
             padding: 12px 15px;
@@ -91,13 +117,13 @@
             font-size: 16px;
             transition: border-color 0.3s;
         }
-  
+     
         select:focus, input:focus {
             outline: none;
             border-color: #1e88e5;
             box-shadow: 0 0 0 3px rgba(30, 136, 229, 0.2);
         }
-  
+     
         button {
             background-color: #1e88e5;
             color: white;
@@ -110,38 +136,47 @@
             transition: background-color 0.3s;
             margin-top: 25px;
         }
-  
+     
         button:hover {
             background-color: #1565c0;
         }
-  
+     
         .btn-secondary {
             background-color: #4caf50;
             margin-left: 10px;
         }
-  
+     
         .btn-secondary:hover {
             background-color: #388e3c;
         }
-  
+     
         .btn-print {
             background-color: #ff9800;
             margin-left: 10px;
         }
-  
+     
         .btn-print:hover {
             background-color: #f57c00;
         }
-  
+     
         .btn-download {
             background-color: #9c27b0;
             margin-left: 10px;
         }
-  
+     
         .btn-download:hover {
             background-color: #7b1fa2;
         }
-  
+     
+        .btn-danger {
+            background-color: #f44336;
+            margin-left: 10px;
+        }
+     
+        .btn-danger:hover {
+            background-color: #d32f2f;
+        }
+     
         .results-section {
             background-color: white;
             border-radius: 10px;
@@ -149,7 +184,7 @@
             overflow: hidden;
             display: none;
         }
-  
+     
         .results-header {
             background-color: #1e88e5;
             color: white;
@@ -160,37 +195,39 @@
             justify-content: space-between;
             align-items: center;
         }
-  
+     
         .results-content {
             padding: 25px;
+            max-height: 600px;
+            overflow-y: auto;
         }
-  
+     
         .result-item {
             margin-bottom: 20px;
             padding-bottom: 20px;
             border-bottom: 1px solid #eee;
         }
-  
+     
         .result-item:last-child {
             border-bottom: none;
             margin-bottom: 0;
             padding-bottom: 0;
         }
-  
+     
         .result-title {
             font-weight: 600;
             color: #1e88e5;
             margin-bottom: 8px;
             font-size: 1.1rem;
         }
-  
+     
         .no-results {
             text-align: center;
             padding: 30px;
             color: #7f8c8d;
             font-style: italic;
         }
-  
+     
         .add-vendor-section {
             background-color: white;
             padding: 25px;
@@ -199,30 +236,30 @@
             margin-top: 30px;
             display: none;
         }
-  
+     
         .form-row {
             display: flex;
             flex-wrap: wrap;
             gap: 20px;
             margin-bottom: 20px;
         }
-  
+     
         .form-field {
             flex: 1;
             min-width: 250px;
         }
-  
+     
         .vehicle-numbers-container {
             margin-top: 15px;
         }
-  
+     
         .vehicle-number-input {
             display: flex;
             gap: 10px;
             margin-bottom: 10px;
             align-items: center;
         }
-  
+     
         .remove-vehicle {
             background-color: #f44336;
             color: white;
@@ -231,7 +268,7 @@
             border-radius: 4px;
             cursor: pointer;
         }
-  
+     
         .add-vehicle {
             background-color: #9e9e9e;
             color: white;
@@ -241,7 +278,7 @@
             cursor: pointer;
             margin-top: 10px;
         }
-  
+     
         .suggestions-container {
             position: absolute;
             top: 100%;
@@ -257,55 +294,70 @@
             display: none;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
-  
+     
         .suggestion-item {
             padding: 10px 15px;
             cursor: pointer;
             border-bottom: 1px solid #eee;
         }
-  
+     
         .suggestion-item:hover {
             background-color: #f5f5f5;
         }
-  
+     
         .suggestion-item:last-child {
             border-bottom: none;
         }
-  
+     
         .highlight {
             background-color: #e3f2fd;
             font-weight: bold;
         }
-  
+     
         .transport-details {
             margin-top: 30px;
         }
-  
+     
         .transport-table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 15px;
         }
-  
+     
         .transport-table th, .transport-table td {
             padding: 12px 15px;
             text-align: left;
             border-bottom: 1px solid #ddd;
         }
-  
+     
         .transport-table th {
             background-color: #f8f9fa;
             font-weight: 600;
             color: #2c3e50;
         }
-  
+     
+        .transport-table tr {
+            transition: background-color 0.2s;
+            cursor: pointer;
+        }
+     
         .transport-table tr:hover {
             background-color: #f5f5f5;
         }
-        .transport-table tr.verified {
-            background-color: #dff0d8 !important;
+     
+        .transport-table tr.checked {
+            background-color: #e8f5e9 !important;
         }
-  
+     
+        .transport-table tr.checked:hover {
+            background-color: #d4edda !important;
+        }
+     
+        .check-cell {
+            width: 40px;
+            text-align: center;
+        }
+     
         .summary-box {
             background-color: #e8f5e9;
             border: 2px solid #4caf50;
@@ -317,32 +369,32 @@
             align-items: center;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-  
+     
         .summary-item {
             text-align: center;
             flex: 1;
         }
-  
+     
         .summary-label {
             font-size: 14px;
             color: #2e7d32;
             margin-bottom: 5px;
             font-weight: 600;
         }
-  
+     
         .summary-value {
             font-size: 24px;
             color: #1b5e20;
             font-weight: 700;
         }
-  
+     
         .summary-divider {
             width: 2px;
             height: 50px;
             background-color: #4caf50;
             margin: 0 20px;
         }
-  
+     
         .summary {
             margin-top: 20px;
             padding: 15px;
@@ -350,13 +402,13 @@
             border-radius: 6px;
             font-weight: 600;
         }
-  
+     
         .loading {
             text-align: center;
             padding: 20px;
             color: #1e88e5;
         }
-  
+     
         .warning {
             background-color: #fff3cd;
             color: #856404;
@@ -365,7 +417,7 @@
             margin-bottom: 20px;
             border: 1px solid #ffeaa7;
         }
-  
+     
         .saved-results-section {
             background-color: white;
             border-radius: 10px;
@@ -373,20 +425,20 @@
             margin-top: 30px;
             padding: 25px;
         }
-  
+     
         .saved-results-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
         }
-  
+     
         .saved-results-title {
             font-size: 1.5rem;
             font-weight: 600;
             color: #2c3e50;
         }
-  
+     
         .saved-results-list {
             max-height: 400px;
             overflow-y: auto;
@@ -394,7 +446,7 @@
             border-radius: 6px;
             padding: 15px;
         }
-  
+     
         .saved-result-item {
             padding: 15px;
             border-bottom: 1px solid #eee;
@@ -402,20 +454,20 @@
             justify-content: space-between;
             align-items: center;
         }
-  
+     
         .saved-result-item:last-child {
             border-bottom: none;
         }
-  
+     
         .saved-result-info {
             flex: 1;
         }
-  
+     
         .saved-result-actions {
             display: flex;
             gap: 10px;
         }
-  
+     
         .btn-remove {
             background-color: #f44336;
             color: white;
@@ -425,7 +477,7 @@
             cursor: pointer;
             font-size: 14px;
         }
-  
+     
         .btn-view {
             background-color: #2196f3;
             color: white;
@@ -435,14 +487,14 @@
             cursor: pointer;
             font-size: 14px;
         }
-  
+     
         .vendor-group {
             margin-bottom: 30px;
             border: 1px solid #e0e0e0;
             border-radius: 8px;
             overflow: hidden;
         }
-  
+     
         .vendor-header {
             background-color: #e3f2fd;
             padding: 15px 20px;
@@ -452,19 +504,19 @@
             align-items: center;
             cursor: pointer;
         }
-  
+     
         .vendor-vehicles {
             padding: 0 20px;
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.3s ease-out;
         }
-  
+     
         .vendor-vehicles.expanded {
             max-height: 500px;
             padding: 15px 20px;
         }
-  
+     
         .vehicle-option {
             padding: 10px 15px;
             margin: 5px 0;
@@ -473,30 +525,30 @@
             cursor: pointer;
             transition: background-color 0.2s;
         }
-  
+     
         .vehicle-option:hover {
             background-color: #f5f5f5;
         }
-  
+     
         .vehicle-option.selected {
             background-color: #e3f2fd;
             border-color: #1e88e5;
         }
-  
+     
         .amount-edit {
             display: flex;
             align-items: center;
             gap: 10px;
             margin-top: 10px;
         }
-  
+     
         .amount-input {
             width: 150px;
             padding: 8px 12px;
             border: 1px solid #ddd;
             border-radius: 4px;
         }
-  
+     
         .btn-update {
             background-color: #4caf50;
             color: white;
@@ -506,14 +558,14 @@
             cursor: pointer;
             font-size: 14px;
         }
-  
+     
         .vehicle-details {
             margin-top: 20px;
             padding: 15px;
             background-color: #f9f9f9;
             border-radius: 6px;
         }
-  
+     
         .dashboard-title {
             font-size: 1.3rem;
             font-weight: 700;
@@ -523,11 +575,11 @@
             padding-bottom: 10px;
             border-bottom: 2px solid #e0e0e0;
         }
-  
+     
         .dashboard-section {
             margin-bottom: 25px;
         }
-  
+     
         .dashboard-section-title {
             font-size: 1.1rem;
             font-weight: 600;
@@ -536,7 +588,7 @@
             padding-bottom: 8px;
             border-bottom: 1px solid #e0e0e0;
         }
-  
+     
         .dashboard-summary-box {
             background-color: #f8f9fa;
             border-radius: 8px;
@@ -544,37 +596,37 @@
             margin-bottom: 15px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
-  
+     
         .dashboard-summary-item {
             display: flex;
             justify-content: space-between;
             margin-bottom: 10px;
         }
-  
+     
         .dashboard-summary-item:last-child {
             margin-bottom: 0;
         }
-  
+     
         .dashboard-label {
             font-weight: 500;
             color: #555;
         }
-  
+     
         .dashboard-value {
             font-weight: 600;
             color: #1e88e5;
         }
-  
+     
         .dashboard-highlight {
             font-weight: 700;
             color: #1565c0;
             font-size: 1.1rem;
         }
-  
+     
         .product-breakdown {
             margin-top: 15px;
         }
-  
+     
         .product-item {
             display: flex;
             justify-content: space-between;
@@ -583,21 +635,21 @@
             background-color: #f5f5f5;
             border-radius: 4px;
         }
-  
+     
         .product-name {
             font-weight: 500;
         }
-  
+     
         .product-qty {
             font-weight: 600;
             color: #2e7d32;
         }
-  
+     
         .product-amount {
             font-weight: 600;
             color: #d32f2f;
         }
-  
+     
         .dashboard-refresh {
             background-color: #1e88e5;
             color: white;
@@ -611,18 +663,18 @@
             margin-top: 10px;
             transition: background-color 0.3s;
         }
-  
+     
         .dashboard-refresh:hover {
             background-color: #1565c0;
         }
-  
+     
         .dashboard-loading {
             text-align: center;
             padding: 10px;
             color: #1e88e5;
             font-style: italic;
         }
-  
+     
         .vendor-total-summary {
             background-color: #e8f5e9;
             border: 2px solid #4caf50;
@@ -631,7 +683,7 @@
             margin: 20px 0;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-  
+     
         .vendor-total-title {
             font-size: 1.2rem;
             font-weight: 700;
@@ -639,107 +691,174 @@
             margin-bottom: 15px;
             text-align: center;
         }
-  
+     
         .vendor-total-details {
             display: flex;
             justify-content: space-around;
             flex-wrap: wrap;
             gap: 15px;
         }
-  
+     
         .vendor-total-item {
             text-align: center;
             flex: 1;
             min-width: 150px;
         }
-  
+     
         .vendor-total-label {
             font-size: 14px;
             color: #2e7d32;
             margin-bottom: 5px;
             font-weight: 600;
         }
-  
+     
         .vendor-total-value {
             font-size: 20px;
             color: #1b5e20;
             font-weight: 700;
         }
-  
-        @media (max-width: 768px) {
+     
+        .record-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+     
+        .record-checkbox {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+     
+        .assign-vendor-section {
+            background-color: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
+            display: none;
+        }
+     
+        .vendor-search-container {
+            position: relative;
+        }
+     
+        .quick-add-vendor {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 6px;
+        }
+     
+        .quick-add-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+     
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 5px 0;
+            cursor: pointer;
+        }
+     
+        .checkbox-label input[type="checkbox"] {
+            width: auto;
+        }
+     
+        .selected-records-count {
+            background-color: #4caf50;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+     
+        @media (max-width: 1024px) {
             .container {
                 flex-direction: column;
             }
-      
+         
             .dashboard-sidebar {
                 width: 100%;
                 order: -1;
                 margin-bottom: 20px;
             }
-      
+         
             .form-group, .form-field {
                 min-width: 100%;
             }
-      
+         
             h1 {
                 font-size: 2rem;
             }
-      
+         
             .form-row {
                 flex-direction: column;
                 gap: 15px;
             }
-      
+         
             .transport-table {
                 display: block;
                 overflow-x: auto;
             }
-      
+         
             .saved-result-item {
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 10px;
             }
-      
+         
             .saved-result-actions {
                 width: 100%;
                 justify-content: flex-end;
             }
-      
+         
             .amount-edit {
                 flex-direction: column;
                 align-items: flex-start;
             }
-      
+         
             .amount-input {
                 width: 100%;
             }
-      
+         
             .summary-box {
                 flex-direction: column;
                 gap: 15px;
             }
-      
+         
             .summary-divider {
                 width: 100%;
                 height: 2px;
                 margin: 10px 0;
             }
-      
+         
             .vendor-total-details {
                 flex-direction: column;
                 gap: 10px;
             }
         }
-  
+     
         @media print {
-            .search-section, .add-vendor-section, .btn-print, .saved-results-section, .dashboard-sidebar {
+            .search-section, .add-vendor-section, .btn-print, .saved-results-section, .dashboard-sidebar, .record-actions, .assign-vendor-section {
                 display: none;
             }
-      
+         
             .results-section {
                 display: block !important;
                 box-shadow: none;
+            }
+         
+            .transport-table tr.checked {
+                background-color: #e8f5e9 !important;
+                -webkit-print-color-adjust: exact;
             }
         }
     </style>
@@ -750,31 +869,57 @@
             <header>
                 <h1>SGX - Transport Billing System</h1>
             </header>
-      
-            <section class="search-section">
+         
+            <div class="search-tabs">
+                <div class="search-tab active" onclick="switchSearchTab('vehicle')">Search by Vehicle</div>
+                <div class="search-tab" onclick="switchSearchTab('dc')">Search by DC Number</div>
+                <div class="search-tab" onclick="switchSearchTab('vendor')">Search by Vendor</div>
+            </div>
+         
+            <section class="search-section" id="vehicleSearchSection">
                 <div class="search-form">
                     <div class="form-group">
                         <label for="vehicleSearch">Search Vehicle Number:</label>
                         <input type="text" id="vehicleSearch" placeholder="Start typing vehicle number (e.g., AP39UJ)" autocomplete="off">
-                        <div class="suggestions-container" id="suggestionsContainer"></div>
-                    </div>
-                    <div class="form-group">
-                        <label for="dcSearch">Search Delivery Challan No:</label>
-                        <input type="text" id="dcSearch" placeholder="Enter Delivery Challan No" autocomplete="off">
-                        <div class="suggestions-container" id="dcSuggestionsContainer"></div>
+                        <div class="suggestions-container" id="vehicleSuggestionsContainer"></div>
                     </div>
                 </div>
-          
+             
                 <button type="button" onclick="searchVehicle()">Search Vehicle</button>
-                <button type="button" onclick="searchDC()">Search Delivery Challan No</button>
                 <button type="button" class="btn-secondary" onclick="toggleAddVendorForm()">Add New Vendor</button>
                 <button type="button" class="btn-download" onclick="downloadSavedResults()">Download Excel</button>
             </section>
-      
+         
+            <section class="search-section" id="dcSearchSection" style="display: none;">
+                <div class="search-form">
+                    <div class="form-group">
+                        <label for="dcSearch">Search DC Number:</label>
+                        <input type="text" id="dcSearch" placeholder="Enter DC Number" autocomplete="off">
+                        <div class="suggestions-container" id="dcSuggestionsContainer"></div>
+                    </div>
+                </div>
+             
+                <button type="button" onclick="searchDC()">Search DC</button>
+                <button type="button" class="btn-secondary" onclick="assignDCToVendor()">Assign DC to Vendor</button>
+            </section>
+         
+            <section class="search-section" id="vendorSearchSection" style="display: none;">
+                <div class="search-form">
+                    <div class="form-group">
+                        <label for="vendorSearch">Search Vendor Name:</label>
+                        <input type="text" id="vendorSearch" placeholder="Start typing vendor name" autocomplete="off">
+                        <div class="suggestions-container" id="vendorSuggestionsContainer"></div>
+                    </div>
+                </div>
+             
+                <button type="button" onclick="searchVendor()">Search Vendor</button>
+            </section>
+         
             <section class="results-section" id="resultsSection">
                 <div class="results-header">
-                    <span>Vehicle Details</span>
+                    <span id="resultsHeader">Vehicle Details</span>
                     <div>
+                        <span id="selectedRecordsCount" class="selected-records-count" style="display: none;">0 selected</span>
                         <button type="button" class="btn-secondary" onclick="saveCurrentResult()">Save to List</button>
                         <button type="button" class="btn-print" onclick="printResults()">Print</button>
                     </div>
@@ -782,41 +927,51 @@
                 <div class="results-content" id="resultsContent">
                     <!-- Results will be displayed here -->
                 </div>
+                <div class="record-actions" id="recordActions" style="display: none;">
+                    <button type="button" onclick="selectAllRecords()">Select All</button>
+                    <button type="button" onclick="deselectAllRecords()">Deselect All</button>
+                    <button type="button" class="btn-secondary" onclick="assignSelectedToVendor()">Assign Selected to Vendor</button>
+                    <button type="button" class="btn-danger" onclick="clearSelectedRecords()">Clear Selection</button>
+                </div>
             </section>
-      
+         
             <section class="add-vendor-section" id="addVendorSection">
-                <div class="results-header">Add New Vendor</div>
+                <div class="results-header">Add/Edit Vendor</div>
                 <div class="results-content">
                     <form id="vendorForm">
                         <div class="form-row">
                             <div class="form-field">
-                                <label for="partyName">Party Name:</label>
+                                <label for="partyName">Party Name:*</label>
                                 <input type="text" id="partyName" required>
                             </div>
                             <div class="form-field">
-                                <label for="accountNo">Account Number:</label>
+                                <label for="accountNo">Account Number:*</label>
                                 <input type="text" id="accountNo" required>
                             </div>
                         </div>
-                  
+                     
                         <div class="form-row">
                             <div class="form-field">
-                                <label for="bankName">Bank Name & Branch:</label>
+                                <label for="bankName">Bank Name & Branch:*</label>
                                 <input type="text" id="bankName" required>
                             </div>
                             <div class="form-field">
-                                <label for="beneficiary">Beneficiary:</label>
+                                <label for="beneficiary">Beneficiary:*</label>
                                 <input type="text" id="beneficiary" required>
                             </div>
                         </div>
-                  
+                     
                         <div class="form-row">
                             <div class="form-field">
-                                <label for="pan">PAN Number:</label>
-                                <input type="text" id="pan" required>
+                                <label for="pan">PAN Number:*</label>
+                                <input type="text" id="pan" required pattern="[A-Z]{5}[0-9]{4}[A-Z]{1}" title="Enter valid PAN (Format: ABCDE1234F)">
+                            </div>
+                            <div class="form-field">
+                                <label for="ifsc">IFSC Code:</label>
+                                <input type="text" id="ifsc">
                             </div>
                         </div>
-                  
+                     
                         <div class="form-row">
                             <div class="form-field">
                                 <label>Vehicle Numbers:</label>
@@ -829,7 +984,7 @@
                                 <button type="button" class="add-vehicle" onclick="addVehicleField()">Add Another Vehicle</button>
                             </div>
                         </div>
-                  
+                     
                         <div class="form-row">
                             <button type="button" onclick="addNewVendor()">Save Vendor</button>
                             <button type="button" class="btn-secondary" onclick="toggleAddVendorForm()">Cancel</button>
@@ -837,13 +992,60 @@
                     </form>
                 </div>
             </section>
-      
+         
+            <section class="assign-vendor-section" id="assignVendorSection">
+                <div class="results-header">Assign Records to Vendor</div>
+                <div class="results-content">
+                    <div class="form-row">
+                        <div class="form-field">
+                            <label for="assignVendorSearch">Select Vendor:</label>
+                            <div class="vendor-search-container">
+                                <input type="text" id="assignVendorSearch" placeholder="Search vendor by name or PAN" autocomplete="off">
+                                <div class="suggestions-container" id="assignVendorSuggestionsContainer"></div>
+                            </div>
+                        </div>
+                    </div>
+                 
+                    <div class="quick-add-vendor">
+                        <div class="quick-add-title">Or Quick Add New Vendor:</div>
+                        <div class="form-row">
+                            <div class="form-field">
+                                <input type="text" id="quickPartyName" placeholder="Party Name">
+                            </div>
+                            <div class="form-field">
+                                <input type="text" id="quickPan" placeholder="PAN Number">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-field">
+                                <input type="text" id="quickAccountNo" placeholder="Account Number">
+                            </div>
+                            <div class="form-field">
+                                <input type="text" id="quickBankName" placeholder="Bank Name">
+                            </div>
+                        </div>
+                    </div>
+                 
+                    <div class="form-row">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="addVehicleToVendor" checked>
+                            Add vehicle number(s) to vendor's vehicle list
+                        </label>
+                    </div>
+                 
+                    <div class="form-row">
+                        <button type="button" onclick="confirmAssignToVendor()">Assign Selected Records</button>
+                        <button type="button" class="btn-secondary" onclick="cancelAssignToVendor()">Cancel</button>
+                    </div>
+                </div>
+            </section>
+         
             <section class="saved-results-section" id="savedResultsSection">
                 <div class="saved-results-header">
                     <div class="saved-results-title">Saved Results</div>
                     <div>
                         <button type="button" class="btn-download" onclick="downloadSavedResults()">Download Excel</button>
-                        <button type="button" class="btn-secondary" onclick="clearSavedResults()">Clear All</button>
+                        <button type="button" class="btn-danger" onclick="clearSavedResults()">Clear All</button>
                     </div>
                 </div>
                 <div class="saved-results-list" id="savedResultsList">
@@ -851,10 +1053,10 @@
                 </div>
             </section>
         </div>
-  
+     
         <div class="dashboard-sidebar">
             <div class="dashboard-title">Monthly Dashboard</div>
-      
+         
             <div class="dashboard-section">
                 <div class="dashboard-section-title">Overall Summary</div>
                 <div class="dashboard-summary-box">
@@ -862,7 +1064,7 @@
                         <span class="dashboard-label">Total Vehicles:</span>
                         <span class="dashboard-value" id="totalVehicles">0</span>
                     </div>
-          
+             
                     <div class="dashboard-summary-item">
                         <span class="dashboard-label">Total Quantity:</span>
                         <span class="dashboard-value" id="totalQuantity">0.00</span>
@@ -873,7 +1075,7 @@
                     </div>
                 </div>
             </div>
-      
+         
             <div class="dashboard-section">
                 <div class="dashboard-section-title">Product Breakdown</div>
                 <div class="dashboard-summary-box">
@@ -882,16 +1084,27 @@
                     </div>
                 </div>
             </div>
-      
+         
+            <div class="dashboard-section">
+                <div class="dashboard-section-title">Top Vendors</div>
+                <div class="dashboard-summary-box">
+                    <div id="topVendors">
+                        <!-- Top vendors will be displayed here -->
+                    </div>
+                </div>
+            </div>
+         
             <button type="button" class="dashboard-refresh" onclick="updateDashboard()">Refresh Dashboard</button>
         </div>
     </div>
+
     <!-- Load SheetJS with defer -->
     <script defer src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
     <script>
         'use strict';
+
         // -------------------------------------------------
-        // DATA
+        //  DATA
         // -------------------------------------------------
         let vehicleData = [
             { partyName: "YARA GOVIND RAO - BT -2", accountNo: "29611100003742", bankName: "DCB Bank, Anakapalli", beneficiary: "YARA GOVIND RAO", pan: "AYBPY0969R", vehicleNumbers: ["AP39UY3435"] },
@@ -916,7 +1129,6 @@
             { partyName: "SIRI BUILDTECH", accountNo: "10230601834", bankName: "IDFC FIRST BANK", beneficiary: "Kondala Rao", pan: "CCAPK6960M", vehicleNumbers: ["AP39WH3659"] },
             { partyName: "DURGALAMMATALLI LORRY SERVICE", accountNo: "32949321587", bankName: "SBI ANAKAPALLE", beneficiary: "DASARI GOVINDA", pan: "CMJPD4773Q", vehicleNumbers: ["AP39WE9299", "AP39UM4767"] },
             { partyName: "SREE MODHAMAMBHA TRANSPORT", accountNo: "386602010026387", bankName: "UNION BANK", beneficiary: "B HEMANTH KUMAR", pan: "CEGPB5646M", vehicleNumbers: ["AP39WH2769", "AP39WH1869"] },
-            { partyName: "POLNATI ANNAPURNA", accountNo: "6086101003959", bankName: "CANARA BANK", beneficiary: "Polnati Annapuran", pan: "DWOPP2749J", vehicleNumbers: ["AP39WC9149", "AP39UP9239"] },
             { partyName: "Sri Kanaka Durga Lorry transprot", accountNo: "3512984417", bankName: "Kotak Mahindra Anakapalli", beneficiary: "Karanam Uma Maheswara Rao", pan: "IBOPK6921H", vehicleNumbers: ["AP39UJ1166", "AP39W2399"] },
             { partyName: "Sri Polnati Venkata Srinivas Rao", accountNo: "11040675260", bankName: "SBI, Anakapalle", beneficiary: "Polnati Venkata Srinivasrao", pan: "EMOPP4189M", vehicleNumbers: ["AP39UH2489"] },
             { partyName: "Amma Durgamma Lorry Service", accountNo: "386602010021851", bankName: "UNION BANK, THUMMAPALA", beneficiary: "Pilla Satyanarayana", pan: "DIHPP4262D", vehicleNumbers: ["AP39WD3257"] },
@@ -928,81 +1140,91 @@
             { partyName: "P.V.Srinivasa Rao- (Sri Balaji Transport )", accountNo: "30794877494", bankName: "SBI, Anakapalle", beneficiary: "Polnati Venkata Srinivasrao", pan: "ENNPP6015C", vehicleNumbers: ["AP39WC5225"] },
             { partyName: "Srinivasa Minerals Products", accountNo: "50200105596341", bankName: "HDFC, Anakapalli", beneficiary: "", pan: "", vehicleNumbers: ["AP39WH3659"] }
         ];
+
         let transportData = [];
         let savedResults = [];
+        let selectedRecords = new Set();
+        let currentSearchType = 'vehicle';
+        let currentDCSearchResults = [];
+
         // -------------------------------------------------
-        // INITIALISATION
+        //  INITIALISATION
         // -------------------------------------------------
         function initApp() {
             setupSearchFunctionality();
-            setupDCSearchFunctionality();
             loadTransportData();
             loadSavedResults();
+            loadVehicleData();
         }
+
         // -------------------------------------------------
-        // LOAD TRANSPORT EXCEL - CORRECTED URL
+        //  LOAD TRANSPORT EXCEL - CORRECTED VERSION
         // -------------------------------------------------
         async function loadTransportData() {
             const resultsContent = document.getElementById('resultsContent');
             resultsContent.innerHTML = '<div class="loading">Loading transport data...</div>';
+
             try {
-                // Dynamic file name based on previous month
-                const now = new Date();
-                const previousMonth = new Date(now.getTime());
-                previousMonth.setMonth(previousMonth.getMonth() - 1);
-                const monthAbbr = previousMonth.toLocaleString('en-US', { month: 'short' });
-                const yearShort = previousMonth.getFullYear() % 100;
-                const fileName = `Agg%20Sales%20Report-${monthAbbr}-${yearShort}.xlsx`;
-                // CORRECTED URL - Using raw.githubusercontent.com format with %20 for spaces
-                const githubUrl = `https://raw.githubusercontent.com/bimal-bp/E-TRANSPORT-BILLING/main/${fileName}`;
-             
-                console.log('Fetching data from:', githubUrl);
-             
-                const resp = await fetch(githubUrl);
-             
-                if (!resp.ok) {
-                    // Try alternative URL pattern if first one fails
-                    const altUrl = `https://github.com/bimal-bp/E-TRANSPORT-BILLING/raw/main/${fileName}`;
-                    console.log('Trying alternative URL:', altUrl);
-                 
-                    const altResp = await fetch(altUrl);
-                 
-                    if (!altResp.ok) {
-                        throw new Error(`Failed to fetch Excel file. Status: ${resp.status} - ${resp.statusText}`);
+                // Try multiple possible file names and locations
+                const possibleUrls = [
+                    'https://raw.githubusercontent.com/bimal-bp/E-TRANSPORT-BILLING/main/Agg%20Sales%20Report-Dec-25.xlsx',
+                    'https://github.com/bimal-bp/E-TRANSPORT-BILLING/raw/main/Agg%20Sales%20Report-Dec-25.xlsx',
+                    'https://raw.githubusercontent.com/bimal-bp/E-TRANSPORT-BILLING/main/transport_data.xlsx',
+                    'https://github.com/bimal-bp/E-TRANSPORT-BILLING/raw/main/transport_data.xlsx'
+                ];
+
+                let workbook = null;
+                let success = false;
+
+                for (const url of possibleUrls) {
+                    try {
+                        console.log('Trying to fetch from:', url);
+                        const resp = await fetch(url);
+                        
+                        if (resp.ok) {
+                            const arrayBuffer = await resp.arrayBuffer();
+                            workbook = XLSX.read(arrayBuffer, {type: 'array'});
+                            console.log('Successfully loaded from:', url);
+                            success = true;
+                            break;
+                        } else {
+                            console.log('Failed to fetch from:', url, 'Status:', resp.status);
+                        }
+                    } catch (error) {
+                        console.log('Error fetching from:', url, error);
                     }
-                 
-                    const altArrayBuffer = await altResp.arrayBuffer();
-                    const workbook = XLSX.read(altArrayBuffer, {type: 'array'});
-                    const sheet = workbook.Sheets[workbook.SheetNames[0]];
-                    const json = XLSX.utils.sheet_to_json(sheet, {header: 1, raw: false, dateNF: 'yyyy-mm-dd'});
-                    processTransportData(json);
-                } else {
-                    const arrayBuffer = await resp.arrayBuffer();
-                    const workbook = XLSX.read(arrayBuffer, {type: 'array'});
-                 
-                    // Log sheet names for debugging
-                    console.log('Available sheets:', workbook.SheetNames);
-                 
-                    const sheet = workbook.Sheets[workbook.SheetNames[0]];
-                    const json = XLSX.utils.sheet_to_json(sheet, {header: 1, raw: false, dateNF: 'yyyy-mm-dd'});
-                 
-                    // Log first few rows for debugging
-                    console.log('First 3 rows of data:', json.slice(0, 3));
-                 
-                    processTransportData(json);
                 }
-             
-                resultsContent.innerHTML = '<div class="loading" style="color: #4caf50;">✓ Transport data loaded successfully! Search for a vehicle above.</div>';
-             
-                // Clear message after 3 seconds
+
+                if (!success) {
+                    // Try local file as fallback
+                    try {
+                        const localResponse = await fetch('Agg Sales Report-Dec-25.xlsx');
+                        if (localResponse.ok) {
+                            const arrayBuffer = await localResponse.arrayBuffer();
+                            workbook = XLSX.read(arrayBuffer, {type: 'array'});
+                            success = true;
+                        }
+                    } catch (localError) {
+                        console.log('Local file also failed:', localError);
+                    }
+                }
+
+                if (!success) {
+                    throw new Error('Could not load Excel file from any source');
+                }
+
+                processTransportExcel(workbook);
+                
+                resultsContent.innerHTML = '<div class="loading" style="color: #4caf50;">✓ Transport data loaded successfully! ' + transportData.length + ' records found.</div>';
+                
                 setTimeout(() => {
                     if (resultsContent.innerHTML.includes('successfully')) {
                         resultsContent.innerHTML = '';
                     }
                 }, 3000);
-             
+                
                 updateDashboard();
-             
+                
             } catch (e) {
                 console.error('Error loading transport data:', e);
                 resultsContent.innerHTML = `
@@ -1010,222 +1232,407 @@
                         <strong>Error loading transport data:</strong> ${e.message}<br><br>
                         <strong>Troubleshooting steps:</strong>
                         <ol>
-                            <li>Make sure the Excel file exists at: <a href="https://github.com/bimal-bp/E-TRANSPORT-BILLING/blob/main/Agg%20Sales%20Report-Dec-25.xlsx" target="_blank">GitHub Link</a></li>
+                            <li>Make sure the Excel file exists in the GitHub repository</li>
                             <li>Ensure the repository is public</li>
-                            <li>Check the file name is exactly: "Agg Sales Report-Dec-25.xlsx"</li>
-                            <li>Try refreshing the page</li>
+                            <li>Check if the file name is exactly: "Agg Sales Report-Dec-25.xlsx"</li>
+                            <li>Try uploading a sample Excel file with the format shown below</li>
                         </ol>
+                        <div style="margin-top: 15px; padding: 10px; background: #f8f9fa; border-radius: 4px;">
+                            <strong>Expected Excel format:</strong><br>
+                            Date | Customer | DC NO | Weight Slip NO | Vehicle | Material | Net Wt | Rate | Amount
+                        </div>
                         <button onclick="retryLoadTransportData()" style="margin-top: 10px; padding: 8px 16px; background: #1e88e5; color: white; border: none; border-radius: 4px; cursor: pointer;">Retry Loading Data</button>
+                        <button onclick="uploadLocalFile()" style="margin-top: 10px; margin-left: 10px; padding: 8px 16px; background: #4caf50; color: white; border: none; border-radius: 4px; cursor: pointer;">Upload Local File</button>
                     </div>`;
             }
         }
-        function retryLoadTransportData() {
-            loadTransportData();
-        }
-        function processTransportData(json) {
+
+        function processTransportExcel(workbook) {
+            console.log('Available sheets:', workbook.SheetNames);
+            
+            // Try to find the sheet with data
+            let sheet = null;
+            for (const sheetName of workbook.SheetNames) {
+                const potentialSheet = workbook.Sheets[sheetName];
+                const json = XLSX.utils.sheet_to_json(potentialSheet, {header: 1, raw: false, dateNF: 'yyyy-mm-dd'});
+                if (json && json.length > 1) {
+                    sheet = potentialSheet;
+                    console.log('Using sheet:', sheetName);
+                    break;
+                }
+            }
+            
+            if (!sheet) {
+                sheet = workbook.Sheets[workbook.SheetNames[0]];
+            }
+            
+            const json = XLSX.utils.sheet_to_json(sheet, {header: 1, raw: false, dateNF: 'yyyy-mm-dd'});
+            
             if (!json || json.length < 2) {
                 console.warn('No data or insufficient rows in Excel file');
                 transportData = [];
                 return;
             }
-         
-            const headers = json[0].map(h => (h ?? '').toString().trim());
-            console.log('Excel headers:', headers);
-         
-            transportData = json.slice(1)
-                .filter(row => row && row.length > 0)
-                .map(row => {
+            
+            // Find headers by scanning the first few rows
+            let headers = [];
+            for (let i = 0; i < Math.min(5, json.length); i++) {
+                if (json[i] && json[i].some(cell => cell && typeof cell === 'string')) {
+                    headers = json[i].map(h => (h ?? '').toString().trim());
+                    console.log('Found headers at row', i + 1, ':', headers);
+                    break;
+                }
+            }
+            
+            if (headers.length === 0) {
+                headers = Array.from({length: json[0].length}, (_, i) => `Column${i+1}`);
+            }
+            
+            // Clean up header names to match expected format
+            const cleanedHeaders = headers.map(h => {
+                const hLower = h.toLowerCase();
+                if (hLower.includes('date')) return 'Date';
+                if (hLower.includes('customer') || hLower.includes('name')) return 'Customer';
+                if (hLower.includes('dc') && hLower.includes('no')) return 'DC NO';
+                if (hLower.includes('weight') || hLower.includes('slip')) return 'Weight Slip NO';
+                if (hLower.includes('delivery') && hLower.includes('challan')) return 'Delivery Challan No';
+                if (hLower.includes('weighment') && hLower.includes('slip')) return 'Weighment Slip No';
+                if (hLower.includes('vehicle') || hLower.includes('truck')) return 'Vehicle';
+                if (hLower.includes('material') || hLower.includes('product') || hLower.includes('item')) return 'Material';
+                if (hLower.includes('net') || hLower.includes('weight') || hLower.includes('quantity')) return 'Net Wt';
+                if (hLower.includes('rate')) return 'Rate';
+                if (hLower.includes('amount') || hLower.includes('transport')) return 'Amount';
+                return h;
+            });
+            
+            console.log('Cleaned headers:', cleanedHeaders);
+            
+            // Process data rows
+            const startRow = headers === json[0] ? 1 : 0;
+            transportData = json.slice(startRow)
+                .filter(row => row && row.length > 0 && row.some(cell => cell !== '' && cell !== null))
+                .map((row, index) => {
                     const obj = {};
-                    headers.forEach((h, i) => {
-                        if (h && row[i] !== undefined) {
-                            obj[h] = h === 'Accounting Date' ? convertExcelDate(row[i]) : row[i];
+                    cleanedHeaders.forEach((h, i) => {
+                        if (h && row[i] !== undefined && row[i] !== '' && row[i] !== null) {
+                            // Handle date conversion
+                            if (h === 'Date') {
+                                obj[h] = convertExcelDate(row[i]);
+                            } else {
+                                obj[h] = row[i];
+                            }
+                        } else {
+                            obj[h] = '';
                         }
                     });
+                    
+                    // Ensure we have both DC fields
+                    if (!obj['DC NO'] && obj['Delivery Challan No']) {
+                        obj['DC NO'] = obj['Delivery Challan No'];
+                    }
+                    if (!obj['Delivery Challan No'] && obj['DC NO']) {
+                        obj['Delivery Challan No'] = obj['DC NO'];
+                    }
+                    
+                    // Ensure we have both Weight Slip fields
+                    if (!obj['Weight Slip NO'] && obj['Weighment Slip No']) {
+                        obj['Weight Slip NO'] = obj['Weighment Slip No'];
+                    }
+                    if (!obj['Weighment Slip No'] && obj['Weight Slip NO']) {
+                        obj['Weighment Slip No'] = obj['Weight Slip NO'];
+                    }
+                    
+                    obj._id = `record_${Date.now()}_${index}`;
                     return obj;
                 })
-                .filter(obj => Object.keys(obj).length > 0);
-         
+                .filter(obj => {
+                    // Filter out empty rows
+                    return Object.values(obj).some(val => val !== '' && val !== null && val !== undefined);
+                });
+            
             console.log(`Processed ${transportData.length} transport records`);
-         
-            // Log sample data for debugging
+            
             if (transportData.length > 0) {
                 console.log('Sample transport record:', transportData[0]);
+                
+                // Display sample of what was loaded
+                const sampleDiv = document.createElement('div');
+                sampleDiv.innerHTML = `
+                    <div style="margin-top: 10px; padding: 10px; background: #e8f5e9; border-radius: 4px;">
+                        <strong>Sample record loaded:</strong><br>
+                        Date: ${transportData[0].Date || 'N/A'}<br>
+                        Customer: ${transportData[0].Customer || 'N/A'}<br>
+                        DC NO: ${transportData[0]['DC NO'] || 'N/A'}<br>
+                        Weighment Slip: ${transportData[0]['Weighment Slip No'] || 'N/A'}<br>
+                        Vehicle: ${transportData[0].Vehicle || 'N/A'}
+                    </div>
+                `;
+                document.getElementById('resultsContent').appendChild(sampleDiv);
             }
         }
+
+        function uploadLocalFile() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.xlsx,.xls';
+            
+            input.onchange = async (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
+                
+                try {
+                    const arrayBuffer = await file.arrayBuffer();
+                    const workbook = XLSX.read(arrayBuffer, {type: 'array'});
+                    processTransportExcel(workbook);
+                    
+                    // Save to localStorage for future use
+                    localStorage.setItem('localTransportData', JSON.stringify(transportData));
+                    
+                    document.getElementById('resultsContent').innerHTML = 
+                        '<div class="loading" style="color: #4caf50;">✓ Local file loaded successfully! ' + transportData.length + ' records found.</div>';
+                    
+                    setTimeout(() => {
+                        updateDashboard();
+                        document.getElementById('resultsContent').innerHTML = '';
+                    }, 2000);
+                    
+                } catch (error) {
+                    alert('Error loading local file: ' + error.message);
+                }
+            };
+            
+            input.click();
+        }
+
+        function retryLoadTransportData() {
+            loadTransportData();
+        }
+
         // -------------------------------------------------
-        // DASHBOARD
+        //  LOAD/SAVE VEHICLE DATA
+        // -------------------------------------------------
+        function loadVehicleData() {
+            try {
+                const saved = localStorage.getItem('vehicleData');
+                if (saved) {
+                    const parsed = JSON.parse(saved);
+                    if (Array.isArray(parsed) && parsed.length > 0) {
+                        vehicleData = parsed;
+                    }
+                }
+            } catch (e) {
+                console.error('Error loading vehicle data:', e);
+            }
+        }
+
+        function saveVehicleData() {
+            localStorage.setItem('vehicleData', JSON.stringify(vehicleData));
+        }
+
+        // -------------------------------------------------
+        //  DASHBOARD
         // -------------------------------------------------
         function updateDashboard() {
             if (transportData.length === 0) {
                 document.getElementById('totalVehicles').textContent = '0';
                 document.getElementById('totalQuantity').textContent = '0.00';
                 document.getElementById('totalAmount').textContent = '₹0.00';
-             
+                
                 document.getElementById('productBreakdown').innerHTML = '<div class="no-results">No data available</div>';
+                document.getElementById('topVendors').innerHTML = '<div class="no-results">No vendor data</div>';
                 return;
             }
+
             const totalVehicles = new Set();
             let totalQuantity = 0, totalAmount = 0;
             const productBreakdown = {};
+            const vendorTotals = {};
+
             transportData.forEach(record => {
-                const v = (record['VEHICLE NO'] || record['Vehicle Number'] || '').toString().trim().toUpperCase();
+                const v = (record['Vehicle'] || record['VEHICLE NO'] || record['Vehicle Number'] || '').toString().trim().toUpperCase();
                 if (v) totalVehicles.add(v);
-                const qty = parseFloat(record['NET WT'] || record['Quantity'] || 0) || 0;
-                const amt = parseFloat(record['Transport Amount'] || record['Amount'] || 0) || 0;
+
+                const qty = parseFloat(record['Net Wt'] || record['NET WT'] || record['Quantity'] || 0) || 0;
+                const amt = parseFloat(record['Amount'] || record['Transport Amount'] || 0) || 0;
                 totalQuantity += qty;
                 totalAmount += amt;
-                // Try different possible column names for product/material
+
                 const prod = record['Material'] || record['Product'] || record['ITEM'] || 'Unknown';
                 if (!productBreakdown[prod]) productBreakdown[prod] = {qty:0, amt:0};
                 productBreakdown[prod].qty += qty;
                 productBreakdown[prod].amt += amt;
+
+                const vehicleNo = (record['Vehicle'] || record['VEHICLE NO'] || record['Vehicle Number'] || '').toString().trim().toUpperCase();
+                const vendor = findVendorByVehicle(vehicleNo);
+                if (vendor) {
+                    const key = vendor.partyName;
+                    if (!vendorTotals[key]) vendorTotals[key] = {vehicles: new Set(), qty:0, amt:0};
+                    vendorTotals[key].vehicles.add(vehicleNo);
+                    vendorTotals[key].qty += qty;
+                    vendorTotals[key].amt += amt;
+                }
             });
+
             document.getElementById('totalVehicles').textContent = totalVehicles.size;
             document.getElementById('totalQuantity').textContent = totalQuantity.toFixed(2);
             document.getElementById('totalAmount').textContent = `₹${totalAmount.toFixed(2)}`;
-            const pb = document.getElementById('productBreakdown');
+
+            const pb = document.getElementById('productBreakdown'); 
             pb.innerHTML = '';
-         
+            
             if (Object.keys(productBreakdown).length === 0) {
                 pb.innerHTML = '<div class="no-results">No product data found</div>';
-                return;
+            } else {
+                Object.entries(productBreakdown)
+                    .sort((a,b) => b[1].qty - a[1].qty)
+                    .forEach(([p,d]) => {
+                        const el = document.createElement('div'); 
+                        el.className='product-item';
+                        el.innerHTML = `
+                            <div class="product-name">${p}</div>
+                            <div class="product-qty">${d.qty.toFixed(2)}</div>
+                            <div class="product-amount">₹${d.amt.toFixed(2)}</div>`;
+                        pb.appendChild(el);
+                    });
             }
-         
-            Object.entries(productBreakdown)
-                .sort((a,b) => b[1].qty - a[1].qty)
-                .forEach(([p,d]) => {
-                    const el = document.createElement('div');
-                    el.className='product-item';
-                    el.innerHTML = `
-                        <div class="product-name">${p}</div>
-                        <div class="product-qty">${d.qty.toFixed(2)}</div>
-                        <div class="product-amount">₹${d.amt.toFixed(2)}</div>`;
-                    pb.appendChild(el);
-                });
+
+            const tv = document.getElementById('topVendors');
+            tv.innerHTML = '';
+            
+            if (Object.keys(vendorTotals).length === 0) {
+                tv.innerHTML = '<div class="no-results">No vendor data found</div>';
+            } else {
+                Object.entries(vendorTotals)
+                    .sort((a,b) => b[1].amt - a[1].amt)
+                    .slice(0, 5)
+                    .forEach(([v,d]) => {
+                        const el = document.createElement('div'); 
+                        el.className='product-item';
+                        el.innerHTML = `
+                            <div class="product-name">${v}</div>
+                            <div class="product-qty">${d.vehicles.size}</div>
+                            <div class="product-amount">₹${d.amt.toFixed(2)}</div>`;
+                        tv.appendChild(el);
+                    });
+            }
         }
+
         // -------------------------------------------------
-        // SEARCH / SUGGESTIONS FOR VEHICLE
+        //  SEARCH TABS
+        // -------------------------------------------------
+        function switchSearchTab(tab) {
+            currentSearchType = tab;
+            
+            document.querySelectorAll('.search-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.search-section').forEach(s => s.style.display = 'none');
+            
+            if (tab === 'vehicle') {
+                document.querySelector('.search-tab[onclick*="vehicle"]').classList.add('active');
+                document.getElementById('vehicleSearchSection').style.display = 'block';
+                document.getElementById('resultsHeader').textContent = 'Vehicle Details';
+            } else if (tab === 'dc') {
+                document.querySelector('.search-tab[onclick*="dc"]').classList.add('active');
+                document.getElementById('dcSearchSection').style.display = 'block';
+                document.getElementById('resultsHeader').textContent = 'DC Number Details';
+            } else if (tab === 'vendor') {
+                document.querySelector('.search-tab[onclick*="vendor"]').classList.add('active');
+                document.getElementById('vendorSearchSection').style.display = 'block';
+                document.getElementById('resultsHeader').textContent = 'Vendor Details';
+            }
+        }
+
+        // -------------------------------------------------
+        //  SEARCH FUNCTIONALITY
         // -------------------------------------------------
         function setupSearchFunctionality() {
-            const input = document.getElementById('vehicleSearch');
-            const cont = document.getElementById('suggestionsContainer');
-            input.addEventListener('input', () => {
-                const term = input.value.trim().toUpperCase();
-                if (!term) {
-                    cont.style.display='none';
-                    return;
+            // Vehicle search
+            const vehicleInput = document.getElementById('vehicleSearch');
+            const vehicleSuggestions = document.getElementById('vehicleSuggestionsContainer');
+            
+            vehicleInput.addEventListener('input', () => {
+                const term = vehicleInput.value.trim().toUpperCase();
+                if (!term) { 
+                    vehicleSuggestions.style.display='none'; 
+                    return; 
                 }
                 const matches = getMatchingVehicles(term);
-                displaySuggestions(matches, term, cont, input);
+                displaySuggestions(matches, term, vehicleSuggestions);
             });
-            document.addEventListener('click', e => {
-                if (!input.contains(e.target) && !cont.contains(e.target)) {
-                    cont.style.display='none';
+
+            // DC search
+            const dcInput = document.getElementById('dcSearch');
+            const dcSuggestions = document.getElementById('dcSuggestionsContainer');
+            
+            dcInput.addEventListener('input', () => {
+                const term = dcInput.value.trim();
+                if (!term) { 
+                    dcSuggestions.style.display='none'; 
+                    return; 
                 }
+                const matches = getMatchingDCNumbers(term);
+                displaySuggestions(matches, term, dcSuggestions);
             });
-            input.addEventListener('keydown', e => {
-                const items = cont.querySelectorAll('.suggestion-item');
-                const active = cont.querySelector('.suggestion-item.active');
-                if (e.key === 'ArrowDown') {
-                    e.preventDefault();
-                    if (items.length) {
-                        cont.querySelectorAll('.suggestion-item').forEach(i => i.classList.remove('active'));
-                        const nextIndex = active ? (Array.from(items).indexOf(active) + 1) % items.length : 0;
-                        items[nextIndex].classList.add('active');
-                    }
-                } else if (e.key === 'ArrowUp') {
-                    e.preventDefault();
-                    if (active) {
-                        const items = cont.querySelectorAll('.suggestion-item');
-                        const currentIndex = Array.from(items).indexOf(active);
-                        const prevIndex = (currentIndex - 1 + items.length) % items.length;
-                     
-                        cont.querySelectorAll('.suggestion-item').forEach(i => i.classList.remove('active'));
-                        items[prevIndex].classList.add('active');
-                    }
-                } else if (e.key === 'Enter') {
-                    e.preventDefault();
-                    if (active) {
-                        input.value = active.textContent;
-                        cont.style.display='none';
-                        searchVehicle();
-                    } else {
-                        searchVehicle();
-                    }
+
+            // Vendor search
+            const vendorInput = document.getElementById('vendorSearch');
+            const vendorSuggestions = document.getElementById('vendorSuggestionsContainer');
+            
+            vendorInput.addEventListener('input', () => {
+                const term = vendorInput.value.trim();
+                if (!term) { 
+                    vendorSuggestions.style.display='none'; 
+                    return; 
+                }
+                const matches = getMatchingVendors(term);
+                displayVendorSuggestions(matches, term, vendorSuggestions);
+            });
+
+            // Assign vendor search
+            const assignVendorInput = document.getElementById('assignVendorSearch');
+            const assignVendorSuggestions = document.getElementById('assignVendorSuggestionsContainer');
+            
+            assignVendorInput.addEventListener('input', () => {
+                const term = assignVendorInput.value.trim();
+                if (!term) { 
+                    assignVendorSuggestions.style.display='none'; 
+                    return; 
+                }
+                const matches = getMatchingVendors(term);
+                displayVendorSuggestions(matches, term, assignVendorSuggestions);
+            });
+
+            document.addEventListener('click', e => {
+                if (!vehicleInput.contains(e.target) && !vehicleSuggestions.contains(e.target)) {
+                    vehicleSuggestions.style.display='none';
+                }
+                if (!dcInput.contains(e.target) && !dcSuggestions.contains(e.target)) {
+                    dcSuggestions.style.display='none';
+                }
+                if (!vendorInput.contains(e.target) && !vendorSuggestions.contains(e.target)) {
+                    vendorSuggestions.style.display='none';
+                }
+                if (!assignVendorInput.contains(e.target) && !assignVendorSuggestions.contains(e.target)) {
+                    assignVendorSuggestions.style.display='none';
                 }
             });
         }
-        // -------------------------------------------------
-        // SEARCH / SUGGESTIONS FOR DC
-        // -------------------------------------------------
-        function setupDCSearchFunctionality() {
-            const input = document.getElementById('dcSearch');
-            const cont = document.getElementById('dcSuggestionsContainer');
-            input.addEventListener('input', () => {
-                const term = input.value.trim().toUpperCase();
-                if (!term) {
-                    cont.style.display='none';
-                    return;
-                }
-                const matches = getMatchingDCs(term);
-                displaySuggestions(matches, term, cont, input);
-            });
-            document.addEventListener('click', e => {
-                if (!input.contains(e.target) && !cont.contains(e.target)) {
-                    cont.style.display='none';
-                }
-            });
-            input.addEventListener('keydown', e => {
-                const items = cont.querySelectorAll('.suggestion-item');
-                const active = cont.querySelector('.suggestion-item.active');
-                if (e.key === 'ArrowDown') {
-                    e.preventDefault();
-                    if (items.length) {
-                        cont.querySelectorAll('.suggestion-item').forEach(i => i.classList.remove('active'));
-                        const nextIndex = active ? (Array.from(items).indexOf(active) + 1) % items.length : 0;
-                        items[nextIndex].classList.add('active');
-                    }
-                } else if (e.key === 'ArrowUp') {
-                    e.preventDefault();
-                    if (active) {
-                        const items = cont.querySelectorAll('.suggestion-item');
-                        const currentIndex = Array.from(items).indexOf(active);
-                        const prevIndex = (currentIndex - 1 + items.length) % items.length;
-                     
-                        cont.querySelectorAll('.suggestion-item').forEach(i => i.classList.remove('active'));
-                        items[prevIndex].classList.add('active');
-                    }
-                } else if (e.key === 'Enter') {
-                    e.preventDefault();
-                    if (active) {
-                        input.value = active.textContent;
-                        cont.style.display='none';
-                        searchDC();
-                    } else {
-                        searchDC();
-                    }
-                }
-            });
-        }
+
         function getMatchingVehicles(term) {
             const set = new Set();
-         
-            // Search in vendor data
+            
             vehicleData.forEach(v => {
-                v.vehicleNumbers.forEach(n => {
-                    if (n && n.toUpperCase().includes(term)) set.add(n);
+                v.vehicleNumbers.forEach(n => { 
+                    if (n && n.toUpperCase().includes(term)) set.add(n); 
                 });
             });
-         
-            // Search in transport data
-            transportData.forEach(r => {
-                const v = (r['VEHICLE NO'] || r['Vehicle Number'] || '').toString().trim().toUpperCase();
-                if (v && v.includes(term)) set.add(v);
+            
+            transportData.forEach(r => { 
+                const v = (r['Vehicle'] || r['VEHICLE NO'] || r['Vehicle Number'] || '').toString().trim().toUpperCase(); 
+                if (v && v.includes(term)) set.add(v); 
             });
-         
+            
             return Array.from(set)
                 .sort((a,b) => {
-                    // Sort by exact match first, then by position of match
                     const aExact = a === term;
                     const bExact = b === term;
                     if (aExact && !bExact) return -1;
@@ -1233,55 +1640,95 @@
                     return a.indexOf(term) - b.indexOf(term);
                 });
         }
-        function getMatchingDCs(term) {
+
+        function getMatchingDCNumbers(term) {
             const set = new Set();
-         
-            // Search in transport data for DC NO
-            transportData.forEach(r => {
-                const dc = (r['DC NO'] || '').toString().trim().toUpperCase();
-                if (dc && dc.includes(term)) set.add(dc);
+            
+            transportData.forEach(r => { 
+                const dc = (r['DC NO'] || r['DC Number'] || r['Delivery Challan'] || '').toString().trim(); 
+                if (dc && dc.toLowerCase().includes(term.toLowerCase())) set.add(dc); 
             });
-         
+            
             return Array.from(set)
                 .sort((a,b) => {
-                    const aExact = a === term;
-                    const bExact = b === term;
+                    const aExact = a.toLowerCase() === term.toLowerCase();
+                    const bExact = b.toLowerCase() === term.toLowerCase();
                     if (aExact && !bExact) return -1;
                     if (!aExact && bExact) return 1;
-                    return a.indexOf(term) - b.indexOf(term);
+                    return a.toLowerCase().indexOf(term.toLowerCase()) - b.toLowerCase().indexOf(term.toLowerCase());
                 });
         }
-        function displaySuggestions(matches, term, cont, input) {
-            cont.innerHTML='';
-         
-            if (!matches.length) {
-                cont.style.display='none';
-                return;
+
+        function getMatchingVendors(term) {
+            return vehicleData.filter(v => 
+                v.partyName.toLowerCase().includes(term.toLowerCase()) ||
+                v.pan.toLowerCase().includes(term.toLowerCase())
+            );
+        }
+
+        function displaySuggestions(matches, term, container) {
+            container.innerHTML='';
+            
+            if (!matches.length) { 
+                container.style.display='none'; 
+                return; 
             }
-         
+            
             matches.forEach(m => {
-                const el = document.createElement('div');
+                const el = document.createElement('div'); 
                 el.className='suggestion-item';
                 el.innerHTML = m.replace(new RegExp(term,'gi'), '<span class="highlight">$&</span>');
-                el.onclick = () => {
-                    input.value = m;
-                    cont.style.display='none';
-                    if (input.id === 'vehicleSearch') {
-                        searchVehicle();
-                    } else {
-                        searchDC();
+                el.onclick = () => { 
+                    if (container.id === 'vehicleSuggestionsContainer') {
+                        document.getElementById('vehicleSearch').value = m; 
+                    } else if (container.id === 'dcSuggestionsContainer') {
+                        document.getElementById('dcSearch').value = m; 
                     }
+                    container.style.display='none'; 
                 };
-                el.onmouseover = () => {
-                    cont.querySelectorAll('.suggestion-item').forEach(i => i.classList.remove('active'));
-                    el.classList.add('active');
+                el.onmouseover = () => { 
+                    container.querySelectorAll('.suggestion-item').forEach(i => i.classList.remove('active')); 
+                    el.classList.add('active'); 
                 };
-                cont.appendChild(el);
+                container.appendChild(el);
             });
-            cont.style.display='block';
+            container.style.display='block';
         }
+
+        function displayVendorSuggestions(matches, term, container) {
+            container.innerHTML='';
+            
+            if (!matches.length) { 
+                container.style.display='none'; 
+                return; 
+            }
+            
+            matches.forEach(v => {
+                const el = document.createElement('div'); 
+                el.className='suggestion-item';
+                el.innerHTML = `
+                    <div><strong>${v.partyName.replace(new RegExp(term,'gi'), '<span class="highlight">$&</span>')}</strong></div>
+                    <div style="font-size: 12px; color: #666;">PAN: ${v.pan}</div>
+                    <div style="font-size: 12px; color: #666;">Vehicles: ${v.vehicleNumbers.length}</div>`;
+                el.onclick = () => { 
+                    if (container.id === 'vendorSuggestionsContainer') {
+                        document.getElementById('vendorSearch').value = v.partyName; 
+                    } else if (container.id === 'assignVendorSuggestionsContainer') {
+                        document.getElementById('assignVendorSearch').value = v.partyName; 
+                    }
+                    container.style.display='none'; 
+                };
+                el.onmouseover = () => { 
+                    container.querySelectorAll('.suggestion-item').forEach(i => i.classList.remove('active')); 
+                    el.classList.add('active'); 
+                };
+                container.appendChild(el);
+            });
+            container.style.display='block';
+        }
+
         // -------------------------------------------------
-        // MAIN SEARCH FOR VEHICLE
+        //  MAIN SEARCH FUNCTIONS
         // -------------------------------------------------
         function searchVehicle() {
             const term = document.getElementById('vehicleSearch').value.trim().toUpperCase();
@@ -1289,268 +1736,352 @@
                 alert('Please enter a vehicle number');
                 return;
             }
-            const vendorMatches = vehicleData.filter(v =>
-                v.vehicleNumbers.some(n => n.toUpperCase() === term)
-            );
-            // Find transport records - check multiple possible column names
-            const transportRecords = transportData.filter(r => {
-                const vehicleNo = (r['VEHICLE NO'] || r['Vehicle Number'] || '').toString().trim().toUpperCase();
-                return vehicleNo === term;
-            });
-            // Store full context BEFORE display
+
+            const vendorMatches = findVendorsByVehicle(term);
+            const transportRecords = findTransportRecordsByVehicle(term);
+
             window.currentSearch = {
                 type: 'vehicle',
                 searchValue: term,
                 vendorDetails: vendorMatches,
                 transportRecords: transportRecords,
-                allVendorVehicles: [],
-                vendorTotals: {totalVehicles:0, totalRecords:0, totalQuantity:0, totalAmount:0},
+                allVendorVehicles: getAllVehiclesForVendors(vendorMatches),
+                vendorTotals: calculateVendorTotals(vendorMatches),
                 manualAmount: null
             };
-            // Get all vehicles for matched vendors
-            const allVeh = new Set();
-            vendorMatches.forEach(v => v.vehicleNumbers.forEach(n => allVeh.add(n)));
-            window.currentSearch.allVendorVehicles = Array.from(allVeh);
+
             displayResults(vendorMatches, term, transportRecords);
+            clearSelectedRecords();
         }
-        // -------------------------------------------------
-        // MAIN SEARCH FOR DC - MODIFIED TO HANDLE MULTIPLE DC NUMBERS
-        // -------------------------------------------------
+
         function searchDC() {
-            const inputValue = document.getElementById('dcSearch').value.trim().toUpperCase();
-            if (!inputValue) {
-                alert('Please enter at least one Delivery Challan No');
+            const term = document.getElementById('dcSearch').value.trim();
+            if (!term) {
+                alert('Please enter a DC number');
                 return;
             }
-            // Split by space or comma for multiple DCs
-            const terms = inputValue.split(/\s*[\s,]\s*/).filter(t => t);
-            let allTransportRecords = [];
-            let allVehicles = new Set();
-            terms.forEach(term => {
-                const records = transportData.filter(r => {
-                    const dcNo = (r['DC NO'] || r['Delivery Challan No'] || '').toString().trim().toUpperCase();
-                    return dcNo === term;
-                });
-                allTransportRecords.push(...records);
-                records.forEach(r => {
-                    const vehicleNo = (r['VEHICLE NO'] || r['Vehicle Number'] || '').toString().trim().toUpperCase();
-                    if (vehicleNo) allVehicles.add(vehicleNo);
-                });
-            });
-            if (!allTransportRecords.length) {
-                displayNoResults();
+
+            const transportRecords = findTransportRecordsByDC(term);
+            currentDCSearchResults = transportRecords;
+
+            if (transportRecords.length === 0) {
+                alert('No records found for this DC number');
                 return;
             }
-            // Group records by vehicle
-            const recordsByVehicle = {};
-            allTransportRecords.forEach(r => {
-                const vehicleNo = (r['VEHICLE NO'] || r['Vehicle Number'] || '').toString().trim().toUpperCase();
-                if (!recordsByVehicle[vehicleNo]) recordsByVehicle[vehicleNo] = [];
-                recordsByVehicle[vehicleNo].push(r);
+
+            const uniqueVehicles = [...new Set(transportRecords.map(r => 
+                (r['Vehicle'] || r['VEHICLE NO'] || r['Vehicle Number'] || '').toString().trim().toUpperCase()
+            ))];
+            
+            const vendorMatches = [];
+            uniqueVehicles.forEach(v => {
+                const vendors = findVendorsByVehicle(v);
+                vendorMatches.push(...vendors);
             });
-            // Find vendors for all vehicles
-            const vendorMatches = vehicleData.filter(v =>
-                v.vehicleNumbers.some(n => allVehicles.has(n.toUpperCase()))
-            );
-            // Store full context
+
             window.currentSearch = {
                 type: 'dc',
-                searchValue: terms.join(', '),
-                vehicleNumber: Array.from(allVehicles).join(', '),
-                vendorDetails: vendorMatches,
-                transportRecords: allTransportRecords,
-                allVendorVehicles: [],
-                vendorTotals: {totalVehicles:0, totalRecords:0, totalQuantity:0, totalAmount:0},
+                searchValue: term,
+                vendorDetails: [...new Map(vendorMatches.map(v => [v.partyName, v])).values()],
+                transportRecords: transportRecords,
+                allVendorVehicles: getAllVehiclesForVendors(vendorMatches),
+                vendorTotals: calculateVendorTotals(vendorMatches),
                 manualAmount: null
             };
-            // Get all vehicles for matched vendors
-            const allVeh = new Set();
-            vendorMatches.forEach(v => v.vehicleNumbers.forEach(n => allVeh.add(n)));
-            window.currentSearch.allVendorVehicles = Array.from(allVeh);
-            // Display results, but since multiple, display grouped by vehicle
-            displayResults(vendorMatches, terms.join(', '), allTransportRecords);
-            // Display transport for each vehicle
-            Object.entries(recordsByVehicle).forEach(([veh, recs]) => {
-                displayTransportDetails(veh, recs);
-            });
-            // If no vendor, show option to add
-            if (!vendorMatches.length) {
-                const cont = document.getElementById('resultsContent');
-                const btn = document.createElement('button');
-                btn.className = 'btn-secondary';
-                btn.textContent = 'Add Vendor for these Vehicles';
-                btn.onclick = () => addVendorForVehicle(Array.from(allVehicles).join(', '));
-                cont.appendChild(btn);
+
+            displayResults([], term, transportRecords);
+            showRecordActions();
+        }
+
+        function searchVendor() {
+            const term = document.getElementById('vendorSearch').value.trim();
+            if (!term) {
+                alert('Please enter a vendor name');
+                return;
             }
+
+            const vendorMatches = vehicleData.filter(v => 
+                v.partyName.toLowerCase().includes(term.toLowerCase()) ||
+                v.pan.toLowerCase().includes(term.toLowerCase())
+            );
+
+            if (vendorMatches.length === 0) {
+                alert('No vendor found with that name or PAN');
+                return;
+            }
+
+            const allVehicles = getAllVehiclesForVendors(vendorMatches);
+            const transportRecords = [];
+            allVehicles.forEach(v => {
+                const records = findTransportRecordsByVehicle(v);
+                transportRecords.push(...records);
+            });
+
+            window.currentSearch = {
+                type: 'vendor',
+                searchValue: term,
+                vendorDetails: vendorMatches,
+                transportRecords: transportRecords,
+                allVendorVehicles: allVehicles,
+                vendorTotals: calculateVendorTotals(vendorMatches),
+                manualAmount: null
+            };
+
+            displayVendorResults(vendorMatches, term, transportRecords);
         }
-        function displayNoResults() {
-            const sec = document.getElementById('resultsSection');
-            const cont = document.getElementById('resultsContent');
-            cont.innerHTML = '<div class="no-results">No data found for this search.</div>';
-            sec.style.display = 'block';
-            sec.scrollIntoView({behavior: 'smooth'});
+
+        // -------------------------------------------------
+        //  HELPER FUNCTIONS
+        // -------------------------------------------------
+        function findVendorsByVehicle(vehicleNo) {
+            return vehicleData.filter(v => 
+                v.vehicleNumbers.some(n => n.toUpperCase() === vehicleNo)
+            );
         }
+
+        function findVendorByVehicle(vehicleNo) {
+            return vehicleData.find(v => 
+                v.vehicleNumbers.some(n => n.toUpperCase() === vehicleNo)
+            );
+        }
+
+        function findTransportRecordsByVehicle(vehicleNo) {
+            return transportData.filter(r => {
+                const v = (r['Vehicle'] || r['VEHICLE NO'] || r['Vehicle Number'] || '').toString().trim().toUpperCase();
+                return v === vehicleNo;
+            });
+        }
+
+        function findTransportRecordsByDC(dcNo) {
+            return transportData.filter(r => {
+                const dc = (r['DC NO'] || r['DC Number'] || r['Delivery Challan'] || '').toString().trim();
+                const dcAlt = (r['Delivery Challan No'] || '').toString().trim();
+                return dc.toLowerCase() === dcNo.toLowerCase() || dcAlt.toLowerCase() === dcNo.toLowerCase();
+            });
+        }
+
+        function getAllVehiclesForVendors(vendors) {
+            const allVeh = new Set();
+            vendors.forEach(v => v.vehicleNumbers.forEach(n => allVeh.add(n)));
+            return Array.from(allVeh);
+        }
+
+        function calculateVendorTotals(vendors) {
+            const allVeh = getAllVehiclesForVendors(vendors);
+            let totQty = 0, totAmt = 0, totRec = 0;
+
+            allVeh.forEach(vn => {
+                const recs = findTransportRecordsByVehicle(vn);
+                recs.forEach(r => { 
+                    totQty += parseFloat(r['Net Wt'] || r['NET WT'] || r['Quantity'] || 0) || 0; 
+                    totAmt += parseFloat(r['Amount'] || r['Transport Amount'] || 0) || 0; 
+                    totRec++; 
+                });
+            });
+
+            return {
+                totalVehicles: allVeh.length, 
+                totalRecords: totRec, 
+                totalQuantity: totQty, 
+                totalAmount: totAmt
+            };
+        }
+
+        // -------------------------------------------------
+        //  DISPLAY RESULTS
+        // -------------------------------------------------
         function displayResults(vendorMatches, searchValue, transportRecords) {
             const sec = document.getElementById('resultsSection');
-            const cont = document.getElementById('resultsContent');
+            const cont = document.getElementById('resultsContent'); 
             cont.innerHTML='';
-            if (vendorMatches.length === 0) {
-                if (transportRecords.length) {
-                    cont.innerHTML = '<div class="warning"><strong>Note:</strong> Vendor details not found in database, but transport records exist.</div>';
-                    // Display transport details grouped
-                    const recordsByVeh = {};
-                    transportRecords.forEach(r => {
-                        const veh = (r['VEHICLE NO'] || r['Vehicle Number'] || '').toString().trim().toUpperCase();
-                        if (!recordsByVeh[veh]) recordsByVeh[veh] = [];
-                        recordsByVeh[veh].push(r);
-                    });
-                    Object.entries(recordsByVeh).forEach(([veh, recs]) => {
-                        displayTransportDetails(veh, recs);
-                    });
-                } else {
-                    cont.innerHTML = '<div class="no-results">No vendor or transport data found for this vehicle number.</div>';
-                }
-                sec.style.display='block';
+
+            if (vendorMatches.length === 0 && transportRecords.length === 0) {
+                cont.innerHTML = '<div class="no-results">No vendor or transport data found.</div>';
+                sec.style.display='block'; 
                 sec.scrollIntoView({behavior:'smooth'});
                 return;
             }
-            // Group vendors by party name and PAN (in case of duplicates)
-            const groups = {};
-            vendorMatches.forEach(v => {
-                const key = `${v.partyName}|${v.pan}`;
-                if (!groups[key]) {
-                    groups[key] = {
-                        vendor: v,
-                        vehicles: []
-                    };
-                }
-                v.vehicleNumbers.forEach(n => {
-                    if (!groups[key].vehicles.includes(n)) {
-                        groups[key].vehicles.push(n);
+
+            // Display vendor details if found
+            if (vendorMatches.length > 0) {
+                const groups = {};
+                vendorMatches.forEach(v => {
+                    const key = `${v.partyName}|${v.pan}`;
+                    if (!groups[key]) {
+                        groups[key] = {
+                            vendor: v,
+                            vehicles: []
+                        };
                     }
+                    v.vehicleNumbers.forEach(n => {
+                        if (!groups[key].vehicles.includes(n)) {
+                            groups[key].vehicles.push(n);
+                        }
+                    });
                 });
-            });
-            // Display each vendor group (transporter-wise)
-            Object.values(groups).forEach((g, idx) => {
-                const vg = document.createElement('div');
+
+                Object.values(groups).forEach((g, idx) => {
+                    const vg = document.createElement('div'); 
+                    vg.className='vendor-group';
+                    
+                    const hdr = document.createElement('div'); 
+                    hdr.className='vendor-header';
+                    hdr.innerHTML = `
+                        <div>
+                            <div class="result-title">${g.vendor.partyName}</div>
+                            <div><strong>PAN:</strong> ${g.vendor.pan || 'Not provided'}</div>
+                        </div>
+                        <div>${g.vehicles.length} Vehicle${g.vehicles.length !== 1 ? 's' : ''}</div>`;
+                    hdr.onclick = () => {
+                        const vehDiv = document.getElementById(`veh${idx}`);
+                        vehDiv.classList.toggle('expanded');
+                    };
+                    vg.appendChild(hdr);
+
+                    const vehDiv = document.createElement('div'); 
+                    vehDiv.id = `veh${idx}`; 
+                    vehDiv.className='vendor-vehicles';
+                    
+                    g.vehicles.forEach(vn => {
+                        const opt = document.createElement('div'); 
+                        opt.className='vehicle-option';
+                        if (vn === searchValue) opt.classList.add('selected');
+                        opt.textContent = vn;
+                        opt.onclick = () => { 
+                            document.getElementById('vehicleSearch').value = vn; 
+                            searchVehicle(); 
+                        };
+                        vehDiv.appendChild(opt);
+                    });
+                    vg.appendChild(vehDiv);
+                    cont.appendChild(vg);
+
+                    const det = document.createElement('div'); 
+                    det.className='result-item';
+                    det.innerHTML = `
+                        <div><strong>Bank Account:</strong> ${g.vendor.accountNo}</div>
+                        <div><strong>Bank & Branch:</strong> ${g.vendor.bankName}</div>
+                        <div><strong>Beneficiary:</strong> ${g.vendor.beneficiary}</div>`;
+                    cont.appendChild(det);
+                });
+
+                // Display vendor total summary
+                const totals = window.currentSearch.vendorTotals;
+                const sum = document.createElement('div'); 
+                sum.className='vendor-total-summary';
+                sum.innerHTML = `
+                    <div class="vendor-total-title">Vendor Total Summary</div>
+                    <div class="vendor-total-details">
+                        <div class="vendor-total-item">
+                            <div class="vendor-total-label">Vehicles</div>
+                            <div class="vendor-total-value">${totals.totalVehicles}</div>
+                        </div>
+                        <div class="vendor-total-item">
+                            <div class="vendor-total-label">Records</div>
+                            <div class="vendor-total-value">${totals.totalRecords}</div>
+                        </div>
+                        <div class="vendor-total-item">
+                            <div class="vendor-total-label">Quantity</div>
+                            <div class="vendor-total-value">${totals.totalQuantity.toFixed(2)}</div>
+                        </div>
+                        <div class="vendor-total-item">
+                            <div class="vendor-total-label">Amount</div>
+                            <div class="vendor-total-value">₹${totals.totalAmount.toFixed(2)}</div>
+                        </div>
+                    </div>`;
+                cont.appendChild(sum);
+            } else {
+                cont.innerHTML += '<div class="warning"><strong>Note:</strong> Vendor details not found in database.</div>';
+            }
+
+            // Display transport details
+            if (transportRecords.length > 0) {
+                displayTransportDetailsTable(transportRecords, searchValue);
+            }
+
+            sec.style.display='block';
+            sec.scrollIntoView({behavior:'smooth'});
+        }
+
+        function displayVendorResults(vendorMatches, searchValue, transportRecords) {
+            const sec = document.getElementById('resultsSection');
+            const cont = document.getElementById('resultsContent'); 
+            cont.innerHTML='';
+
+            vendorMatches.forEach((v, idx) => {
+                const vg = document.createElement('div'); 
                 vg.className='vendor-group';
-             
-                const hdr = document.createElement('div');
+                
+                const hdr = document.createElement('div'); 
                 hdr.className='vendor-header';
                 hdr.innerHTML = `
                     <div>
-                        <div class="result-title">${g.vendor.partyName}</div>
-                        <div><strong>PAN:</strong> ${g.vendor.pan || 'Not provided'}</div>
+                        <div class="result-title">${v.partyName}</div>
+                        <div><strong>PAN:</strong> ${v.pan || 'Not provided'}</div>
                     </div>
-                    <div>${g.vehicles.length} Vehicle${g.vehicles.length !== 1 ? 's' : ''}</div>`;
+                    <div>${v.vehicleNumbers.length} Vehicle${v.vehicleNumbers.length !== 1 ? 's' : ''}</div>`;
                 hdr.onclick = () => {
                     const vehDiv = document.getElementById(`veh${idx}`);
                     vehDiv.classList.toggle('expanded');
                 };
                 vg.appendChild(hdr);
-                const vehDiv = document.createElement('div');
-                vehDiv.id = `veh${idx}`;
+
+                const vehDiv = document.createElement('div'); 
+                vehDiv.id = `veh${idx}`; 
                 vehDiv.className='vendor-vehicles';
-             
-                g.vehicles.forEach(vn => {
-                    const opt = document.createElement('div');
+                
+                v.vehicleNumbers.forEach(vn => {
+                    const opt = document.createElement('div'); 
                     opt.className='vehicle-option';
-                    if (vn === searchValue) opt.classList.add('selected');
                     opt.textContent = vn;
-                    opt.onclick = () => {
-                        document.getElementById('vehicleSearch').value = vn;
-                        searchVehicle();
+                    opt.onclick = () => { 
+                        document.getElementById('vehicleSearch').value = vn; 
+                        searchVehicle(); 
                     };
                     vehDiv.appendChild(opt);
                 });
                 vg.appendChild(vehDiv);
                 cont.appendChild(vg);
-                // Display vendor bank details
-                const det = document.createElement('div');
+
+                const det = document.createElement('div'); 
                 det.className='result-item';
                 det.innerHTML = `
-                    <div><strong>Bank Account:</strong> ${g.vendor.accountNo}</div>
-                    <div><strong>Bank & Branch:</strong> ${g.vendor.bankName}</div>
-                    <div><strong>Beneficiary:</strong> ${g.vendor.beneficiary}</div>`;
+                    <div><strong>Bank Account:</strong> ${v.accountNo}</div>
+                    <div><strong>Bank & Branch:</strong> ${v.bankName}</div>
+                    <div><strong>Beneficiary:</strong> ${v.beneficiary}</div>
+                    <div><strong>IFSC:</strong> ${v.ifsc || 'Not provided'}</div>`;
                 cont.appendChild(det);
-                // Display transport details for this vendor
-                displayVendorTransportDetails(g.vendor, g.vehicles);
+
+                // Display transport records for this vendor's vehicles
+                const vendorRecords = transportRecords.filter(r => 
+                    v.vehicleNumbers.includes((r['Vehicle'] || r['VEHICLE NO'] || r['Vehicle Number'] || '').toString().trim().toUpperCase())
+                );
+                
+                if (vendorRecords.length > 0) {
+                    displayTransportDetailsTable(vendorRecords, v.partyName);
+                }
             });
+
             sec.style.display='block';
             sec.scrollIntoView({behavior:'smooth'});
         }
-        function displayVendorTransportDetails(vendor, vehicleNumbers) {
-            const allRecs = [];
-            let totQty = 0, totAmt = 0, totRec = 0;
-            vehicleNumbers.forEach(vn => {
-                const recs = transportData.filter(r => {
-                    const vehicleNo = (r['VEHICLE NO'] || r['Vehicle Number'] || '').toString().trim().toUpperCase();
-                    return vehicleNo === vn;
-                });
-                recs.forEach(r => {
-                    totQty += parseFloat(r['NET WT'] || r['Quantity'] || 0) || 0;
-                    totAmt += parseFloat(r['Transport Amount'] || r['Amount'] || 0) || 0;
-                    totRec++;
-                });
-                allRecs.push(...recs);
-            });
-            window.currentSearch.vendorTotals = {
-                totalVehicles: vehicleNumbers.length,
-                totalRecords: totRec,
-                totalQuantity: totQty,
-                totalAmount: totAmt
-            };
-            // Create vendor total summary
-            const sum = document.createElement('div');
-            sum.className='vendor-total-summary';
-            sum.innerHTML = `
-                <div class="vendor-total-title">Vendor Total Summary</div>
-                <div class="vendor-total-details">
-                    <div class="vendor-total-item">
-                        <div class="vendor-total-label">Vehicles</div>
-                        <div class="vendor-total-value">${vehicleNumbers.length}</div>
-                    </div>
-                    <div class="vendor-total-item">
-                        <div class="vendor-total-label">Records</div>
-                        <div class="vendor-total-value">${totRec}</div>
-                    </div>
-                    <div class="vendor-total-item">
-                        <div class="vendor-total-label">Quantity</div>
-                        <div class="vendor-total-value">${totQty.toFixed(2)}</div>
-                    </div>
-                    <div class="vendor-total-item">
-                        <div class="vendor-total-label">Amount</div>
-                        <div class="vendor-total-value">₹${totAmt.toFixed(2)}</div>
-                    </div>
-                </div>`;
-            document.getElementById('resultsContent').appendChild(sum);
-            // Display transport details for each vehicle
-            vehicleNumbers.forEach(vn => {
-                const recs = allRecs.filter(r => {
-                    const vehicleNo = (r['VEHICLE NO'] || r['Vehicle Number'] || '').toString().trim().toUpperCase();
-                    return vehicleNo === vn;
-                });
-                if (recs.length) {
-                    displayTransportDetails(vn, recs);
-                }
-            });
-        }
-        function displayTransportDetails(vehicleNumber, records) {
-            if (!records.length) return;
-         
-            const div = document.createElement('div');
+
+        function displayTransportDetailsTable(records, title) {
+            const div = document.createElement('div'); 
             div.className='transport-details';
-            const safe = vehicleNumber.replace(/\s+/g,'_').replace(/[^a-zA-Z0-9_]/g, '');
-         
+            
             div.innerHTML = `
-                <div class="result-title">Transport Details for Vehicle: ${vehicleNumber}</div>
+                <div class="result-title">Transport Details: ${title}</div>
                 <table class="transport-table">
                     <thead>
                         <tr>
+                            <th class="check-cell"></th>
                             <th>Date</th>
                             <th>Customer</th>
+                            <th>DC NO</th>
                             <th>Delivery Challan No</th>
                             <th>Weighment Slip No</th>
+                            <th>Weight Slip NO</th>
                             <th>Vehicle</th>
                             <th>Material</th>
                             <th>Net Wt</th>
@@ -1558,128 +2089,316 @@
                             <th>Amount</th>
                         </tr>
                     </thead>
-                    <tbody id="tbody_${safe}"></tbody>
+                    <tbody id="transportTableBody"></tbody>
                 </table>
-                <div class="summary-box" id="summary_${safe}">
+                <div class="summary-box">
                     <div class="summary-item">
                         <div class="summary-label">Records</div>
-                        <div class="summary-value" id="recs_${safe}">0</div>
+                        <div class="summary-value" id="totalRecords">${records.length}</div>
                     </div>
                     <div class="summary-divider"></div>
                     <div class="summary-item">
                         <div class="summary-label">Quantity</div>
-                        <div class="summary-value" id="qty_${safe}">0.00</div>
+                        <div class="summary-value" id="totalQuantity">0.00</div>
                     </div>
                     <div class="summary-divider"></div>
                     <div class="summary-item">
                         <div class="summary-label">Amount</div>
-                        <div class="summary-value" id="amt_${safe}">0.00</div>
+                        <div class="summary-value" id="totalAmount">0.00</div>
                     </div>
-                </div>
-                <div class="amount-edit">
-                    <label for="manual_${safe}">Manual Amount Override:</label>
-                    <input type="number" id="manual_${safe}" class="amount-input" placeholder="Enter manual amount">
-                    <button type="button" class="btn-update" onclick="updateTotalAmount('${vehicleNumber}')">Update Amount</button>
                 </div>`;
-         
+            
             document.getElementById('resultsContent').appendChild(div);
-            const tbody = document.getElementById(`tbody_${safe}`);
-            let qty = 0, amt = 0;
-         
+
+            const tbody = document.getElementById('transportTableBody');
+            let totalQty = 0, totalAmt = 0;
+            
             records.forEach(r => {
                 const tr = document.createElement('tr');
-                tr.onclick = () => toggleVerify(tr);
+                tr.dataset.id = r._id;
+                
+                const qty = parseFloat(r['Net Wt'] || r['NET WT'] || r['Quantity'] || 0) || 0;
+                const amt = parseFloat(r['Amount'] || r['Transport Amount'] || 0) || 0;
+                totalQty += qty;
+                totalAmt += amt;
+                
                 tr.innerHTML = `
-                    <td>${formatDateForDisplay(r['Accounting Date'] || r['Date'])}</td>
-                    <td>${r['NAME OF THE CUSTOMER'] || r['Customer Name'] || ''}</td>
-                    <td>${r['DC NO'] || r['Delivery Challan No'] || ''}</td>
-                    <td>${r['WEIGHMENT SLIP NO'] || r['Weighment Slip No'] || r['Weight Slip NO'] || ''}</td>
-                    <td>${r['VEHICLE NO'] || r['Vehicle Number'] || ''}</td>
+                    <td class="check-cell">
+                        <input type="checkbox" class="record-checkbox" onchange="toggleRecordSelection('${r._id}')">
+                    </td>
+                    <td>${formatDateForDisplay(r['Date'] || r['Accounting Date'])}</td>
+                    <td>${r['Customer'] || r['NAME OF THE CUSTOMER'] || r['Customer Name'] || ''}</td>
+                    <td>${r['DC NO'] || r['DC Number'] || r['Delivery Challan'] || 'N/A'}</td>
+                    <td>${r['Delivery Challan No'] || r['DC NO'] || 'N/A'}</td>
+                    <td>${r['Weighment Slip No'] || r['Weight Slip NO'] || 'N/A'}</td>
+                    <td>${r['Weight Slip NO'] || r['Weighment Slip No'] || 'N/A'}</td>
+                    <td>${r['Vehicle'] || r['VEHICLE NO'] || r['Vehicle Number'] || ''}</td>
                     <td>${r['Material'] || r['Product'] || r['ITEM'] || ''}</td>
-                    <td>${r['NET WT'] || r['Quantity'] || '0.00'}</td>
-                    <td>${r['Transport Rate'] || r['Rate'] || '0.00'}</td>
-                    <td>${r['Transport Amount'] || r['Amount'] || '0.00'}</td>`;
+                    <td>${qty.toFixed(2)}</td>
+                    <td>${r['Rate'] || r['Transport Rate'] || '0.00'}</td>
+                    <td>${amt.toFixed(2)}</td>`;
+                
+                tr.onclick = (e) => {
+                    if (e.target.type !== 'checkbox') {
+                        const checkbox = tr.querySelector('.record-checkbox');
+                        checkbox.checked = !checkbox.checked;
+                        toggleRecordSelection(r._id);
+                    }
+                };
+                
                 tbody.appendChild(tr);
-             
-                qty += parseFloat(r['NET WT'] || r['Quantity'] || 0) || 0;
-                amt += parseFloat(r['Transport Amount'] || r['Amount'] || 0) || 0;
             });
-            document.getElementById(`recs_${safe}`).textContent = records.length;
-            document.getElementById(`qty_${safe}`).textContent = qty.toFixed(2);
-            document.getElementById(`amt_${safe}`).textContent = amt.toFixed(2);
-            document.getElementById(`manual_${safe}`).value = amt.toFixed(2);
+
+            document.getElementById('totalQuantity').textContent = totalQty.toFixed(2);
+            document.getElementById('totalAmount').textContent = totalAmt.toFixed(2);
         }
-        function toggleVerify(row) {
-            row.classList.toggle('verified');
+
+        // -------------------------------------------------
+        //  RECORD SELECTION
+        // -------------------------------------------------
+        function toggleRecordSelection(recordId) {
+            const tr = document.querySelector(`tr[data-id="${recordId}"]`);
+            const checkbox = tr.querySelector('.record-checkbox');
+            
+            if (checkbox.checked) {
+                selectedRecords.add(recordId);
+                tr.classList.add('checked');
+            } else {
+                selectedRecords.delete(recordId);
+                tr.classList.remove('checked');
+            }
+            
+            updateSelectedCount();
         }
-        function updateTotalAmount(vehicleNumber) {
-            const safe = vehicleNumber.replace(/\s+/g,'_').replace(/[^a-zA-Z0-9_]/g, '');
-            const val = parseFloat(document.getElementById(`manual_${safe}`).value);
-         
-            if (isNaN(val) || val < 0) {
-                alert('Please enter a valid positive amount');
+
+        function selectAllRecords() {
+            const checkboxes = document.querySelectorAll('.record-checkbox');
+            const records = Array.from(document.querySelectorAll('tr[data-id]'));
+            
+            checkboxes.forEach(cb => cb.checked = true);
+            records.forEach(r => {
+                selectedRecords.add(r.dataset.id);
+                r.classList.add('checked');
+            });
+            
+            updateSelectedCount();
+        }
+
+        function deselectAllRecords() {
+            const checkboxes = document.querySelectorAll('.record-checkbox');
+            const records = Array.from(document.querySelectorAll('tr[data-id]'));
+            
+            checkboxes.forEach(cb => cb.checked = false);
+            records.forEach(r => {
+                selectedRecords.delete(r.dataset.id);
+                r.classList.remove('checked');
+            });
+            
+            updateSelectedCount();
+        }
+
+        function clearSelectedRecords() {
+            selectedRecords.clear();
+            const checkboxes = document.querySelectorAll('.record-checkbox');
+            const records = Array.from(document.querySelectorAll('tr[data-id]'));
+            
+            checkboxes.forEach(cb => cb.checked = false);
+            records.forEach(r => r.classList.remove('checked'));
+            
+            updateSelectedCount();
+            hideRecordActions();
+        }
+
+        function updateSelectedCount() {
+            const count = selectedRecords.size;
+            const countElement = document.getElementById('selectedRecordsCount');
+            
+            if (count > 0) {
+                countElement.textContent = `${count} selected`;
+                countElement.style.display = 'inline-block';
+                showRecordActions();
+            } else {
+                countElement.style.display = 'none';
+                hideRecordActions();
+            }
+        }
+
+        function showRecordActions() {
+            document.getElementById('recordActions').style.display = 'flex';
+        }
+
+        function hideRecordActions() {
+            document.getElementById('recordActions').style.display = 'none';
+        }
+
+        // -------------------------------------------------
+        //  ASSIGN TO VENDOR
+        // -------------------------------------------------
+        function assignSelectedToVendor() {
+            if (selectedRecords.size === 0) {
+                alert('Please select at least one record to assign');
                 return;
             }
-         
-            document.getElementById(`amt_${safe}`).textContent = val.toFixed(2);
-            window.currentSearch.manualAmount = val;
-         
-            // Update vendor totals if this is the searched vehicle
-            if (vehicleNumber === window.currentSearch.vehicleNumber || window.currentSearch.type === 'dc') {
-                window.currentSearch.vendorTotals.totalAmount = val;
+            
+            document.getElementById('assignVendorSection').style.display = 'block';
+            document.getElementById('assignVendorSection').scrollIntoView({behavior: 'smooth'});
+        }
+
+        function cancelAssignToVendor() {
+            document.getElementById('assignVendorSection').style.display = 'none';
+            document.getElementById('assignVendorSearch').value = '';
+            document.getElementById('quickPartyName').value = '';
+            document.getElementById('quickPan').value = '';
+            document.getElementById('quickAccountNo').value = '';
+            document.getElementById('quickBankName').value = '';
+        }
+
+        function confirmAssignToVendor() {
+            const vendorSearch = document.getElementById('assignVendorSearch').value.trim();
+            const quickParty = document.getElementById('quickPartyName').value.trim();
+            const quickPan = document.getElementById('quickPan').value.trim();
+            const quickAccount = document.getElementById('quickAccountNo').value.trim();
+            const quickBank = document.getElementById('quickBankName').value.trim();
+            
+            let vendor = null;
+            
+            if (vendorSearch) {
+                vendor = vehicleData.find(v => 
+                    v.partyName === vendorSearch || 
+                    v.partyName.toLowerCase().includes(vendorSearch.toLowerCase())
+                );
+                
+                if (!vendor) {
+                    alert('Selected vendor not found. Please select from suggestions or use quick add.');
+                    return;
+                }
+            } else if (quickParty && quickPan) {
+                vendor = vehicleData.find(v => 
+                    v.partyName === quickParty || v.pan === quickPan.toUpperCase()
+                );
+                
+                if (!vendor) {
+                    vendor = {
+                        partyName: quickParty,
+                        pan: quickPan.toUpperCase(),
+                        accountNo: quickAccount,
+                        bankName: quickBank,
+                        beneficiary: quickParty,
+                        vehicleNumbers: []
+                    };
+                    vehicleData.push(vendor);
+                    saveVehicleData();
+                }
+            } else {
+                alert('Please select a vendor or enter new vendor details');
+                return;
+            }
+            
+            // Get selected records
+            const selectedIds = Array.from(selectedRecords);
+            const records = transportData.filter(r => selectedIds.includes(r._id));
+            
+            // Get unique vehicles from selected records
+            const uniqueVehicles = [...new Set(records.map(r => 
+                (r['Vehicle'] || r['VEHICLE NO'] || r['Vehicle Number'] || '').toString().trim().toUpperCase()
+            ))];
+            
+            // Add vehicles to vendor if checkbox is checked
+            if (document.getElementById('addVehicleToVendor').checked) {
+                uniqueVehicles.forEach(v => {
+                    if (!vendor.vehicleNumbers.includes(v)) {
+                        vendor.vehicleNumbers.push(v);
+                    }
+                });
+                saveVehicleData();
+            }
+            
+            alert(`Successfully assigned ${selectedIds.length} record(s) to ${vendor.partyName}`);
+            
+            // Clear and close
+            cancelAssignToVendor();
+            clearSelectedRecords();
+            
+            // Refresh display if we're viewing these records
+            if (window.currentSearch && window.currentSearch.transportRecords) {
+                const currentIds = window.currentSearch.transportRecords.map(r => r._id);
+                if (selectedIds.some(id => currentIds.includes(id))) {
+                    // Refresh the current view
+                    if (window.currentSearch.type === 'vehicle') {
+                        searchVehicle();
+                    } else if (window.currentSearch.type === 'dc') {
+                        searchDC();
+                    } else if (window.currentSearch.type === 'vendor') {
+                        searchVendor();
+                    }
+                }
             }
         }
+
+        function assignDCToVendor() {
+            const dcNo = document.getElementById('dcSearch').value.trim();
+            if (!dcNo) {
+                alert('Please enter a DC number first');
+                return;
+            }
+            
+            const records = findTransportRecordsByDC(dcNo);
+            if (records.length === 0) {
+                alert('No records found for this DC number');
+                return;
+            }
+            
+            // Select all records for this DC
+            selectedRecords.clear();
+            records.forEach(r => selectedRecords.add(r._id));
+            updateSelectedCount();
+            
+            // Show assign vendor section
+            assignSelectedToVendor();
+        }
+
         // -------------------------------------------------
-        // SAVE TO LIST
+        //  SAVE TO LIST
         // -------------------------------------------------
         function saveCurrentResult() {
             if (!window.currentSearch) {
                 alert('No search results to save. Please search for a vehicle first.');
                 return;
             }
+
             const vendor = window.currentSearch.vendorDetails[0] || null;
             const allVeh = window.currentSearch.allVendorVehicles;
             const key = vendor ? `${vendor.partyName}|${vendor.pan}` : window.currentSearch.searchValue;
-            const allRecs = [];
-            let totQty = 0, totAmt = 0, totRec = 0;
-         
-            allVeh.forEach(vn => {
-                const recs = transportData.filter(r => {
-                    const vehicleNo = (r['VEHICLE NO'] || r['Vehicle Number'] || '').toString().trim().toUpperCase();
-                    return vehicleNo === vn;
-                });
-                recs.forEach(r => {
-                    totQty += parseFloat(r['NET WT'] || r['Quantity'] || 0) || 0;
-                    totAmt += parseFloat(r['Transport Amount'] || r['Amount'] || 0) || 0;
-                    totRec++;
-                });
-                allRecs.push(...recs);
-            });
-            const finalAmt = window.currentSearch.manualAmount !== null ?
-                window.currentSearch.manualAmount : totAmt;
+
+            const allRecs = window.currentSearch.transportRecords || [];
+            const totals = window.currentSearch.vendorTotals;
+
+            const finalAmt = window.currentSearch.manualAmount !== null ? 
+                window.currentSearch.manualAmount : totals.totalAmount;
+
             const obj = {
                 type: window.currentSearch.type,
                 searchValue: window.currentSearch.searchValue,
-                vehicleNumber: window.currentSearch.vehicleNumber || window.currentSearch.searchValue,
                 vendorDetails: vendor ? [vendor] : [],
                 allVendorVehicles: allVeh,
                 allVendorTransportRecords: allRecs,
                 vendorTotals: {
-                    totalVehicles: allVeh.length,
-                    totalRecords: totRec,
-                    totalQuantity: totQty,
+                    totalVehicles: allVeh.length, 
+                    totalRecords: totals.totalRecords, 
+                    totalQuantity: totals.totalQuantity, 
                     totalAmount: finalAmt
                 },
                 timestamp: new Date().toISOString(),
                 searchTime: new Date().toLocaleString()
             };
-            // Check if already exists
+
             const idx = savedResults.findIndex(r => {
-                const existingKey = r.vendorDetails[0] ?
-                    `${r.vendorDetails[0].partyName}|${r.vendorDetails[0].pan}` :
+                const existingKey = r.vendorDetails[0] ? 
+                    `${r.vendorDetails[0].partyName}|${r.vendorDetails[0].pan}` : 
                     r.searchValue;
                 return existingKey === key;
             });
+
             if (idx > -1) {
                 if (confirm('A result for this vendor already exists. Replace it?')) {
                     savedResults[idx] = obj;
@@ -1689,49 +2408,53 @@
             } else {
                 savedResults.push(obj);
             }
+
             saveSavedResults();
             displaySavedResults();
             alert('Result saved successfully!');
         }
+
         // -------------------------------------------------
-        // SAVED RESULTS
+        //  SAVED RESULTS
         // -------------------------------------------------
         function loadSavedResults() {
             try {
                 const raw = localStorage.getItem('transportSavedResults');
-                if (raw) {
-                    savedResults = JSON.parse(raw);
-                    displaySavedResults();
+                if (raw) { 
+                    savedResults = JSON.parse(raw); 
+                    displaySavedResults(); 
                 }
             } catch (e) {
                 console.error('Error loading saved results:', e);
                 savedResults = [];
             }
         }
-     
-        function saveSavedResults() {
-            localStorage.setItem('transportSavedResults', JSON.stringify(savedResults));
+        
+        function saveSavedResults() { 
+            localStorage.setItem('transportSavedResults', JSON.stringify(savedResults)); 
         }
+
         function displaySavedResults() {
             const list = document.getElementById('savedResultsList');
-            if (!savedResults.length) {
-                list.innerHTML='<div class="no-results">No saved results yet. Search for a vehicle and click "Save to List".</div>';
-                return;
+            if (!savedResults.length) { 
+                list.innerHTML='<div class="no-results">No saved results yet. Search for a vehicle and click "Save to List".</div>'; 
+                return; 
             }
-         
+            
             list.innerHTML='';
             savedResults.forEach((r,i) => {
                 const v = r.vendorDetails[0] || null;
                 const t = r.vendorTotals;
-                const el = document.createElement('div');
+                const el = document.createElement('div'); 
                 el.className='saved-result-item';
                 el.innerHTML = `
                     <div class="saved-result-info">
-                        <div class="result-title">${v ? v.partyName : 'No Vendor'}</div>
-                        <div><strong>PAN:</strong> ${v ? v.pan : 'N/A'}</div>
+                        <div class="result-title">${v ? v.partyName : r.searchValue}</div>
+                        <div><strong>Type:</strong> ${r.type.toUpperCase()}</div>
+                        <div><strong>Search:</strong> ${r.searchValue}</div>
+                        ${v ? `<div><strong>PAN:</strong> ${v.pan}</div>` : ''}
                         <div><strong>Vehicles:</strong> ${t.totalVehicles}</div>
                         <div><strong>Records:</strong> ${t.totalRecords}</div>
-                        <div><strong>Total Quantity:</strong> ${t.totalQuantity.toFixed(2)}</div>
                         <div><strong>Total Amount:</strong> ₹${t.totalAmount.toFixed(2)}</div>
                         <div style="font-size: 12px; color: #666; margin-top: 5px;">
                             Saved: ${r.searchTime || 'Recently'}
@@ -1744,18 +2467,27 @@
                 list.appendChild(el);
             });
         }
+
         function viewSavedResult(idx) {
             const r = savedResults[idx];
             if (!r) return;
-         
-            if (r.type === 'vehicle') {
-                document.getElementById('vehicleSearch').value = r.searchValue;
-                searchVehicle();
-            } else {
-                document.getElementById('dcSearch').value = r.searchValue;
-                searchDC();
+            
+            switch(r.type) {
+                case 'vehicle':
+                    document.getElementById('vehicleSearch').value = r.searchValue;
+                    searchVehicle();
+                    break;
+                case 'dc':
+                    document.getElementById('dcSearch').value = r.searchValue;
+                    searchDC();
+                    break;
+                case 'vendor':
+                    document.getElementById('vendorSearch').value = r.searchValue;
+                    searchVendor();
+                    break;
             }
         }
+
         function removeSavedResult(idx) {
             if (confirm('Are you sure you want to remove this saved result?')) {
                 savedResults.splice(idx,1);
@@ -1763,42 +2495,47 @@
                 displaySavedResults();
             }
         }
+
         function clearSavedResults() {
             if (!savedResults.length) {
                 alert('No saved results to clear.');
                 return;
             }
-         
+            
             if (confirm('Are you sure you want to clear ALL saved results? This action cannot be undone.')) {
                 savedResults = [];
                 saveSavedResults();
                 displaySavedResults();
             }
         }
+
         // -------------------------------------------------
-        // DOWNLOAD EXCEL
+        //  DOWNLOAD EXCEL
         // -------------------------------------------------
         function downloadSavedResults() {
             if (!savedResults.length) {
                 alert('No saved results to export. Please save some results first.');
                 return;
             }
-            // Check if XLSX library is loaded
+
             if (typeof XLSX === 'undefined') {
                 alert('Excel library not loaded. Please refresh the page and try again.');
                 return;
             }
+
             try {
                 const wb = XLSX.utils.book_new();
-                // Summary sheet
+
                 const summaryData = [
-                    ['Vendor Name', 'PAN', 'Account No', 'Bank Name', 'Beneficiary', 'Total Vehicles', 'Total Records', 'Total Quantity', 'Total Amount', 'Saved Time']
+                    ['Search Type', 'Search Value', 'Vendor Name', 'PAN', 'Account No', 'Bank Name', 'Beneficiary', 'Total Vehicles', 'Total Records', 'Total Quantity', 'Total Amount', 'Saved Time']
                 ];
-             
+                
                 savedResults.forEach(r => {
                     const v = r.vendorDetails[0] || {};
                     const t = r.vendorTotals;
                     summaryData.push([
+                        r.type.toUpperCase(),
+                        r.searchValue,
                         v.partyName || 'N/A',
                         v.pan || 'N/A',
                         v.accountNo || 'N/A',
@@ -1811,59 +2548,59 @@
                         r.searchTime || new Date().toLocaleString()
                     ]);
                 });
-             
+                
                 const summarySheet = XLSX.utils.aoa_to_sheet(summaryData);
                 XLSX.utils.book_append_sheet(wb, summarySheet, 'Summary');
-                // Detailed sheets for each vendor
+
                 savedResults.forEach((r, i) => {
                     const v = r.vendorDetails[0] || {};
-                    const sheetName = (v.partyName || `Vendor_${i+1}`)
+                    const sheetName = (v.partyName || `${r.type}_${i+1}`)
                         .replace(/[^\w\s]/g, '')
                         .substring(0, 31);
-                 
+                    
                     const detailData = [
-                        ['Date', 'Customer', 'Delivery Challan No', 'Weighment Slip No', 'Vehicle', 'Material', 'Net Weight', 'Rate', 'Amount']
+                        ['Date', 'Customer', 'DC NO', 'Delivery Challan No', 'Weighment Slip No', 'Weight Slip NO', 'Vehicle', 'Material', 'Net Wt', 'Rate', 'Amount']
                     ];
-                 
+                    
                     r.allVendorTransportRecords.forEach(rec => {
                         detailData.push([
-                            formatDateForDisplay(rec['Accounting Date'] || rec['Date']),
-                            rec['NAME OF THE CUSTOMER'] || rec['Customer Name'] || '',
-                            rec['DC NO'] || rec['Delivery Challan No'] || '',
-                            rec['WEIGHMENT SLIP NO'] || rec['Weighment Slip No'] || rec['Weight Slip NO'] || '',
-                            rec['VEHICLE NO'] || rec['Vehicle Number'] || '',
+                            formatDateForDisplay(rec['Date'] || rec['Accounting Date']),
+                            rec['Customer'] || rec['NAME OF THE CUSTOMER'] || rec['Customer Name'] || '',
+                            rec['DC NO'] || rec['DC Number'] || rec['Delivery Challan'] || '',
+                            rec['Delivery Challan No'] || rec['DC NO'] || '',
+                            rec['Weighment Slip No'] || rec['Weight Slip NO'] || '',
+                            rec['Weight Slip NO'] || rec['Weighment Slip No'] || '',
+                            rec['Vehicle'] || rec['VEHICLE NO'] || rec['Vehicle Number'] || '',
                             rec['Material'] || rec['Product'] || rec['ITEM'] || '',
-                            rec['NET WT'] || rec['Quantity'] || '',
-                            rec['Transport Rate'] || rec['Rate'] || '',
-                            rec['Transport Amount'] || rec['Amount'] || ''
+                            rec['Net Wt'] || rec['NET WT'] || rec['Quantity'] || '',
+                            rec['Rate'] || rec['Transport Rate'] || '',
+                            rec['Amount'] || rec['Transport Amount'] || ''
                         ]);
                     });
-                 
+                    
                     const detailSheet = XLSX.utils.aoa_to_sheet(detailData);
                     XLSX.utils.book_append_sheet(wb, detailSheet, sheetName);
                 });
-                // Generate filename with current date
+
                 const today = new Date();
                 const dateStr = today.toISOString().split('T')[0];
                 const filename = `Transport_Billing_Report_${dateStr}.xlsx`;
-             
+                
                 XLSX.writeFile(wb, filename);
-             
+                
             } catch (error) {
                 console.error('Error generating Excel:', error);
                 alert('Error generating Excel file: ' + error.message);
             }
         }
+
         // -------------------------------------------------
-        // MISC FUNCTIONS
+        //  VENDOR MANAGEMENT
         // -------------------------------------------------
-        function printResults() {
-            window.print();
-        }
         function toggleAddVendorForm() {
             const sec = document.getElementById('addVendorSection');
             const res = document.getElementById('resultsSection');
-         
+            
             if (sec.style.display === 'block') {
                 sec.style.display = 'none';
                 document.getElementById('vendorForm').reset();
@@ -1877,117 +2614,141 @@
                 sec.scrollIntoView({behavior:'smooth'});
             }
         }
+
         function addVehicleField() {
             const cont = document.getElementById('vehicleNumbersContainer');
-            const div = document.createElement('div');
+            const div = document.createElement('div'); 
             div.className='vehicle-number-input';
             div.innerHTML = `
                 <input type="text" class="vehicleNumber" placeholder="Vehicle Number" required>
                 <button type="button" class="remove-vehicle" onclick="removeVehicleField(this)">Remove</button>`;
             cont.appendChild(div);
         }
+
         function removeVehicleField(btn) {
             const cont = document.getElementById('vehicleNumbersContainer');
             if (cont.children.length > 1) {
                 cont.removeChild(btn.parentNode);
             }
         }
+
         function addNewVendor() {
             const party = document.getElementById('partyName').value.trim();
             const acc = document.getElementById('accountNo').value.trim();
             const bank = document.getElementById('bankName').value.trim();
             const ben = document.getElementById('beneficiary').value.trim();
             const pan = document.getElementById('pan').value.trim().toUpperCase();
-         
+            const ifsc = document.getElementById('ifsc').value.trim();
+            
             const inputs = document.querySelectorAll('.vehicleNumber');
             const veh = Array.from(inputs)
                 .map(i => i.value.trim().toUpperCase())
                 .filter(v => v);
-         
+            
             if (!party || !acc || !bank || !ben || !pan || veh.length === 0) {
                 alert('Please fill all required fields and add at least one vehicle number.');
                 return;
             }
-         
-            // Check if PAN is valid format
+            
             if (!/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/.test(pan)) {
                 alert('Please enter a valid PAN number (format: ABCDE1234F)');
                 return;
             }
-         
-            // Check if vendor already exists
-            const existingVendor = vehicleData.find(v =>
+            
+            const existingVendor = vehicleData.find(v => 
                 v.partyName === party || v.pan === pan
             );
-         
+            
+            const vendorData = {
+                partyName: party, 
+                accountNo: acc, 
+                bankName: bank, 
+                beneficiary: ben, 
+                pan: pan, 
+                ifsc: ifsc,
+                vehicleNumbers: veh
+            };
+            
             if (existingVendor) {
-                if (confirm('A vendor with this name or PAN already exists. Add anyway?')) {
-                    vehicleData.push({
-                        partyName: party,
-                        accountNo: acc,
-                        bankName: bank,
-                        beneficiary: ben,
-                        pan: pan,
-                        vehicleNumbers: veh
-                    });
+                if (confirm('A vendor with this name or PAN already exists. Update existing vendor?')) {
+                    Object.assign(existingVendor, vendorData);
                 } else {
                     return;
                 }
             } else {
-                vehicleData.push({
-                    partyName: party,
-                    accountNo: acc,
-                    bankName: bank,
-                    beneficiary: ben,
-                    pan: pan,
-                    vehicleNumbers: veh
-                });
+                vehicleData.push(vendorData);
             }
-         
-            alert('Vendor added successfully!');
+            
+            saveVehicleData();
+            alert('Vendor saved successfully!');
             document.getElementById('vendorForm').reset();
             toggleAddVendorForm();
+            updateDashboard();
         }
-        function addVendorForVehicle(veh) {
-            toggleAddVendorForm();
-            document.querySelector('.vehicleNumber').value = veh;
-        }
+
         // -------------------------------------------------
-        // HELPER FUNCTIONS
+        //  HELPER FUNCTIONS
         // -------------------------------------------------
         function convertExcelDate(v) {
             if (!v) return '';
-         
-            if (typeof v === 'string' && v.includes('-')) {
-                return v;
+            
+            // Check if it's already a date string
+            if (typeof v === 'string') {
+                // Try to parse various date formats
+                const dateFormats = [
+                    /^\d{1,2}\/\d{1,2}\/\d{2,4}$/, // MM/DD/YYYY or DD/MM/YYYY
+                    /^\d{4}-\d{2}-\d{2}$/, // YYYY-MM-DD
+                    /^\d{1,2}-\d{1,2}-\d{2,4}$/ // MM-DD-YYYY or DD-MM-YYYY
+                ];
+                
+                for (const format of dateFormats) {
+                    if (format.test(v)) {
+                        const date = new Date(v);
+                        if (!isNaN(date.getTime())) {
+                            return date.toISOString().split('T')[0];
+                        }
+                    }
+                }
             }
-         
+            
+            // Handle Excel serial date numbers
             if (typeof v === 'number') {
-                // Excel date serial number (days since 1900-01-00)
-                const excelEpoch = new Date(1900, 0, 1);
-                const days = v - 2; // Excel incorrectly treats 1900 as leap year
+                // Excel dates are number of days since Jan 1, 1900 (with 1900 bug)
+                const excelEpoch = new Date(1900, 0, -1); // Excel incorrectly treats 1900 as leap year
+                const days = v - 2; // Subtract 2 days because of Excel's 1900 leap year bug
                 const date = new Date(excelEpoch.getTime() + days * 86400000);
                 return date.toISOString().split('T')[0];
             }
-         
+            
+            // Return original value if we can't parse it
             return v;
         }
+
         function formatDateForDisplay(v) {
             if (!v) return '';
-         
-            if (typeof v === 'string' && v.includes('-')) {
-                const d = new Date(v);
-                return !isNaN(d.getTime()) ? d.toLocaleDateString('en-IN') : v;
+            
+            if (typeof v === 'string') {
+                // Try to parse the date
+                const date = new Date(v);
+                if (!isNaN(date.getTime())) {
+                    return date.toLocaleDateString('en-IN');
+                }
+                return v;
             }
-         
+            
             if (v instanceof Date) {
                 return v.toLocaleDateString('en-IN');
             }
-         
+            
             return v;
         }
+
+        function printResults() { 
+            window.print(); 
+        }
+
         // -------------------------------------------------
-        // INITIALIZE APP
+        //  INITIALIZE APP
         // -------------------------------------------------
         window.onload = initApp;
     </script>
