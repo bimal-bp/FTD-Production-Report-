@@ -1292,8 +1292,6 @@
             const cleanedHeaders = headers.map(h => {
                 const hLower = h.toLowerCase();
                 if (hLower.includes('date')) return 'Date';
-                if (hLower.includes('customer') || hLower.includes('name')) return 'Customer';
-                if (hLower.includes('dc') && hLower.includes('no')) return 'DC NO';
                 if (hLower.includes('weight') || hLower.includes('slip')) return 'Weight Slip NO';
                 if (hLower.includes('delivery') && hLower.includes('challan')) return 'Delivery Challan No';
                 if (hLower.includes('weighment') && hLower.includes('slip')) return 'Weighment Slip No';
@@ -2077,8 +2075,6 @@
                         <tr>
                             <th class="check-cell"></th>
                             <th>Date</th>
-                            <th>Customer</th>
-                            <th>DC NO</th>
                             <th>Delivery Challan No</th>
                             <th>Weighment Slip No</th>
                             <th>Weight Slip NO</th>
